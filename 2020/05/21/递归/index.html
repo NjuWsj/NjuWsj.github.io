@@ -20,30 +20,37 @@
     var CONFIG = {"hostname":"halfmoonex.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="路还很长，要慢慢走">
-<meta property="og:type" content="website">
-<meta property="og:title" content="半月的博客">
-<meta property="og:url" content="http://halfmoonex.cn/index.html">
+  <meta name="description" content="1. 分治 divide and conquer: 将原问题划分为若干个较小规模而结构与原问题相同或者相似的子问题，然后分别解决这些子问题，最后合并子问题的解，即可得到原问题的解。  很多时候需要通过递归的手段实现，当然有时候也可以用非递归的方式，这里不再细讲。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="递归">
+<meta property="og:url" content="http://halfmoonex.cn/2020/05/21/%E9%80%92%E5%BD%92/index.html">
 <meta property="og:site_name" content="半月的博客">
-<meta property="og:description" content="路还很长，要慢慢走">
+<meta property="og:description" content="1. 分治 divide and conquer: 将原问题划分为若干个较小规模而结构与原问题相同或者相似的子问题，然后分别解决这些子问题，最后合并子问题的解，即可得到原问题的解。  很多时候需要通过递归的手段实现，当然有时候也可以用非递归的方式，这里不再细讲。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://halfmoonex.cn/images/2020-5-21_1.png">
+<meta property="article:published_time" content="2020-05-21T04:45:23.487Z">
+<meta property="article:modified_time" content="2020-05-21T06:40:31.860Z">
 <meta property="article:author" content="halfmoon">
+<meta property="article:tag" content="C&#x2F;C++">
+<meta property="article:tag" content="斐波那契数列">
+<meta property="article:tag" content="全排列">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://halfmoonex.cn/images/2020-5-21_1.png">
 
-<link rel="canonical" href="http://halfmoonex.cn/">
+<link rel="canonical" href="http://halfmoonex.cn/2020/05/21/%E9%80%92%E5%BD%92/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>半月的博客</title>
+  <title>递归 | 半月的博客</title>
   
 
 
@@ -181,199 +188,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://halfmoonex.cn/2020/05/21/Pat%E7%94%B2%E7%BA%A7%E8%80%83%E8%AF%95%E9%A2%98%E5%BD%95%EF%BC%9AA1034(%E6%9C%AA%E5%AE%8C%E6%88%90)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="halfmoon">
-      <meta itemprop="description" content="路还很长，要慢慢走">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="半月的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/21/Pat%E7%94%B2%E7%BA%A7%E8%80%83%E8%AF%95%E9%A2%98%E5%BD%95%EF%BC%9AA1034(%E6%9C%AA%E5%AE%8C%E6%88%90)/" class="post-title-link" itemprop="url">Pat甲级考试题录：A1034(未完成)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-05-21 15:30:49 / 修改时间：17:12:42" itemprop="dateCreated datePublished" datetime="2020-05-21T15:30:49+08:00">2020-05-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PAT%E7%94%B2%E7%BA%A7/" itemprop="url" rel="index"><span itemprop="name">PAT甲级</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.4k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>1034 Head of a Gang (30分)</p>
-<p>One way that the police finds the head of a gang is to check people’s phone calls. If there is a phone call between <em>A</em> and <em>B</em>, we say that <em>A</em> and <em>B</em> is related. The weight of a relation is defined to be the total time length of all the phone calls made between the two persons. A “Gang” is a cluster of more than 2 persons who are related to each other with total relation weight being greater than a given threshold <em>K</em>. In each gang, the one with maximum total weight is the head. Now given a list of phone calls, you are supposed to find the gangs and the heads.<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/21/Pat%E7%94%B2%E7%BA%A7%E8%80%83%E8%AF%95%E9%A2%98%E5%BD%95%EF%BC%9AA1034(%E6%9C%AA%E5%AE%8C%E6%88%90)/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-	
-	<div>
-    
-    </div>
-	
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://halfmoonex.cn/2020/05/21/%E6%95%A3%E5%88%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="halfmoon">
-      <meta itemprop="description" content="路还很长，要慢慢走">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="半月的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/21/%E6%95%A3%E5%88%97/" class="post-title-link" itemprop="url">散列</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-05-21 14:50:09 / 修改时间：17:13:49" itemprop="dateCreated datePublished" datetime="2020-05-21T14:50:09+08:00">2020-05-21</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">程序设计基础</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="1-散列（hash）"><a href="#1-散列（hash）" class="headerlink" title="1. 散列（hash）"></a>1. 散列（hash）</h4><ul>
-<li>问题：现在有集合N={8,3,7,6,2},集合M={7,4,2}，求两集合的交集<br>这个具体的例子比较简单，直接能看出来答案是{7,2}.<br>实际上这个问题可以推广到N中有n个数，M中有m个数，判断集合M中的哪些数在N中出现过（n&gt;m,求交集）。首先容易想到的是一种非常简单暴力的方式，直接将M中的每一个数和N中的所有数进行比对，如果出现了相同的数，就将这个数据输出；否则下一个。<br>看得出来上面的算法时间复杂度比较大为O（n+m）。
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/21/%E6%95%A3%E5%88%97/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-	
-	<div>
-    
-    </div>
-	
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -389,10 +207,9 @@
       <meta itemprop="name" content="半月的博客">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/21/%E9%80%92%E5%BD%92/" class="post-title-link" itemprop="url">递归</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          递归
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -414,7 +231,14 @@
                 </span>
             </span>
 
-          <br>
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
             <span class="post-meta-item" title="本文字数">
               <span class="post-meta-item-icon">
                 <i class="far fa-file-word"></i>
@@ -439,144 +263,88 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h4 id="1-分治"><a href="#1-分治" class="headerlink" title="1. 分治"></a>1. 分治</h4><blockquote>
+        <h4 id="1-分治"><a href="#1-分治" class="headerlink" title="1. 分治"></a>1. 分治</h4><blockquote>
 <p>divide and conquer: 将原问题划分为若干个较小规模而结构与原问题相同或者相似的子问题，然后分别解决这些子问题，最后合并子问题的解，即可得到原问题的解。</p>
 </blockquote>
 <p>很多时候需要通过递归的手段实现，当然有时候也可以用非递归的方式，这里不再细讲。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/21/%E9%80%92%E5%BD%92/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
+<a id="more"></a>
+<h4 id="2-递归"><a href="#2-递归" class="headerlink" title="2. 递归"></a>2. 递归</h4><ul>
+<li><p>典型实例：求$n!$<br>n! = n（n-1)(n-2)(n-3)…1<br>n! = n*(n-1)!</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//求n的阶乘的函数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">F</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> n*F（n<span class="number">-1</span>）；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实例2：斐波那契数列<br>f(n) = f(n-1) + f(n-2);</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">F</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>（n == <span class="number">0</span> || n == <span class="number">1</span> ）<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span>  F(n<span class="number">-1</span>) + F(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>1-n全排列问题：求1~n这n个整数能形成的所有排列，并且按<strong>字典顺序</strong>输出（假设n最大可以取到10）。<br>先解决第一个数字是1的排列，再解决第一个数字是2的排列，以此类推；<br>为了解决这个问题，需要构建一个大小为n的数组，存放排列；<br>借助hashTable判断将要读取的数字是否已经在数组中，在的话将其标记为true (hashTable初始化为false)<br>比如现在在一个排列中已经处理好前k-1个位置(1&lt;k&lt;n),此时需要处理第k个位置，首先判断将要填入的数字x的状态即hashTable（x）是否为false，如果为false将x填入,false改为true再去处理第k+1个位置；然后将hashTable(x)重新转成false</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> P[maxn];</span><br><span class="line"><span class="keyword">bool</span> hashTable[maxn] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createP</span><span class="params">(<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(k == n)&#123;<span class="comment">//k=n时，说明将要填的数组已经到达边界，递归结束，输出数组内的值</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n;i++)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d"</span>,P[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> x = <span class="number">1</span>; x &lt;= n; x++)&#123;<span class="comment">//遍历将要填的数字</span></span><br><span class="line">		<span class="keyword">if</span>(hashTable[x] == <span class="literal">false</span>)<span class="comment">//如果该数字在数组中没有出现过，填入k号位置，再去处理k+1号位置</span></span><br><span class="line">			&#123;</span><br><span class="line">				P[k] = x;</span><br><span class="line">				hashTable[x] = <span class="literal">true</span>;</span><br><span class="line">				createP(k+<span class="number">1</span>);</span><br><span class="line">		        hashTable[x] = <span class="literal">false</span>; </span><br><span class="line">			&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">	createP(<span class="number">0</span>);	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="\images\2020-5-21_1.png" alt="image"></p>
+</li>
+</ul>
+
     </div>
 	
 	<div>
     
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
     </div>
 	
 
     
     
     
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>halfmoon
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://halfmoonex.cn/2020/05/21/%E9%80%92%E5%BD%92/" title="递归">http://halfmoonex.cn/2020/05/21/递归/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://halfmoonex.cn/2020/05/18/Pat%E7%94%B2%E7%BA%A7%E8%80%83%E8%AF%95%E9%A2%98%E5%BD%95%EF%BC%9AA1001-A1002/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="halfmoon">
-      <meta itemprop="description" content="路还很长，要慢慢走">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="半月的博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/05/18/Pat%E7%94%B2%E7%BA%A7%E8%80%83%E8%AF%95%E9%A2%98%E5%BD%95%EF%BC%9AA1001-A1002/" class="post-title-link" itemprop="url">Pat甲级考试题录：A1001-A1002</a>
-        </h2>
+          <div class="post-tags">
+              <a href="/tags/C-C/" rel="tag"><i class="fa fa-tag"></i> C/C++</a>
+              <a href="/tags/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97/" rel="tag"><i class="fa fa-tag"></i> 斐波那契数列</a>
+              <a href="/tags/%E5%85%A8%E6%8E%92%E5%88%97/" rel="tag"><i class="fa fa-tag"></i> 全排列</a>
+          </div>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-05-18 02:09:47" itemprop="dateCreated datePublished" datetime="2020-05-18T02:09:47+08:00">2020-05-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-21 17:03:09" itemprop="dateModified" datetime="2020-05-21T17:03:09+08:00">2020-05-21</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PAT%E7%94%B2%E7%BA%A7/" itemprop="url" rel="index"><span itemprop="name">PAT甲级</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.2k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="1001-A-B-Format-20分"><a href="#1001-A-B-Format-20分" class="headerlink" title="1001. A+B Format(20分)"></a>1001. A+B Format(20分)</h4><p>Calculate a+b and output the sum in standard format — that is, the digits must be separated into groups of three by commas (unless there are less than four digits).<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/05/18/Pat%E7%94%B2%E7%BA%A7%E8%80%83%E8%AF%95%E9%A2%98%E5%BD%95%EF%BC%9AA1001-A1002/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
-	
-	<div>
-    
-    </div>
-	
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/18/Pat%E7%94%B2%E7%BA%A7%E8%80%83%E8%AF%95%E9%A2%98%E5%BD%95%EF%BC%9AA1001-A1002/" rel="prev" title="Pat甲级考试题录：A1001-A1002">
+      <i class="fa fa-chevron-left"></i> Pat甲级考试题录：A1001-A1002
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/05/21/%E6%95%A3%E5%88%97/" rel="next" title="散列">
+      散列 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -623,6 +391,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-分治"><span class="nav-number">1.</span> <span class="nav-text">1. 分治</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-递归"><span class="nav-number">2.</span> <span class="nav-text">2. 递归</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -818,6 +587,25 @@
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'dea6b8f99a140aedca8f',
+      clientSecret: 'a67b0dc00e81473283893d0fae14ed0d8bcaa39f',
+      repo        : 'Comments',
+      owner       : 'NjuWsj',
+      admin       : ['NjuWsj'],
+      id          : '23c8a4931a6a22193c902ffdc0429f2d',
+        language: 'zh-CN',
+      distractionFreeMode: false
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
  
  <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>

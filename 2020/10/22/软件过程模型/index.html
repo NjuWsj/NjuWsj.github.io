@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"halfmoonex.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="目前还没有参加过任何实际的软件开发工作，软件过程模型在面试中属于经常被考察的点，虽然占比不大，但还是相当重要的。所以提前将这部分知识整理一下，着重梳理每个模型的特点，与其他模型相比较有什么差异，有哪些优势或者不足，为以后做准备。再者以后实际工作中难免会遇到这些模型，到时候再回过头来看看这些肯定会有些不一样的感受。  一、构建修复(build-fix)模型是最早也是最自然产生的软件开发模型。严格来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件过程模型">
+<meta property="og:url" content="http://halfmoonex.cn/2020/10/22/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:site_name" content="半月的博客">
+<meta property="og:description" content="目前还没有参加过任何实际的软件开发工作，软件过程模型在面试中属于经常被考察的点，虽然占比不大，但还是相当重要的。所以提前将这部分知识整理一下，着重梳理每个模型的特点，与其他模型相比较有什么差异，有哪些优势或者不足，为以后做准备。再者以后实际工作中难免会遇到这些模型，到时候再回过头来看看这些肯定会有些不一样的感受。  一、构建修复(build-fix)模型是最早也是最自然产生的软件开发模型。严格来">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://halfmoonex.cn/2020/10/22/images/%E6%9E%84%E5%BB%BA-%E4%BF%AE%E5%A4%8D%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="http://halfmoonex.cn/2020/10/22/images/%E5%85%B8%E5%9E%8B%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+<meta property="og:image" content="http://halfmoonex.cn/2020/10/22/images/%E7%80%91%E5%B8%83%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="http://halfmoonex.cn/2020/10/22/images/%E5%A2%9E%E9%87%8F%E8%BF%AD%E4%BB%A3%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="http://halfmoonex.cn/2020/10/22/images/%E6%BC%94%E5%8C%96%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="http://halfmoonex.cn/2020/10/22/images/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:image" content="http://halfmoonex.cn/2020/10/22/images/%E8%9E%BA%E6%97%8B.png">
+<meta property="article:published_time" content="2020-10-22T00:28:58.118Z">
+<meta property="article:modified_time" content="2020-10-22T00:40:06.227Z">
+<meta property="article:author" content="halfmoon">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://halfmoonex.cn/2020/10/22/images/%E6%9E%84%E5%BB%BA-%E4%BF%AE%E5%A4%8D%E6%A8%A1%E5%9E%8B.png">
+
+<link rel="canonical" href="http://halfmoonex.cn/2020/10/22/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E6%A8%A1%E5%9E%8B/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>软件过程模型 | 半月的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">半月的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">自学技术的小宅</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">7</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">3</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">5</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://halfmoonex.cn/2020/10/22/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E6%A8%A1%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="halfmoon">
+      <meta itemprop="description" content="路还很长，要慢慢走">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="半月的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件过程模型
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-10-22 08:28:58 / 修改时间：08:40:06" itemprop="dateCreated datePublished" datetime="2020-10-22T08:28:58+08:00">2020-10-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">软件工程</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>目前还没有参加过任何实际的软件开发工作，软件过程模型在面试中属于经常被考察的点，虽然占比不大，但还是相当重要的。所以提前将这部分知识整理一下，着重梳理每个模型的特点，与其他模型相比较有什么差异，有哪些优势或者不足，为以后做准备。再者以后实际工作中难免会遇到这些模型，到时候再回过头来看看这些肯定会有些不一样的感受。</p>
+</blockquote>
+<h3 id="一、构建修复-build-fix-模型"><a href="#一、构建修复-build-fix-模型" class="headerlink" title="一、构建修复(build-fix)模型"></a>一、构建修复(build-fix)模型</h3><p><img src="../images/构建-修复模型.png" alt="构建-修复模型"><br>是最早也是最自然产生的软件开发模型。<br>严格来说它并不能算是一个软件过程模型，因为它对软件开发活动没有任何的规划和组织，是一种完全依靠开发人员个人能力进行软件开发的方式。<br><a id="more"></a></p>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>没有对开发工作进行规范和组织，所以随着软件系统复杂度的提升，开发活动会超出个人直接控制能力，构建-修复模型就会导致开发活动无法有效进行而失败；</li>
+<li>没有分析需求的真实性，给软件开发带来很大的风险；</li>
+<li>没有考虑软件结构的质量，使得软件结构在不断的修改中变得质量越来越糟，直至无法修改；</li>
+<li>没有考虑测试和程序的可维护性，也没有任何文档，软件维护十分困难；</li>
+</ol>
+<p><strong>适用性</strong>：</p>
+<ol>
+<li>软件规模很小，只需要几百行程序，其开发复杂度个人能力能够胜任；</li>
+<li>软件对质量的要求不高，即使出错也无所谓；</li>
+<li>只关注开发活动，对后期维护的要求不高，甚至不需要进行维护</li>
+</ol>
+<h3 id="二、-生命周期模型-瀑布模型"><a href="#二、-生命周期模型-瀑布模型" class="headerlink" title="二、 生命周期模型(瀑布模型)"></a>二、 生命周期模型(瀑布模型)</h3><p><img src="../images/典型的生命周期.png" alt="典型的生命周期模型"></p>
+<p>上面是经典的生命周期模型，可以看得出来将整个软件开发的过程是线性的，连续的。缺点也是同样明显，只有当进行完一个步骤之后，才能继续进行下一个步骤。<br>在此基础之上更为常见的瀑布模型如下：<br><img src="../images/瀑布模型.png" alt="瀑布模型"><br><strong>区别</strong>：</p>
+<ol>
+<li>允许活动出现反复和迭代；</li>
+<li>重点在于要求每个活动的结果必须要进行验证；</li>
+<li>文档驱动</li>
+</ol>
+<p>就是说过在上面经典模型的基础之上，对于每个过程添加了一个验证的过程，如果检验之后发现不合格还可以返回上一级进行修改，所以文档就显得格外重要，这也是说它是文档驱动的原因<br><strong>缺点</strong>：</p>
+<ol>
+<li>对文档的过高期望具有局限性；</li>
+<li>对开发活动的线性假设具有局限性；</li>
+<li>客户、用户参与具有局限性；</li>
+<li>里程碑粒度具有局限性；</li>
+</ol>
+<p>仔细思考一下，瀑布模型的缺点正是来源于它的特点。<br>一个特点是线性，这就意味着以这个模型为基础的开发客户和用户只能参与一种的某个环节，而实际的开发过程中需要他们从始至终的参与；其次，如果前面的开发环节中出现了问题，那么后面的活动也无法展开，势必会影响开发效率。<br>第二个特点是文档驱动。所以说在文档方面需要投入大量的时间和精力，需要建立一个特别完备可靠的文档库，实际上在工作中是很难实现的。</p>
+<p><strong>适用性</strong>：</p>
+<ol>
+<li>需求十分成熟、稳定，没有不确定的内容，也不会发生变化；</li>
+<li>所需的技术成熟、可靠，没有不确定的技术难点，也没有开发人员不熟悉的技术问题；</li>
+<li>复杂度适中，不至于产生太大的文档负担和过粗的里程碑。</li>
+</ol>
+<h3 id="三、增量迭代模型"><a href="#三、增量迭代模型" class="headerlink" title="三、增量迭代模型"></a>三、增量迭代模型</h3><p><img src="../images/增量迭代模型.png" alt="增量迭代"></p>
+<p>随着软件规模增大，开发周期越来越长，所以需要一种可以并行并发的开发模式以提高效率。<br>这种开发模式的逻辑是在项目开始时，通过系统需求开发和核心体系结构设计活动完成项目对前景和范围的界定，然后再讲后续开发活动组织为多个迭代、并行的瀑布式开发活动。</p>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>迭代式开发更加符合软件开发的实际情况，具有更好的适用性；</li>
+<li>并行开发可以帮助缩短软件产品的开发时间；</li>
+<li>渐进交付可以加强用户反馈，降低开发风险。</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>由于各个构件是逐渐并入已有的软件体系结构中的，所以加入构件必须不被破坏已构造好的系统部分，这需要软件具备开放式的体系结构。</li>
+<li>增量迭代模型需要一个完备、清晰的项目前景和范围以进行并行开发规划，但是在一些不稳定的领域，不确定性太多或者需求变化非常频繁，很难在项目开始就确定前景和范围。</li>
+</ol>
+<p><strong>适用性</strong>：<br>适用于大规模软件系统的开发，在<u>比较成熟和稳定的领域</u>有着广泛的应用。</p>
+<h3 id="四、演化模型"><a href="#四、演化模型" class="headerlink" title="四、演化模型"></a>四、演化模型</h3><p><img src="../images/演化模型.png" alt="演化模型"><br>与增量模型相比，相同点是它们都使用迭代式组织开发活动并且都适合大规模软件开发，不同点是增量迭代模型使用于比较成熟、稳定的领域，而演化模型主要用在需求变更比较频繁或不确定性较多的领域。</p>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>使用了迭代式开发，具有更好的适用性，尤其是演化式迭代安排能够适用于那些需求变更比较频繁或不确定性较多的软件系统的开发；</li>
+<li>并行开发可以帮助缩短软件产品的开发时间；</li>
+<li>渐进交付可以加强用户反馈，降低开发风险。</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>无法在项目早期阶段确定项目范围，所以项目的整体计划、进度调度，尤其是商务协商事宜无法准确把握；</li>
+<li>后续迭代的开发活动是在前导迭代基础上进行修改和扩展的，这<strong>容易让后续迭代忽略分析与设计工作</strong>，蜕变为构建-修复方式。</li>
+</ol>
+<p>在实践中，<u>不稳定领域的大规模软件系统开发</u>适合使用演化模型进行组织。</p>
+<h3 id="五、原型模型"><a href="#五、原型模型" class="headerlink" title="五、原型模型"></a>五、原型模型</h3><p><img src="../images/原型模型.png" alt="原型模型"></p>
+<ul>
+<li><p>抛弃式原型：<br>  通过模拟“未来”产品，将“未来”的知识置于“现在”进行推敲，解决不确定性。</p>
+</li>
+<li><p>演化式原型：<br>  在迭代中构建，是系统的核心，并不断扩充，最终成为真正的软件产品。</p>
+</li>
+</ul>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>对原型方法的使用加强了与客户、用户的交流，可以让最终产品取得更好的满意度；</li>
+<li>适用于非常新颖的领域，这些领域因为新颖存在着大量的不确定性。</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>原型方法能够解决风险，但是自身也能带来新的风险，例如原因开发的成本较高，可能会耗尽项目的费用和时间；</li>
+<li>实践中，很多项目负责人不舍得抛弃“抛弃式原型”，使得质量较差的代码进入了最终产品，导致了最终产品的低质量。</li>
+</ol>
+<p>实践中，原型模型主要用于在<u>有着大量不确定性的新颖领域</u>进行开发活动组织。</p>
+<h3 id="六、螺旋模型"><a href="#六、螺旋模型" class="headerlink" title="六、螺旋模型"></a>六、螺旋模型</h3><p><img src="../images/螺旋.png" alt="螺旋模型"><br>基本思想是尽早解决比较高的风险，如果有些问题实在无法解决，那么早发现比项目结束时再发现要好，至少损失要小得多</p>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>可以降低风险，减少项目因风险造成的损失</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>风险解决需要使用原型手段，也就会存在原型自身带来的风险，这一点与原型模型相同；</li>
+<li>模型过于复杂，不利于管理者依据其组织软件开发活动。</li>
+</ol>
+<p>在实践中，螺旋模型在<u>高风险的大规模软件系统开发</u>中有着较多的应用。</p>
+<h3 id="七、Rational统一过程"><a href="#七、Rational统一过程" class="headerlink" title="七、Rational统一过程"></a>七、Rational统一过程</h3><p>英文：Rational Unified Process 缩写：RUP<br>一种迭代式软件开发流程，最早由Rational Software公司开发，因此冠上公司名称。后来，这家公司被IBM并购，成IBM公司下一个部门。RUP描述了如何有效利用商业的可靠的方法开发和部署软件，是一种重量级过程，因此特别适用于大型软件团队开发大型项目。<br><strong>RUP核心实践方法</strong>：</p>
+<ol>
+<li>迭代式开发；</li>
+<li>管理需求，重视需求工程中除了需求开发之外的需求管理活动；</li>
+<li>使用基于组件包的体系结构，他帮助建立一个可维护、易开发、易服用的软件体系结构；</li>
+<li>可视化建模（利用UML进行建模）；</li>
+<li>验证软件质量，尽早和持续地展开验证，以尽早发现缺陷，降低风险和成本；</li>
+<li>控制软件变更，适应1990s以后需求变更越来越重要的事实。</li>
+</ol>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>吸收和借鉴了传统的最佳实践方法，尤其是核心的6个实践方法，能够保证软件开发过程的组织是基本有效和合理的；</li>
+<li>RUP依据其定制机制的不同，可以适用于小型项目，也可以适用于大型项目的开发，适用面广发；</li>
+<li>RUP有一套软件工程工具的支持，这可以帮助RUP有效地实施</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>没有考虑交付之后的软件维护问题；</li>
+<li>裁剪和配置工作不是一个简单的任务，无法保证每个项目都能定制一个有效的RUP过程。</li>
+</ol>
+<h3 id="八、敏捷过程"><a href="#八、敏捷过程" class="headerlink" title="八、敏捷过程"></a>八、敏捷过程</h3><p>敏捷开发是一种以人为核心、迭代、循序渐进的开发方法。在敏捷开发中，软件项目的构建被切分成多个子项目，各个子项目的成果都经过测试，具备集成和可运行的特征。换言之，就是把一个大项目分为多个相互联系，但也可独立运行的小项目，并且分别完成，在此过程中软件一直处于可使用的状态。<br><strong>特点</strong>：</p>
+<ol>
+<li>具有很强的适应性而非预设性；<br>实际的软件开发过程中存在很多的不确定因素，这也正是软件设计的难点所在。传统的控制项目模式都是试图对一个软件开发项目在很长的时间跨度内作出详细的计划，然后依计划进行开发。所以这类方法往往不欢迎变化，拒绝变化。<br>而敏捷过程与此相反。</li>
+<li>敏捷开发方法是“面向人”而非“面向过程”<br> 在传统的软件开发工作中，项目团队分配工作的中点是明确角色的定义，以个人的能力去适应角色，而角色的定义就是为了保证过程的事实，即个人以资源的方式被分配给角色，同时，资源是可以替代的，而角色不可替代。<br> 然而，传统软件开发的这些方法在敏捷开发方式中被完全颠覆。敏捷开发试图是软件开发工作能够利用人的特点，充分发挥人的创造能力。<br> 敏捷开发的目的是建立起一个项目团队全员参与到软件开发中，包括设定软件开发流程的管理人员，只有这样软件开发流程才有可接受性。同时敏捷开发要求研发人员自主在技术上进行决策。因为他们是最了解什么技术是需要和不需要的。再者，敏捷开发特别重视项目团队中的信息交流。</li>
+</ol>
+<p>敏捷过程包含的方法众多，各有特点，除了共同的思想和原则之外，很难准确描述它们的共同点，所以也无法确切界定它们的优缺点。从敏捷联盟声明的思想和原则来看，它们反映了20世纪90年代之后软件工程的发展趋势，所以得到了广泛的应用，尤其是能够适应于快速变化或者时间压力较大的项目。</p>
+
+    </div>
+	
+	<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+    </div>
+	
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>halfmoon
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://halfmoonex.cn/2020/10/22/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E6%A8%A1%E5%9E%8B/" title="软件过程模型">http://halfmoonex.cn/2020/10/22/软件过程模型/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"><i class="fa fa-tag"></i> 设计模式</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/21/Pat%E7%94%B2%E7%BA%A7%E8%80%83%E8%AF%95%E9%A2%98%E5%BD%95%EF%BC%9AA1034(%E6%9C%AA%E5%AE%8C%E6%88%90)/" rel="prev" title="Pat甲级考试题录：A1034(未完成)">
+      <i class="fa fa-chevron-left"></i> Pat甲级考试题录：A1034(未完成)
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、构建修复-build-fix-模型"><span class="nav-number">1.</span> <span class="nav-text">一、构建修复(build-fix)模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、-生命周期模型-瀑布模型"><span class="nav-number">2.</span> <span class="nav-text">二、 生命周期模型(瀑布模型)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、增量迭代模型"><span class="nav-number">3.</span> <span class="nav-text">三、增量迭代模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、演化模型"><span class="nav-number">4.</span> <span class="nav-text">四、演化模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、原型模型"><span class="nav-number">5.</span> <span class="nav-text">五、原型模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、螺旋模型"><span class="nav-number">6.</span> <span class="nav-text">六、螺旋模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七、Rational统一过程"><span class="nav-number">7.</span> <span class="nav-text">七、Rational统一过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#八、敏捷过程"><span class="nav-number">8.</span> <span class="nav-text">八、敏捷过程</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="halfmoon"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">halfmoon</p>
+  <div class="site-description" itemprop="description">路还很长，要慢慢走</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/NjuWsj" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;NjuWsj" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/2616289505/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;2616289505&#x2F;profile?rightmod&#x3D;1&amp;wvr&#x3D;6&amp;mod&#x3D;personinfo&amp;is_all&#x3D;1" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+	  
+	  
+      <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fas fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jamie</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">10k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">9 分钟</span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'dea6b8f99a140aedca8f',
+      clientSecret: 'a67b0dc00e81473283893d0fae14ed0d8bcaa39f',
+      repo        : 'Comments',
+      owner       : 'NjuWsj',
+      admin       : ['NjuWsj'],
+      id          : '4f50f3ab46ebff9da2ff99defa6a9ca7',
+        language: 'zh-CN',
+      distractionFreeMode: false
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+ 
+ <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+ 
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

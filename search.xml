@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>线性表</title>
-    <url>/2020/05/25/%E7%BA%BF%E6%80%A7%E8%A1%A8/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>Pat甲级考试题录：A1001-A1002</title>
     <url>/2020/05/18/Pat%E7%94%B2%E7%BA%A7%E8%80%83%E8%AF%95%E9%A2%98%E5%BD%95%EF%BC%9AA1001-A1002/</url>
     <content><![CDATA[<h4 id="1001-A-B-Format-20分"><a href="#1001-A-B-Format-20分" class="headerlink" title="1001. A+B Format(20分)"></a>1001. A+B Format(20分)</h4><p>Calculate a+b and output the sum in standard format — that is, the digits must be separated into groups of three by commas (unless there are less than four digits).<br><a id="more"></a><br><strong>Input Specification:</strong><br>Each input file contains one test case. Each case contains a pair of integers a and b where $-10^6≤a,b≤10^6$. The numbers are separated by a space.<br><strong>Output Specification:</strong><br>For each test case, you should output the sum of a and b in one line. The sum must be written in the standard format.<br><strong>Sample Input:</strong><br>-1000000 9<br><strong>Sample Output:</strong><br>-999,991</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a,b;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"请输入两个整数："</span>;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;a&gt;&gt;b;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">string</span> s = to_string(a+b);<span class="comment">//将a+b的结果转换成字符串，并自动生成数组</span></span><br><span class="line">    <span class="keyword">int</span> len = s.length();<span class="comment">//得到字符串数组的大小</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; len; i++)&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;s[i];<span class="comment">//将计算结果以字符的形式输出</span></span><br><span class="line">        <span class="keyword">if</span>(s[i]==<span class="string">'-'</span>) <span class="keyword">continue</span>;<span class="comment">//如果数字中存在负号，跳过此次循环，避免出现输出“-，999,999”的情况</span></span><br><span class="line">        <span class="keyword">if</span>((i + <span class="number">1</span>) %<span class="number">3</span> ==len %<span class="number">3</span> &amp;&amp; i != len<span class="number">-1</span>) <span class="built_in">cout</span>&lt;&lt;<span class="string">","</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="1002-1002-A-B-for-Polynomials-25分"><a href="#1002-1002-A-B-for-Polynomials-25分" class="headerlink" title="1002. 1002 A+B for Polynomials (25分)"></a>1002. 1002 A+B for Polynomials (25分)</h4><p>This time, you are supposed to find A+B where A and B are two polynomials.<br><strong>Input Specification:</strong><br>Each input file contains one test case. Each case occupies 2 lines, and each line contains the information of a polynomial:<br>K $ N<em>1$ $a</em>{N<em>1}$ $N_2$ $a</em>{N<em>2}$ …. $N_k$ $a</em>{N<em>k} $<br>where K is the number of nonzero terms in the polynomial, $N_i$ and $a</em>{N_k}$ (i=1,2,⋯,K) are the exponents and coefficients, respectively. It is given that 1≤K≤10，0≤$N_k$&lt;⋯&lt;$N_2$&lt;$N_1$≤1000.<br><strong>Output Specification:</strong><br>For each test case you should output the sum of A and B in one line, with the same format as the input. Notice that there must be NO extra space at the end of each line. Please be accurate to 1 decimal place.<br><strong>Sample Input:</strong><br>2 1 2.4 0 3.2<br>2 2 1.5 1 0.5<br><strong>Sample Output:</strong><br>3 2 1.5 1 2.9 0 3.2</p>
+<h4 id="1002-1002-A-B-for-Polynomials-25分"><a href="#1002-1002-A-B-for-Polynomials-25分" class="headerlink" title="1002. 1002 A+B for Polynomials (25分)"></a>1002. 1002 A+B for Polynomials (25分)</h4><p>This time, you are supposed to find A+B where A and B are two polynomials.<br><strong>Input Specification:</strong><br>Each input file contains one test case. Each case occupies 2 lines, and each line contains the information of a polynomial:<br>K $N<em>1$ $a</em>{N<em>1}$ $N_2$ $a</em>{N<em>2}$ …. $N_k$ $a</em>{N<em>k}$<br>where K is the number of nonzero terms in the polynomial, $N_i$ and $a</em>{N_k}$ (i=1,2,⋯,K) are the exponents and coefficients, respectively. It is given that 1≤K≤10，0≤$N_k$&lt;⋯&lt;$N_2$&lt;$N_1$≤1000.<br><strong>Output Specification:</strong><br>For each test case you should output the sum of A and B in one line, with the same format as the input. Notice that there must be NO extra space at the end of each line. Please be accurate to 1 decimal place.<br><strong>Sample Input:</strong><br>2 1 2.4 0 3.2<br>2 2 1.5 1 0.5<br><strong>Sample Output:</strong><br>3 2 1.5 1 2.9 0 3.2</p>
 <p> 核心思路就是利用数组中的下标表示成多项式中的指数，将数组元素设计成各项系数。首先根据K的值确定循环条件，得到一个初始多项式，在此基础之上对于不同的项赋值新的数值，加和，得到加和之后的多项式。<br> 只要数组元素不等于0就意味着该项存在，可据此输出多项式的指数和系数，并且统计多项式的项数</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt; </span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> K,N;</span><br><span class="line">	<span class="keyword">float</span> a;	</span><br><span class="line">	<span class="keyword">float</span> p[<span class="number">1001</span>] = &#123;<span class="number">0</span>&#125;;	</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;K;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; K; i++)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;N&gt;&gt;a;</span><br><span class="line">		p[N] = a;</span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;K;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; K;i++)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;N&gt;&gt;a;</span><br><span class="line">		p[N] = p[N] + a;</span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="keyword">int</span> cont = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1000</span>; i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">		<span class="keyword">if</span>(p[i] != <span class="number">0</span>) 	cont++;		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; cont;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1000</span>; i&gt;=<span class="number">0</span>; i--)&#123;</span><br><span class="line">		<span class="keyword">if</span>(p[i] != <span class="number">0</span>) </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">" %d %.1f"</span>, i ,p[i]);<span class="comment">//涉及到输出格式还是老老实实用printf()吧，，，</span></span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>注意：C++中数组名不要和其他变量名重复<br>setprecision()函数可以控制输出数字的精度，不过需要引用#include<iomanip></p>
@@ -24,28 +19,9 @@
       </tags>
   </entry>
   <entry>
-    <title>散列</title>
-    <url>/2020/05/21/%E6%95%A3%E5%88%97/</url>
-    <content><![CDATA[<h4 id="1-散列（hash）"><a href="#1-散列（hash）" class="headerlink" title="1. 散列（hash）"></a>1. 散列（hash）</h4><ul>
-<li>问题：现在有集合N={8,3,7,6,2},集合M={7,4,2}，求两集合的交集<br>这个具体的例子比较简单，直接能看出来答案是{7,2}.<br>实际上这个问题可以推广到N中有n个数，M中有m个数，判断集合M中的哪些数在N中出现过（n&gt;m,求交集）。首先容易想到的是一种非常简单暴力的方式，直接将M中的每一个数和N中的所有数进行比对，如果出现了相同的数，就将这个数据输出；否则下一个。<br>看得出来上面的算法时间复杂度比较大为O（n+m）。<a id="more"></a>
-而通过散列的方式可以利用空间转化为时间，降低复杂度。具体的方式就是，申请一个足够大（大于N中的最大值）的布尔型数组hashTable[]，将所有元素初始化为false;在读取N集合中的元素时(比如x)，在对应的位置将hashTable[x]转为true；之后判断M中的数字在N中有没有出现过，只需要通过数字查询对应的hashTable的状态，即可知道情况。<br>所以上面的问题具体实现如下：<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">100010</span>;<span class="comment">//一个比较大的数，其实应该视实际情况而定</span></span><br><span class="line"><span class="keyword">bool</span> hashTable[maxn] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> N[<span class="number">5</span>], M[<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N[i]);</span><br><span class="line">		hashTable[N[i]] = <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">3</span>; k++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;M[k]);</span><br><span class="line">		<span class="keyword">if</span>(hashTable[M[k]] == <span class="literal">true</span>)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, M[k]);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-如果需要查询一些数字在N中出现的次数，可以构建int型的hashTable[]；每读入一次x,相应的hashTable[x]++<br>比如 N = {2,0,2,0,5,2,0}查询2,0出现的次数：<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">100010</span>;</span><br><span class="line"><span class="keyword">int</span> hashTable[maxn] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> N[<span class="number">7</span>], M[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">7</span>; i++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N[i]);</span><br><span class="line">		hashTable[N[i]]++;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">2</span>; k++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;M[k]);</span><br><span class="line">		<span class="keyword">if</span>(hashTable[M[k]] != <span class="number">0</span>)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>, M[k], hashTable[M[k]]);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<img src="\images\2020-5-21.png" alt="image"></li>
-</ul>
-]]></content>
-      <categories>
-        <category>程序设计基础</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-        <tag>散列</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Pat甲级考试题录：A1034(未完成)</title>
     <url>/2020/05/21/Pat%E7%94%B2%E7%BA%A7%E8%80%83%E8%AF%95%E9%A2%98%E5%BD%95%EF%BC%9AA1034(%E6%9C%AA%E5%AE%8C%E6%88%90)/</url>
-    <content><![CDATA[<p>1034 Head of a Gang (30分)</p>
-<p>One way that the police finds the head of a gang is to check people’s phone calls. If there is a phone call between <em>A</em> and <em>B</em>, we say that <em>A</em> and <em>B</em> is related. The weight of a relation is defined to be the total time length of all the phone calls made between the two persons. A “Gang” is a cluster of more than 2 persons who are related to each other with total relation weight being greater than a given threshold <em>K</em>. In each gang, the one with maximum total weight is the head. Now given a list of phone calls, you are supposed to find the gangs and the heads.<br><a id="more"></a></p>
+    <content><![CDATA[<h3 id="1034-Head-of-a-Gang-30分"><a href="#1034-Head-of-a-Gang-30分" class="headerlink" title="1034 Head of a Gang (30分)"></a>1034 Head of a Gang (30分)</h3><p>One way that the police finds the head of a gang is to check people’s phone calls. If there is a phone call between <em>A</em> and <em>B</em>, we say that <em>A</em> and <em>B</em> is related. The weight of a relation is defined to be the total time length of all the phone calls made between the two persons. A “Gang” is a cluster of more than 2 persons who are related to each other with total relation weight being greater than a given threshold <em>K</em>. In each gang, the one with maximum total weight is the head. Now given a list of phone calls, you are supposed to find the gangs and the heads.<br><a id="more"></a></p>
 <h3 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a>Input Specification:</h3><p>Each input file contains one test case. For each case, the first line contains two positive numbers <em>N</em> and <em>K</em> (both less than or equal to 1000), the number of phone calls and the weight threthold, respectively. Then <em>N</em> lines follow, each in the following format:</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Name1 Name2 Time</span><br></pre></td></tr></table></figure>
 <p>where <code>Name1</code> and <code>Name2</code> are the names of people at the two ends of the call, and <code>Time</code> is the length of the call. A name is a string of three capital letters chosen from <code>A</code>-<code>Z</code>. A time length is a positive integer which is no more than 1000 minutes.</p>
@@ -61,6 +37,137 @@
       <tags>
         <tag>C/C++</tag>
         <tag>Graph</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软件过程模型</title>
+    <url>/2020/10/22/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<blockquote>
+<p>目前还没有参加过任何实际的软件开发工作，软件过程模型在面试中属于经常被考察的点，虽然占比不大，但还是相当重要的。所以提前将这部分知识整理一下，着重梳理每个模型的特点，与其他模型相比较有什么差异，有哪些优势或者不足，为以后做准备。再者以后实际工作中难免会遇到这些模型，到时候再回过头来看看这些肯定会有些不一样的感受。</p>
+</blockquote>
+<h3 id="一、构建修复-build-fix-模型"><a href="#一、构建修复-build-fix-模型" class="headerlink" title="一、构建修复(build-fix)模型"></a>一、构建修复(build-fix)模型</h3><p><img src="../images/构建-修复模型.png" alt="构建-修复模型"><br>是最早也是最自然产生的软件开发模型。<br>严格来说它并不能算是一个软件过程模型，因为它对软件开发活动没有任何的规划和组织，是一种完全依靠开发人员个人能力进行软件开发的方式。<br><a id="more"></a></p>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>没有对开发工作进行规范和组织，所以随着软件系统复杂度的提升，开发活动会超出个人直接控制能力，构建-修复模型就会导致开发活动无法有效进行而失败；</li>
+<li>没有分析需求的真实性，给软件开发带来很大的风险；</li>
+<li>没有考虑软件结构的质量，使得软件结构在不断的修改中变得质量越来越糟，直至无法修改；</li>
+<li>没有考虑测试和程序的可维护性，也没有任何文档，软件维护十分困难；</li>
+</ol>
+<p><strong>适用性</strong>：</p>
+<ol>
+<li>软件规模很小，只需要几百行程序，其开发复杂度个人能力能够胜任；</li>
+<li>软件对质量的要求不高，即使出错也无所谓；</li>
+<li>只关注开发活动，对后期维护的要求不高，甚至不需要进行维护</li>
+</ol>
+<h3 id="二、-生命周期模型-瀑布模型"><a href="#二、-生命周期模型-瀑布模型" class="headerlink" title="二、 生命周期模型(瀑布模型)"></a>二、 生命周期模型(瀑布模型)</h3><p><img src="../images/典型的生命周期.png" alt="典型的生命周期模型"></p>
+<p>上面是经典的生命周期模型，可以看得出来将整个软件开发的过程是线性的，连续的。缺点也是同样明显，只有当进行完一个步骤之后，才能继续进行下一个步骤。<br>在此基础之上更为常见的瀑布模型如下：<br><img src="../images/瀑布模型.png" alt="瀑布模型"><br><strong>区别</strong>：</p>
+<ol>
+<li>允许活动出现反复和迭代；</li>
+<li>重点在于要求每个活动的结果必须要进行验证；</li>
+<li>文档驱动</li>
+</ol>
+<p>就是说过在上面经典模型的基础之上，对于每个过程添加了一个验证的过程，如果检验之后发现不合格还可以返回上一级进行修改，所以文档就显得格外重要，这也是说它是文档驱动的原因<br><strong>缺点</strong>：</p>
+<ol>
+<li>对文档的过高期望具有局限性；</li>
+<li>对开发活动的线性假设具有局限性；</li>
+<li>客户、用户参与具有局限性；</li>
+<li>里程碑粒度具有局限性；</li>
+</ol>
+<p>仔细思考一下，瀑布模型的缺点正是来源于它的特点。<br>一个特点是线性，这就意味着以这个模型为基础的开发客户和用户只能参与一种的某个环节，而实际的开发过程中需要他们从始至终的参与；其次，如果前面的开发环节中出现了问题，那么后面的活动也无法展开，势必会影响开发效率。<br>第二个特点是文档驱动。所以说在文档方面需要投入大量的时间和精力，需要建立一个特别完备可靠的文档库，实际上在工作中是很难实现的。</p>
+<p><strong>适用性</strong>：</p>
+<ol>
+<li>需求十分成熟、稳定，没有不确定的内容，也不会发生变化；</li>
+<li>所需的技术成熟、可靠，没有不确定的技术难点，也没有开发人员不熟悉的技术问题；</li>
+<li>复杂度适中，不至于产生太大的文档负担和过粗的里程碑。</li>
+</ol>
+<h3 id="三、增量迭代模型"><a href="#三、增量迭代模型" class="headerlink" title="三、增量迭代模型"></a>三、增量迭代模型</h3><p><img src="../images/增量迭代模型.png" alt="增量迭代"></p>
+<p>随着软件规模增大，开发周期越来越长，所以需要一种可以并行并发的开发模式以提高效率。<br>这种开发模式的逻辑是在项目开始时，通过系统需求开发和核心体系结构设计活动完成项目对前景和范围的界定，然后再讲后续开发活动组织为多个迭代、并行的瀑布式开发活动。</p>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>迭代式开发更加符合软件开发的实际情况，具有更好的适用性；</li>
+<li>并行开发可以帮助缩短软件产品的开发时间；</li>
+<li>渐进交付可以加强用户反馈，降低开发风险。</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>由于各个构件是逐渐并入已有的软件体系结构中的，所以加入构件必须不被破坏已构造好的系统部分，这需要软件具备开放式的体系结构。</li>
+<li>增量迭代模型需要一个完备、清晰的项目前景和范围以进行并行开发规划，但是在一些不稳定的领域，不确定性太多或者需求变化非常频繁，很难在项目开始就确定前景和范围。</li>
+</ol>
+<p><strong>适用性</strong>：<br>适用于大规模软件系统的开发，在<u>比较成熟和稳定的领域</u>有着广泛的应用。</p>
+<h3 id="四、演化模型"><a href="#四、演化模型" class="headerlink" title="四、演化模型"></a>四、演化模型</h3><p><img src="../images/演化模型.png" alt="演化模型"><br>与增量模型相比，相同点是它们都使用迭代式组织开发活动并且都适合大规模软件开发，不同点是增量迭代模型使用于比较成熟、稳定的领域，而演化模型主要用在需求变更比较频繁或不确定性较多的领域。</p>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>使用了迭代式开发，具有更好的适用性，尤其是演化式迭代安排能够适用于那些需求变更比较频繁或不确定性较多的软件系统的开发；</li>
+<li>并行开发可以帮助缩短软件产品的开发时间；</li>
+<li>渐进交付可以加强用户反馈，降低开发风险。</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>无法在项目早期阶段确定项目范围，所以项目的整体计划、进度调度，尤其是商务协商事宜无法准确把握；</li>
+<li>后续迭代的开发活动是在前导迭代基础上进行修改和扩展的，这<strong>容易让后续迭代忽略分析与设计工作</strong>，蜕变为构建-修复方式。</li>
+</ol>
+<p>在实践中，<u>不稳定领域的大规模软件系统开发</u>适合使用演化模型进行组织。</p>
+<h3 id="五、原型模型"><a href="#五、原型模型" class="headerlink" title="五、原型模型"></a>五、原型模型</h3><p><img src="../images/原型模型.png" alt="原型模型"></p>
+<ul>
+<li><p>抛弃式原型：<br>  通过模拟“未来”产品，将“未来”的知识置于“现在”进行推敲，解决不确定性。</p>
+</li>
+<li><p>演化式原型：<br>  在迭代中构建，是系统的核心，并不断扩充，最终成为真正的软件产品。</p>
+</li>
+</ul>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>对原型方法的使用加强了与客户、用户的交流，可以让最终产品取得更好的满意度；</li>
+<li>适用于非常新颖的领域，这些领域因为新颖存在着大量的不确定性。</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>原型方法能够解决风险，但是自身也能带来新的风险，例如原因开发的成本较高，可能会耗尽项目的费用和时间；</li>
+<li>实践中，很多项目负责人不舍得抛弃“抛弃式原型”，使得质量较差的代码进入了最终产品，导致了最终产品的低质量。</li>
+</ol>
+<p>实践中，原型模型主要用于在<u>有着大量不确定性的新颖领域</u>进行开发活动组织。</p>
+<h3 id="六、螺旋模型"><a href="#六、螺旋模型" class="headerlink" title="六、螺旋模型"></a>六、螺旋模型</h3><p><img src="../images/螺旋.png" alt="螺旋模型"><br>基本思想是尽早解决比较高的风险，如果有些问题实在无法解决，那么早发现比项目结束时再发现要好，至少损失要小得多</p>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>可以降低风险，减少项目因风险造成的损失</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>风险解决需要使用原型手段，也就会存在原型自身带来的风险，这一点与原型模型相同；</li>
+<li>模型过于复杂，不利于管理者依据其组织软件开发活动。</li>
+</ol>
+<p>在实践中，螺旋模型在<u>高风险的大规模软件系统开发</u>中有着较多的应用。</p>
+<h3 id="七、Rational统一过程"><a href="#七、Rational统一过程" class="headerlink" title="七、Rational统一过程"></a>七、Rational统一过程</h3><p>英文：Rational Unified Process 缩写：RUP<br>一种迭代式软件开发流程，最早由Rational Software公司开发，因此冠上公司名称。后来，这家公司被IBM并购，成IBM公司下一个部门。RUP描述了如何有效利用商业的可靠的方法开发和部署软件，是一种重量级过程，因此特别适用于大型软件团队开发大型项目。<br><strong>RUP核心实践方法</strong>：</p>
+<ol>
+<li>迭代式开发；</li>
+<li>管理需求，重视需求工程中除了需求开发之外的需求管理活动；</li>
+<li>使用基于组件包的体系结构，他帮助建立一个可维护、易开发、易服用的软件体系结构；</li>
+<li>可视化建模（利用UML进行建模）；</li>
+<li>验证软件质量，尽早和持续地展开验证，以尽早发现缺陷，降低风险和成本；</li>
+<li>控制软件变更，适应1990s以后需求变更越来越重要的事实。</li>
+</ol>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>吸收和借鉴了传统的最佳实践方法，尤其是核心的6个实践方法，能够保证软件开发过程的组织是基本有效和合理的；</li>
+<li>RUP依据其定制机制的不同，可以适用于小型项目，也可以适用于大型项目的开发，适用面广发；</li>
+<li>RUP有一套软件工程工具的支持，这可以帮助RUP有效地实施</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>没有考虑交付之后的软件维护问题；</li>
+<li>裁剪和配置工作不是一个简单的任务，无法保证每个项目都能定制一个有效的RUP过程。</li>
+</ol>
+<h3 id="八、敏捷过程"><a href="#八、敏捷过程" class="headerlink" title="八、敏捷过程"></a>八、敏捷过程</h3><p>敏捷开发是一种以人为核心、迭代、循序渐进的开发方法。在敏捷开发中，软件项目的构建被切分成多个子项目，各个子项目的成果都经过测试，具备集成和可运行的特征。换言之，就是把一个大项目分为多个相互联系，但也可独立运行的小项目，并且分别完成，在此过程中软件一直处于可使用的状态。<br><strong>特点</strong>：</p>
+<ol>
+<li>具有很强的适应性而非预设性；<br>实际的软件开发过程中存在很多的不确定因素，这也正是软件设计的难点所在。传统的控制项目模式都是试图对一个软件开发项目在很长的时间跨度内作出详细的计划，然后依计划进行开发。所以这类方法往往不欢迎变化，拒绝变化。<br>而敏捷过程与此相反。</li>
+<li>敏捷开发方法是“面向人”而非“面向过程”<br> 在传统的软件开发工作中，项目团队分配工作的中点是明确角色的定义，以个人的能力去适应角色，而角色的定义就是为了保证过程的事实，即个人以资源的方式被分配给角色，同时，资源是可以替代的，而角色不可替代。<br> 然而，传统软件开发的这些方法在敏捷开发方式中被完全颠覆。敏捷开发试图是软件开发工作能够利用人的特点，充分发挥人的创造能力。<br> 敏捷开发的目的是建立起一个项目团队全员参与到软件开发中，包括设定软件开发流程的管理人员，只有这样软件开发流程才有可接受性。同时敏捷开发要求研发人员自主在技术上进行决策。因为他们是最了解什么技术是需要和不需要的。再者，敏捷开发特别重视项目团队中的信息交流。</li>
+</ol>
+<p>敏捷过程包含的方法众多，各有特点，除了共同的思想和原则之外，很难准确描述它们的共同点，所以也无法确切界定它们的优缺点。从敏捷联盟声明的思想和原则来看，它们反映了20世纪90年代之后软件工程的发展趋势，所以得到了广泛的应用，尤其是能够适应于快速变化或者时间压力较大的项目。</p>
+]]></content>
+      <categories>
+        <category>软件工程</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -91,6 +198,24 @@
         <tag>C/C++</tag>
         <tag>斐波那契数列</tag>
         <tag>全排列</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>散列</title>
+    <url>/2020/05/21/%E6%95%A3%E5%88%97/</url>
+    <content><![CDATA[<h4 id="1-散列（hash）"><a href="#1-散列（hash）" class="headerlink" title="1. 散列（hash）"></a>1. 散列（hash）</h4><ul>
+<li>问题：现在有集合N={8,3,7,6,2},集合M={7,4,2}，求两集合的交集<br>这个具体的例子比较简单，直接能看出来答案是{7,2}.<br>实际上这个问题可以推广到N中有n个数，M中有m个数，判断集合M中的哪些数在N中出现过（n&gt;m,求交集）。首先容易想到的是一种非常简单暴力的方式，直接将M中的每一个数和N中的所有数进行比对，如果出现了相同的数，就将这个数据输出；否则下一个。<br>看得出来上面的算法时间复杂度比较大为O（n+m）。<a id="more"></a>
+而通过散列的方式可以利用空间转化为时间，降低复杂度。具体的方式就是，申请一个足够大（大于N中的最大值）的布尔型数组hashTable[]，将所有元素初始化为false;在读取N集合中的元素时(比如x)，在对应的位置将hashTable[x]转为true；之后判断M中的数字在N中有没有出现过，只需要通过数字查询对应的hashTable的状态，即可知道情况。<br>所以上面的问题具体实现如下：<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">100010</span>;<span class="comment">//一个比较大的数，其实应该视实际情况而定</span></span><br><span class="line"><span class="keyword">bool</span> hashTable[maxn] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> N[<span class="number">5</span>], M[<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N[i]);</span><br><span class="line">		hashTable[N[i]] = <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">3</span>; k++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;M[k]);</span><br><span class="line">		<span class="keyword">if</span>(hashTable[M[k]] == <span class="literal">true</span>)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, M[k]);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+如果需要查询一些数字在N中出现的次数，可以构建int型的hashTable[]；每读入一次x,相应的hashTable[x]++<br>比如 N = {2,0,2,0,5,2,0}查询2,0出现的次数：<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">100010</span>;</span><br><span class="line"><span class="keyword">int</span> hashTable[maxn] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> N[<span class="number">7</span>], M[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">7</span>; i++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N[i]);</span><br><span class="line">		hashTable[N[i]]++;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">2</span>; k++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;M[k]);</span><br><span class="line">		<span class="keyword">if</span>(hashTable[M[k]] != <span class="number">0</span>)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>, M[k], hashTable[M[k]]);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="\images\2020-5-21.png" alt="image"></li>
+</ul>
+]]></content>
+      <categories>
+        <category>程序设计基础</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+        <tag>散列</tag>
       </tags>
   </entry>
 </search>

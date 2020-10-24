@@ -19,45 +19,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Pat甲级考试题录：A1034(未完成)</title>
-    <url>/2020/05/21/Pat%E7%94%B2%E7%BA%A7%E8%80%83%E8%AF%95%E9%A2%98%E5%BD%95%EF%BC%9AA1034(%E6%9C%AA%E5%AE%8C%E6%88%90)/</url>
-    <content><![CDATA[<h3 id="1034-Head-of-a-Gang-30分"><a href="#1034-Head-of-a-Gang-30分" class="headerlink" title="1034 Head of a Gang (30分)"></a>1034 Head of a Gang (30分)</h3><p>One way that the police finds the head of a gang is to check people’s phone calls. If there is a phone call between <em>A</em> and <em>B</em>, we say that <em>A</em> and <em>B</em> is related. The weight of a relation is defined to be the total time length of all the phone calls made between the two persons. A “Gang” is a cluster of more than 2 persons who are related to each other with total relation weight being greater than a given threshold <em>K</em>. In each gang, the one with maximum total weight is the head. Now given a list of phone calls, you are supposed to find the gangs and the heads.<br><a id="more"></a></p>
-<h3 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a>Input Specification:</h3><p>Each input file contains one test case. For each case, the first line contains two positive numbers <em>N</em> and <em>K</em> (both less than or equal to 1000), the number of phone calls and the weight threthold, respectively. Then <em>N</em> lines follow, each in the following format:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Name1 Name2 Time</span><br></pre></td></tr></table></figure>
-<p>where <code>Name1</code> and <code>Name2</code> are the names of people at the two ends of the call, and <code>Time</code> is the length of the call. A name is a string of three capital letters chosen from <code>A</code>-<code>Z</code>. A time length is a positive integer which is no more than 1000 minutes.</p>
-<h3 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a>Output Specification:</h3><p>For each test case, first print in a line the total number of gangs. Then for each gang, print in a line the name of the head and the total number of the members. It is guaranteed that the head is unique for each gang. The output must be sorted according to the alphabetical order of the names of the heads.</p>
-<h3 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1:"></a>Sample Input 1:</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">8 59</span><br><span class="line">AAA BBB 10</span><br><span class="line">BBB AAA 20</span><br><span class="line">AAA CCC 40</span><br><span class="line">DDD EEE 5</span><br><span class="line">EEE DDD 70</span><br><span class="line">FFF GGG 30</span><br><span class="line">GGG HHH 20</span><br><span class="line">HHH FFF 10</span><br></pre></td></tr></table></figure>
-<h3 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1:"></a>Sample Output 1:</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">AAA 3</span><br><span class="line">GGG 3</span><br></pre></td></tr></table></figure>
-<h3 id="Sample-Input-2"><a href="#Sample-Input-2" class="headerlink" title="Sample Input 2:"></a>Sample Input 2:</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">8 70</span><br><span class="line">AAA BBB 10</span><br><span class="line">BBB AAA 20</span><br><span class="line">AAA CCC 40</span><br><span class="line">DDD EEE 5</span><br><span class="line">EEE DDD 70</span><br><span class="line">FFF GGG 30</span><br><span class="line">GGG HHH 20</span><br><span class="line">HHH FFF 10</span><br></pre></td></tr></table></figure>
-<h3 id="Sample-Output-2"><a href="#Sample-Output-2" class="headerlink" title="Sample Output 2:"></a>Sample Output 2:</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>PAT甲级</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-        <tag>Graph</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>散列</title>
-    <url>/2020/05/21/%E6%95%A3%E5%88%97/</url>
-    <content><![CDATA[<h4 id="1-散列（hash）"><a href="#1-散列（hash）" class="headerlink" title="1. 散列（hash）"></a>1. 散列（hash）</h4><ul>
-<li>问题：现在有集合N={8,3,7,6,2},集合M={7,4,2}，求两集合的交集<br>这个具体的例子比较简单，直接能看出来答案是{7,2}.<br>实际上这个问题可以推广到N中有n个数，M中有m个数，判断集合M中的哪些数在N中出现过（n&gt;m,求交集）。首先容易想到的是一种非常简单暴力的方式，直接将M中的每一个数和N中的所有数进行比对，如果出现了相同的数，就将这个数据输出；否则下一个。<br>看得出来上面的算法时间复杂度比较大为O（n+m）。<a id="more"></a>
-而通过散列的方式可以利用空间转化为时间，降低复杂度。具体的方式就是，申请一个足够大（大于N中的最大值）的布尔型数组hashTable[]，将所有元素初始化为false;在读取N集合中的元素时(比如x)，在对应的位置将hashTable[x]转为true；之后判断M中的数字在N中有没有出现过，只需要通过数字查询对应的hashTable的状态，即可知道情况。<br>所以上面的问题具体实现如下：<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">100010</span>;<span class="comment">//一个比较大的数，其实应该视实际情况而定</span></span><br><span class="line"><span class="keyword">bool</span> hashTable[maxn] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> N[<span class="number">5</span>], M[<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N[i]);</span><br><span class="line">		hashTable[N[i]] = <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">3</span>; k++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;M[k]);</span><br><span class="line">		<span class="keyword">if</span>(hashTable[M[k]] == <span class="literal">true</span>)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, M[k]);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-如果需要查询一些数字在N中出现的次数，可以构建int型的hashTable[]；每读入一次x,相应的hashTable[x]++<br>比如 N = {2,0,2,0,5,2,0}查询2,0出现的次数：<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">100010</span>;</span><br><span class="line"><span class="keyword">int</span> hashTable[maxn] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> N[<span class="number">7</span>], M[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">7</span>; i++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N[i]);</span><br><span class="line">		hashTable[N[i]]++;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">2</span>; k++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;M[k]);</span><br><span class="line">		<span class="keyword">if</span>(hashTable[M[k]] != <span class="number">0</span>)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>, M[k], hashTable[M[k]]);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<img src="\images\2020-5-21.png" alt="image"></li>
-</ul>
-]]></content>
-      <categories>
-        <category>程序设计基础</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-        <tag>散列</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>软件过程模型</title>
     <url>/2020/10/22/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E6%A8%A1%E5%9E%8B/</url>
     <content><![CDATA[<blockquote>
@@ -189,6 +150,24 @@
       </tags>
   </entry>
   <entry>
+    <title>散列</title>
+    <url>/2020/05/21/%E6%95%A3%E5%88%97/</url>
+    <content><![CDATA[<h4 id="1-散列（hash）"><a href="#1-散列（hash）" class="headerlink" title="1. 散列（hash）"></a>1. 散列（hash）</h4><ul>
+<li>问题：现在有集合N={8,3,7,6,2},集合M={7,4,2}，求两集合的交集<br>这个具体的例子比较简单，直接能看出来答案是{7,2}.<br>实际上这个问题可以推广到N中有n个数，M中有m个数，判断集合M中的哪些数在N中出现过（n&gt;m,求交集）。首先容易想到的是一种非常简单暴力的方式，直接将M中的每一个数和N中的所有数进行比对，如果出现了相同的数，就将这个数据输出；否则下一个。<br>看得出来上面的算法时间复杂度比较大为O（n+m）。<a id="more"></a>
+而通过散列的方式可以利用空间转化为时间，降低复杂度。具体的方式就是，申请一个足够大（大于N中的最大值）的布尔型数组hashTable[]，将所有元素初始化为false;在读取N集合中的元素时(比如x)，在对应的位置将hashTable[x]转为true；之后判断M中的数字在N中有没有出现过，只需要通过数字查询对应的hashTable的状态，即可知道情况。<br>所以上面的问题具体实现如下：<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">100010</span>;<span class="comment">//一个比较大的数，其实应该视实际情况而定</span></span><br><span class="line"><span class="keyword">bool</span> hashTable[maxn] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> N[<span class="number">5</span>], M[<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N[i]);</span><br><span class="line">		hashTable[N[i]] = <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">3</span>; k++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;M[k]);</span><br><span class="line">		<span class="keyword">if</span>(hashTable[M[k]] == <span class="literal">true</span>)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, M[k]);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+如果需要查询一些数字在N中出现的次数，可以构建int型的hashTable[]；每读入一次x,相应的hashTable[x]++<br>比如 N = {2,0,2,0,5,2,0}查询2,0出现的次数：<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">100010</span>;</span><br><span class="line"><span class="keyword">int</span> hashTable[maxn] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> N[<span class="number">7</span>], M[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">7</span>; i++) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;N[i]);</span><br><span class="line">		hashTable[N[i]]++;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; <span class="number">2</span>; k++)&#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;M[k]);</span><br><span class="line">		<span class="keyword">if</span>(hashTable[M[k]] != <span class="number">0</span>)</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d %d\n"</span>, M[k], hashTable[M[k]]);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<img src="\images\2020-5-21.png" alt="image"></li>
+</ul>
+]]></content>
+      <categories>
+        <category>程序设计基础</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+        <tag>散列</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>递归</title>
     <url>/2020/05/21/%E9%80%92%E5%BD%92/</url>
     <content><![CDATA[<h4 id="1-分治"><a href="#1-分治" class="headerlink" title="1. 分治"></a>1. 分治</h4><blockquote>
@@ -216,6 +195,27 @@
         <tag>C/C++</tag>
         <tag>斐波那契数列</tag>
         <tag>全排列</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pat甲级考试题录：A1034(未完成)</title>
+    <url>/2020/05/21/Pat%E7%94%B2%E7%BA%A7%E8%80%83%E8%AF%95%E9%A2%98%E5%BD%95%EF%BC%9AA1034(%E6%9C%AA%E5%AE%8C%E6%88%90)/</url>
+    <content><![CDATA[<h3 id="1034-Head-of-a-Gang-30分"><a href="#1034-Head-of-a-Gang-30分" class="headerlink" title="1034 Head of a Gang (30分)"></a>1034 Head of a Gang (30分)</h3><p>One way that the police finds the head of a gang is to check people’s phone calls. If there is a phone call between <em>A</em> and <em>B</em>, we say that <em>A</em> and <em>B</em> is related. The weight of a relation is defined to be the total time length of all the phone calls made between the two persons. A “Gang” is a cluster of more than 2 persons who are related to each other with total relation weight being greater than a given threshold <em>K</em>. In each gang, the one with maximum total weight is the head. Now given a list of phone calls, you are supposed to find the gangs and the heads.<br><a id="more"></a></p>
+<h3 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a>Input Specification:</h3><p>Each input file contains one test case. For each case, the first line contains two positive numbers <em>N</em> and <em>K</em> (both less than or equal to 1000), the number of phone calls and the weight threthold, respectively. Then <em>N</em> lines follow, each in the following format:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Name1 Name2 Time</span><br></pre></td></tr></table></figure>
+<p>where <code>Name1</code> and <code>Name2</code> are the names of people at the two ends of the call, and <code>Time</code> is the length of the call. A name is a string of three capital letters chosen from <code>A</code>-<code>Z</code>. A time length is a positive integer which is no more than 1000 minutes.</p>
+<h3 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a>Output Specification:</h3><p>For each test case, first print in a line the total number of gangs. Then for each gang, print in a line the name of the head and the total number of the members. It is guaranteed that the head is unique for each gang. The output must be sorted according to the alphabetical order of the names of the heads.</p>
+<h3 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1:"></a>Sample Input 1:</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">8 59</span><br><span class="line">AAA BBB 10</span><br><span class="line">BBB AAA 20</span><br><span class="line">AAA CCC 40</span><br><span class="line">DDD EEE 5</span><br><span class="line">EEE DDD 70</span><br><span class="line">FFF GGG 30</span><br><span class="line">GGG HHH 20</span><br><span class="line">HHH FFF 10</span><br></pre></td></tr></table></figure>
+<h3 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1:"></a>Sample Output 1:</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">AAA 3</span><br><span class="line">GGG 3</span><br></pre></td></tr></table></figure>
+<h3 id="Sample-Input-2"><a href="#Sample-Input-2" class="headerlink" title="Sample Input 2:"></a>Sample Input 2:</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">8 70</span><br><span class="line">AAA BBB 10</span><br><span class="line">BBB AAA 20</span><br><span class="line">AAA CCC 40</span><br><span class="line">DDD EEE 5</span><br><span class="line">EEE DDD 70</span><br><span class="line">FFF GGG 30</span><br><span class="line">GGG HHH 20</span><br><span class="line">HHH FFF 10</span><br></pre></td></tr></table></figure>
+<h3 id="Sample-Output-2"><a href="#Sample-Output-2" class="headerlink" title="Sample Output 2:"></a>Sample Output 2:</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>PAT甲级</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+        <tag>Graph</tag>
       </tags>
   </entry>
 </search>

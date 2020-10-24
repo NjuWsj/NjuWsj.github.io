@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"halfmoonex.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一、 图(graph)的基本概念(总结)1. 基本定义图G由顶点集V(vertex)和边集E(edge)组成，记为G &#x3D; (V,E),其中V(G)表示图G中顶点的有限非空集；E(G)表示图G中顶点之间的关系(边)的集合。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图的相关概念及存储">
+<meta property="og:url" content="http://halfmoonex.cn/2020/10/24/%E5%9B%BE%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%AD%98%E5%82%A8/index.html">
+<meta property="og:site_name" content="半月的博客">
+<meta property="og:description" content="一、 图(graph)的基本概念(总结)1. 基本定义图G由顶点集V(vertex)和边集E(edge)组成，记为G &#x3D; (V,E),其中V(G)表示图G中顶点的有限非空集；E(G)表示图G中顶点之间的关系(边)的集合。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/10/24/nQNvM3b6roagp5L.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/24/cWLG1vV8hs2qBau.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/24/QmM8CX1T6Sh5cHd.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/24/L7ubMEC9PeR83Gl.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/24/kz5VmJKfuiPdBbC.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/24/g85LmRWHUETy4Qt.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/24/JxLKZ6folvpF5Pr.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/24/3lQSzvY7ZReUcrX.png">
+<meta property="og:image" content="https://i.loli.net/2020/10/24/8hpOau574g2B6Hb.png">
+<meta property="article:published_time" content="2020-10-24T11:46:12.739Z">
+<meta property="article:modified_time" content="2020-10-24T11:57:08.627Z">
+<meta property="article:author" content="halfmoon">
+<meta property="article:tag" content="图">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/10/24/nQNvM3b6roagp5L.png">
+
+<link rel="canonical" href="http://halfmoonex.cn/2020/10/24/%E5%9B%BE%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%AD%98%E5%82%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>图的相关概念及存储 | 半月的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">半月的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">自学技术的小宅</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">8</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">4</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">6</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://halfmoonex.cn/2020/10/24/%E5%9B%BE%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%AD%98%E5%82%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="halfmoon">
+      <meta itemprop="description" content="路还很长，要慢慢走">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="半月的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          图的相关概念及存储
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-10-24 19:46:12 / 修改时间：19:57:08" itemprop="dateCreated datePublished" datetime="2020-10-24T19:46:12+08:00">2020-10-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="一、-图-graph-的基本概念-总结"><a href="#一、-图-graph-的基本概念-总结" class="headerlink" title="一、 图(graph)的基本概念(总结)"></a>一、 图(graph)的基本概念(总结)</h3><h5 id="1-基本定义"><a href="#1-基本定义" class="headerlink" title="1. 基本定义"></a>1. 基本定义</h5><p>图G由顶点集V(vertex)和边集E(edge)组成，记为G = (V,E),其中V(G)表示图G中顶点的<u>有限非空集</u>；E(G)表示图G中顶点之间的关系(边)的集合。<br><a id="more"></a><br><strong>注</strong>：从定义上就可以看出顶点的集合不可能是空集，而边的集合可以是空集。(其实也很好理解，如果一个图一个顶点都没有，那这个图也就不存在了)<br>若V={v1,v2,···,vn},用|V|表示图G中顶点的个数，也称为图G的阶，E={(u,v)|u属于V，v属于V}，用|E|表示图G中边的条数。</p>
+<blockquote>
+<ul>
+<li>在学习中，后面的涉及到的图的存储以及图的遍历等算法，往往都是将图分为有向图和无向图，所以以这两类为主要分类，像简单图，完全图之类的概念作为补充。</li>
+<li>这里补充一个概念，简单图：1. 不存在重复边(两个顶点之间如果有边，只会有一条边)；2. 不存在顶点到自身的边</li>
+<li>我们所讨论的都是简单图</li>
+</ul>
+</blockquote>
+<h5 id="2-有向图-directed-graph-与无向图-undirected-graph"><a href="#2-有向图-directed-graph-与无向图-undirected-graph" class="headerlink" title="2.有向图(directed graph)与无向图(undirected graph)"></a>2.有向图(directed graph)与无向图(undirected graph)</h5><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>有向图</th>
+<th>无向图</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E为有向边(弧)的集合</td>
+<td>E为无向边的集合</td>
+</tr>
+<tr>
+<td><v,w>表示从顶点v到顶点w的弧</td>
+<td>(v,w)表示v和w之间的边</td>
+</tr>
+<tr>
+<td><v,w>≠<w,v></td>
+<td>(v,w) = (w,v)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>注</strong>：在<v,w>中v称为弧尾，w称为弧头<br><img src="https://i.loli.net/2020/10/24/nQNvM3b6roagp5L.png" alt="无向图"><br><img src="https://i.loli.net/2020/10/24/cWLG1vV8hs2qBau.png" alt="有向图"></p>
+<blockquote>
+<p>完全图：图中任意的两个顶点之间都存在边。假如图的顶点数目是n,那么无向完全图边的数目就是n(n-1)/2,有向完全图边的数目是n(n-1)。</p>
+</blockquote>
+<h5 id="3-边的权-weight-和网-network"><a href="#3-边的权-weight-和网-network" class="headerlink" title="3.边的权(weight)和网(network)"></a>3.边的权(weight)和网(network)</h5><p>在一个图中，每条边上可以标上具有某种意义的数值，该数值就称为该边的权值。这种边上带权值的图(带权图，weighted graph)也叫做网。</p>
+<h5 id="4-路径-path-、路径长度和回路"><a href="#4-路径-path-、路径长度和回路" class="headerlink" title="4.路径(path)、路径长度和回路"></a>4.路径(path)、路径长度和回路</h5><p>顶点v<sub>p</sub>和顶点v<sub>q</sub>之间的一条路径是指顶点序列v<sub>p</sub>,v<sub>1</sub>,v<sub>2</sub>,···,v<sub>i</sub>,v<sub>q</sub>.<br>路径上边的数目称为路径长度；<br>第一个顶点和最后一个顶点相同的路径称为环。<br><strong>注</strong>：如果一个图有n个顶点，而且边的数目大于等于n个，那么这个图一定有环。</p>
+<h5 id="5-距离"><a href="#5-距离" class="headerlink" title="5.距离"></a>5.距离</h5><p>从顶点u出发到顶点v的最短路径；<br>若从u到v不存在任何路径，则可以将距离记为∞。</p>
+<h5 id="6-顶点的度-degree"><a href="#6-顶点的度-degree" class="headerlink" title="6. 顶点的度(degree)"></a>6. 顶点的度(degree)</h5><p>定义：以一个顶点出发，所有和该顶点产生关联的边的数目。<br>假定图的顶点数v,边的数目是e。</p>
+<ul>
+<li>无向图：所有顶点的度的和是边的两倍也就是2e。(一条边有两个顶点，边会被计算两次)</li>
+<li>有向图：有向图的边存在方向，所以分为入度和出度。入度就是以这个顶点为终点的边的数目，出度就是以这个顶点为起点的边的数目。所以，有向图中顶点的度=入度+出度。同时所有顶点的入度之和等于所有顶点的出度之和都等于边的数目。</li>
+</ul>
+<h5 id="7-子图-subgraph"><a href="#7-子图-subgraph" class="headerlink" title="7.子图(subgraph)"></a>7.子图(subgraph)</h5><p>设有两个图，G=(V,E),G<sub>1</sub>=(V<sub>1</sub>,E<sub>1</sub>),其中V<sub>1</sub>是V的子集，E<sub>1</sub>是E的子集，则称G<sub>1</sub>是G的子图。<br><strong>注</strong>：不是任意选择V的子集再加上E的子集就可以构成G的子图，需要考虑到如果E的子集中所有边关联的顶点都必须在V的子集中，否则就无法构成图。</p>
+<p>如果满足V(G<sub>1</sub>) = V(G)的子图，那么称其为G的<u>生成子图</u></p>
+<h5 id="8-连通分量"><a href="#8-连通分量" class="headerlink" title="8.连通分量"></a>8.连通分量</h5><h6 id="8-1连通图-connected-graph-、连通分量-connected-component"><a href="#8-1连通图-connected-graph-、连通分量-connected-component" class="headerlink" title="8.1连通图(connected graph)、连通分量(connected component)"></a>8.1连通图(connected graph)、连通分量(connected component)</h6><ul>
+<li>连通：在无向图中，若从顶点v到顶点w有路径存在，则称v和w是连通的。</li>
+<li><p>连通图：如果图G中任意两个顶点都是连通的，那么图G称为连通图，否则被称为非连通图。<br><strong>注</strong>：如果一个连通图顶点数为N，那么边最少为N-1条(可以考虑极端情况，比如由N个顶点组成的一条“线段”)。换言之，如果边数少于N-1条，那么这个图一定为非连通图。</p>
+</li>
+<li><p>连通分量：无向图中的极大连通子图称为连通分量。<br><strong>注1</strong>：极大连通子图中的顶点是原图G的子集，在此情况下，边和原图中有关联的边相同。如果在此基础上再添加一个顶点，就会变为不连通的。<br>极小连通子图就是说在保证子图连通的情况下，尽可能删除多余的边，直到如果再删除一条边图就会变为非连通<br><strong>注2</strong>：连通图的连通分量仅有它自身一个，而非连通图有多个连通分量</p>
+<h6 id="8-2强连通图"><a href="#8-2强连通图" class="headerlink" title="8.2强连通图"></a>8.2强连通图</h6></li>
+<li>强连通(strongly connected)：在有向图中，若从顶点v到顶点w和从顶点w到顶点v之间都有路径，则称这两个顶点是强连通的；</li>
+<li>强连通图：若图中任何一对顶点都是强连通的，称此图为强连通图；</li>
+<li>强连通分量(strongly connected component)：有向图中的极大强连通子图称为有向图的强连通分量。</li>
+</ul>
+<h5 id="9-生成树、生成森林"><a href="#9-生成树、生成森林" class="headerlink" title="9.生成树、生成森林"></a>9.生成树、生成森林</h5><ul>
+<li>生成树(spanning tree)：连通图的生成树是包含途中全部顶点的一个极小连通子图。(顶点数如果是n,那么边为n-1条)</li>
+<li>生成森林：非连通图中，连通分量的生成树构成了非连通图的生成森林。<br><img src="https://i.loli.net/2020/10/24/QmM8CX1T6Sh5cHd.png" alt="生成树"></li>
+</ul>
+<blockquote>
+<p>关于连通图的若干问题：</p>
+<ol>
+<li>如果一个无向连通图的顶点数为n,那么的边至少为n-1；而一个有向连通图的边至少为n</li>
+<li>如果一个无向图(n)在<u>任何情况下</u>都是连通的，那么边至少为顶点数n-1的完全图边数再加1</li>
+</ol>
+</blockquote>
+<h3 id="二、图的存储-如何在计算机中表示一个图"><a href="#二、图的存储-如何在计算机中表示一个图" class="headerlink" title="二、图的存储(如何在计算机中表示一个图)"></a>二、图的存储(如何在计算机中表示一个图)</h3><h5 id="1-邻接矩阵-adjacency-matrix-法"><a href="#1-邻接矩阵-adjacency-matrix-法" class="headerlink" title="1. 邻接矩阵(adjacency matrix)法"></a>1. 邻接矩阵(adjacency matrix)法</h5><ul>
+<li>无权图：<br>已知G = (V,E),V={V<sub>1</sub>,V<sub>2</sub>,···,V<sub>n</sub>}，那么它的邻接矩阵可以表示为：<br><img src="https://i.loli.net/2020/10/24/L7ubMEC9PeR83Gl.png" alt="邻接矩阵"><br><img src="https://i.loli.net/2020/10/24/kz5VmJKfuiPdBbC.png" alt="无向图邻接矩阵"><blockquote>
+<p>无向图的邻接矩阵是一个对称矩阵，如果要求第i个顶点的度，那么只需要将第i行或者第i列所有元素相加即可。</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/10/24/g85LmRWHUETy4Qt.png" alt="有向图邻接矩阵"></p>
+<blockquote>
+<p>有向图的邻接矩阵不一定为对称矩阵(多数情况下不是),如果要求第i个顶点的出度，则将第i行所有元素相加即可；如果要求第i个顶点的入度，则将第i列所有元素相加。</p>
+<ul>
+<li>带权图：<br>带权图的邻接矩阵表示实际上与无权图邻接矩阵类似，只要把1换成权值，0换成无穷即可。<br><img src="https://i.loli.net/2020/10/24/JxLKZ6folvpF5Pr.png" alt="Snipaste_2020-10-24_19-32-11.png"><br><img src="https://i.loli.net/2020/10/24/3lQSzvY7ZReUcrX.png" alt="带权图邻接矩阵"></li>
+</ul>
+</blockquote>
+<h5 id="2-邻接表-linked-adjacency-list-法"><a href="#2-邻接表-linked-adjacency-list-法" class="headerlink" title="2. 邻接表(linked-adjacency list)法"></a>2. 邻接表(linked-adjacency list)法</h5><p><img src="https://i.loli.net/2020/10/24/8hpOau574g2B6Hb.png" alt="邻接表"></p>
+<h5 id="3-邻接多重表-无向图"><a href="#3-邻接多重表-无向图" class="headerlink" title="3. 邻接多重表(无向图)"></a>3. 邻接多重表(无向图)</h5><p>在无向图中如果边数是e，则在邻接表表示中需要2e个单位来存储，相对来说是比较浪费存储空间的，所以采用邻接多重表，每条边用一个结点来表示。</p>
+<h5 id="4-十字链表-有向图"><a href="#4-十字链表-有向图" class="headerlink" title="4. 十字链表(有向图)"></a>4. 十字链表(有向图)</h5>
+    </div>
+	
+	<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+    </div>
+	
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>halfmoon
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://halfmoonex.cn/2020/10/24/%E5%9B%BE%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%AD%98%E5%82%A8/" title="图的相关概念及存储">http://halfmoonex.cn/2020/10/24/图的相关概念及存储/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/%E5%9B%BE/" rel="tag"><i class="fa fa-tag"></i> 图</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/22/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E6%A8%A1%E5%9E%8B/" rel="prev" title="软件过程模型">
+      <i class="fa fa-chevron-left"></i> 软件过程模型
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、-图-graph-的基本概念-总结"><span class="nav-number">1.</span> <span class="nav-text">一、 图(graph)的基本概念(总结)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-基本定义"><span class="nav-number">1.0.1.</span> <span class="nav-text">1. 基本定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-有向图-directed-graph-与无向图-undirected-graph"><span class="nav-number">1.0.2.</span> <span class="nav-text">2.有向图(directed graph)与无向图(undirected graph)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-边的权-weight-和网-network"><span class="nav-number">1.0.3.</span> <span class="nav-text">3.边的权(weight)和网(network)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-路径-path-、路径长度和回路"><span class="nav-number">1.0.4.</span> <span class="nav-text">4.路径(path)、路径长度和回路</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-距离"><span class="nav-number">1.0.5.</span> <span class="nav-text">5.距离</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-顶点的度-degree"><span class="nav-number">1.0.6.</span> <span class="nav-text">6. 顶点的度(degree)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#7-子图-subgraph"><span class="nav-number">1.0.7.</span> <span class="nav-text">7.子图(subgraph)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#8-连通分量"><span class="nav-number">1.0.8.</span> <span class="nav-text">8.连通分量</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#8-1连通图-connected-graph-、连通分量-connected-component"><span class="nav-number">1.0.8.1.</span> <span class="nav-text">8.1连通图(connected graph)、连通分量(connected component)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#8-2强连通图"><span class="nav-number">1.0.8.2.</span> <span class="nav-text">8.2强连通图</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#9-生成树、生成森林"><span class="nav-number">1.0.9.</span> <span class="nav-text">9.生成树、生成森林</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、图的存储-如何在计算机中表示一个图"><span class="nav-number">2.</span> <span class="nav-text">二、图的存储(如何在计算机中表示一个图)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-邻接矩阵-adjacency-matrix-法"><span class="nav-number">2.0.1.</span> <span class="nav-text">1. 邻接矩阵(adjacency matrix)法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-邻接表-linked-adjacency-list-法"><span class="nav-number">2.0.2.</span> <span class="nav-text">2. 邻接表(linked-adjacency list)法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-邻接多重表-无向图"><span class="nav-number">2.0.3.</span> <span class="nav-text">3. 邻接多重表(无向图)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-十字链表-有向图"><span class="nav-number">2.0.4.</span> <span class="nav-text">4. 十字链表(有向图)</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="halfmoon"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">halfmoon</p>
+  <div class="site-description" itemprop="description">路还很长，要慢慢走</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/NjuWsj" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;NjuWsj" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/2616289505/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;2616289505&#x2F;profile?rightmod&#x3D;1&amp;wvr&#x3D;6&amp;mod&#x3D;personinfo&amp;is_all&#x3D;1" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+	  
+	  
+      <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fas fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jamie</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">12k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">11 分钟</span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'dea6b8f99a140aedca8f',
+      clientSecret: 'a67b0dc00e81473283893d0fae14ed0d8bcaa39f',
+      repo        : 'Comments',
+      owner       : 'NjuWsj',
+      admin       : ['NjuWsj'],
+      id          : '6877a07fe9065b08f1f1e9559601496c',
+        language: 'zh-CN',
+      distractionFreeMode: false
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+ 
+ <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+ 
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>

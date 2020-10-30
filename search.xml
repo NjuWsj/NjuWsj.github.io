@@ -40,6 +40,90 @@
       </tags>
   </entry>
   <entry>
+    <title>对象与类</title>
+    <url>/2020/10/31/%E5%AF%B9%E8%B1%A1%E4%B8%8E%E7%B1%BB/</url>
+    <content><![CDATA[<h3 id="一、-类和对象"><a href="#一、-类和对象" class="headerlink" title="一、 类和对象"></a>一、 类和对象</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类</th>
+<th>对象</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类等价于一个菜谱</td>
+<td>对象等价于一道具体的菜</td>
+</tr>
+<tr>
+<td>类是定义，是规范，是“死”的东西</td>
+<td>对象是实例，是类的一个实现，是一个具体的东西</td>
+</tr>
+<tr>
+<td>最简单的类class A{}</td>
+<td>对象A obj = new A()</td>
+</tr>
+</tbody>
+</table>
+</div>
+<a id="more"></a>
+<ul>
+<li>格式  类型 变量名 = new 类型（参数）：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">5</span>;<span class="comment">//等价于 int a = new int(5);</span></span><br><span class="line"></span><br><span class="line">A obj = <span class="keyword">new</span> A();<span class="comment">//也可以不填参数，构造器会默认进行初始化</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：没有两个对象是完全一样的。<br>即使两个对象的类型是完全一样的，但实际上内存地址也会不同<br>比如：A obj1 = new A(); A obj2 = new A();<br>实际上可以将obj1和obj2是一种指针</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/10/30/a9JOxYlrLMtE8jQ.png" alt="对象引用.png"></p>
+<p>例子：<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//MyNumber类，包含一个int整数，可以通过构造器赋值</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyNumber</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> num;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyNumber</span><span class="params">(<span class="keyword">int</span> num)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.num = num;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SwapTest</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> a = <span class="number">1</span>, b = <span class="number">2</span>;</span><br><span class="line">		swap(a,b);<span class="comment">//1</span></span><br><span class="line">		System.out.println(<span class="string">"a = "</span>+ a + <span class="string">" b = "</span>+ b);</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"---------------------------------------"</span>);</span><br><span class="line">		</span><br><span class="line">		MyNumber obj1 = <span class="keyword">new</span> MyNumber(<span class="number">5</span>);<span class="comment">// obj1.num = 5</span></span><br><span class="line">		MyNumber obj2 = <span class="keyword">new</span> MyNumber(<span class="number">10</span>);<span class="comment">// obj2.num = 10</span></span><br><span class="line">		swap(obj1.num,obj2.num);<span class="comment">//2</span></span><br><span class="line">		System.out.println(<span class="string">"obj1.num = "</span>+ obj1.num+ <span class="string">" obj2.num = "</span>+ obj2.num);</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"----------------------------------------"</span>);</span><br><span class="line">		</span><br><span class="line">		swap(obj1,obj2);<span class="comment">//3</span></span><br><span class="line">		System.out.println(<span class="string">"obj1.num = "</span>+ obj1.num+ <span class="string">" obj2.num = "</span>+ obj2.num);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> m,<span class="keyword">int</span> n)</span><span class="comment">//设想根据值发生交换</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> temp = m;</span><br><span class="line">		m = n;</span><br><span class="line">		n = temp;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(MyNumber obj3,MyNumber obj4)</span> <span class="comment">//引用本身（地址）没有变化，引用对应的值发生交换</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">int</span> temp = obj3.num;</span><br><span class="line">		obj3.num = obj4.num;</span><br><span class="line">		obj4.num = temp;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>1和2处都是把实参的值复制给形参，形参的值在swap函数内发生交换，但是实参保持不变；<br>3处实参是具体的引用，引用所指的变量值确实被交换，所以交换过程能成功进行。</p>
+<ul>
+<li>99%的对象都是通过上面new的形式产生，另外1%由<strong>克隆和反射</strong>生成</li>
+<li>函数内的局部变量，编译器不会给默认值，需要初始化才可以使用；类的成员变量，编译器会给默认值，可以直接使用</li>
+</ul>
+</blockquote>
+<h3 id="二、构造函数"><a href="#二、构造函数" class="headerlink" title="二、构造函数"></a>二、构造函数</h3><ul>
+<li>Java构造函数的名称必须和类名一样，且没有返回值（也就意味着构造函数前面没有void，int，double等关键字）</li>
+<li>Java有构造函数，但是没有析构函数<blockquote>
+<p>构造函数是在内存中开辟一个空间存储数据；析构函数是将一个数据对象清空</p>
+</blockquote>
+</li>
+<li>变量被创建时，变量将占据内存；当变量消亡时，系统将回收内存</li>
+<li><p>每个变量是有生命周期的，只能存储在离他最近的一对{}中</p>
+<blockquote>
+<p>Java具有<strong>内存自动回收机制</strong>，当变量退出生命周期后，JVM会自动回收分配的对象的内存。所以不需要析构函数来释放内存。<br>对象回收效率依赖于<strong>垃圾回收器GC(Garbage Collector)</strong>，其回收算法关系到性能好坏，是JVM的研究热点</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LifeCycleTest</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">int</span> a = <span class="number">0</span>;<span class="comment">//a在整个main函数中active</span></span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)<span class="comment">//i在for循环中active </span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">			k++;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">if</span>(a &gt; <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			Object obj1 = <span class="keyword">new</span> Object();<span class="comment">//obj1在if分支中active</span></span><br><span class="line">			System.out.println(<span class="string">"a is positive"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			Object obj2 = <span class="keyword">new</span> Object();<span class="comment">//obj2在else分支中active</span></span><br><span class="line">			System.out.println(<span class="string">"a is non-positive"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+<li><p>每个Java类都必须有构造函数；</p>
+</li>
+<li>如果没有显示的构造函数，Java编译器<strong>自动</strong>为该类产生一个<strong>空的无形参</strong>构造函数。如果已经有了显示的有参构造函数，编译器就不会越俎代庖了。</li>
+<li>每个子类的构造函数的第一句话，都默认调用父类的无参数构造函数super()，除非子类的构造函数第一句话是super，而且super语句必须放在第一条。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">clas A&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//等价于下面的</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">A</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>一个类可以有多个构造函数，只要形参列表不同即可。</li>
+<li>在new对象的时候，根据实参的不同，自动挑选相应的构造函数。如果实参形参匹配不上，将会报错。</li>
+</ul>
+<h3 id="三、信息隐藏原则"><a href="#三、信息隐藏原则" class="headerlink" title="三、信息隐藏原则"></a>三、信息隐藏原则</h3><ul>
+<li>概念：类的成员属性是私有的private；类的方法是公有的public，可以通过方法修改成员属性的值。</li>
+<li>方法一般是get和set，可以用Java IDE快速生成<br><img src="https://i.loli.net/2020/10/30/Vtq7Zx5sDvEBI8j.png" alt="方法生成.png"><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> height;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> name;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> weight;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getHeight</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> height;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHeight</span><span class="params">(<span class="keyword">int</span> height)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.height = height;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(<span class="keyword">int</span> name)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getWeight</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> weight;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setWeight</span><span class="params">(<span class="keyword">int</span> weight)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.weight = weight;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>this负责指向本类中的成员变量；</li>
+<li>this负责指向本类中的成员方法；</li>
+<li>this可以代替本类中的构造函数；</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JavaSE</category>
+      </categories>
+      <tags>
+        <tag>对象与类</tag>
+        <tag>构造器</tag>
+        <tag>this</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>散列</title>
     <url>/2020/05/21/%E6%95%A3%E5%88%97/</url>
     <content><![CDATA[<h4 id="1-散列（hash）"><a href="#1-散列（hash）" class="headerlink" title="1. 散列（hash）"></a>1. 散列（hash）</h4><ul>
@@ -55,129 +139,6 @@
       <tags>
         <tag>C/C++</tag>
         <tag>散列</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>图的相关概念及存储</title>
-    <url>/2020/10/24/%E5%9B%BE%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%AD%98%E5%82%A8/</url>
-    <content><![CDATA[<h3 id="一、-图-graph-的基本概念-总结"><a href="#一、-图-graph-的基本概念-总结" class="headerlink" title="一、 图(graph)的基本概念(总结)"></a>一、 图(graph)的基本概念(总结)</h3><h5 id="1-基本定义"><a href="#1-基本定义" class="headerlink" title="1. 基本定义"></a>1. 基本定义</h5><p>图G由顶点集V(vertex)和边集E(edge)组成，记为G = (V,E),其中V(G)表示图G中顶点的<u>有限非空集</u>；E(G)表示图G中顶点之间的关系(边)的集合。<br><a id="more"></a><br><strong>注</strong>：从定义上就可以看出顶点的集合不可能是空集，而边的集合可以是空集。(其实也很好理解，如果一个图一个顶点都没有，那这个图也就不存在了)<br>若V={v1,v2,···,vn},用|V|表示图G中顶点的个数，也称为图G的阶，E={(u,v)|u属于V，v属于V}，用|E|表示图G中边的条数。</p>
-<blockquote>
-<ul>
-<li>在学习中，后面的涉及到的图的存储以及图的遍历等算法，往往都是将图分为有向图和无向图，所以以这两类为主要分类，像简单图，完全图之类的概念作为补充。</li>
-<li>这里补充一个概念，简单图：1. 不存在重复边(两个顶点之间如果有边，只会有一条边)；2. 不存在顶点到自身的边</li>
-<li>我们所讨论的都是简单图</li>
-</ul>
-</blockquote>
-<h5 id="2-有向图-directed-graph-与无向图-undirected-graph"><a href="#2-有向图-directed-graph-与无向图-undirected-graph" class="headerlink" title="2.有向图(directed graph)与无向图(undirected graph)"></a>2.有向图(directed graph)与无向图(undirected graph)</h5><div class="table-container">
-<table>
-<thead>
-<tr>
-<th>有向图</th>
-<th>无向图</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>E为有向边(弧)的集合</td>
-<td>E为无向边的集合</td>
-</tr>
-<tr>
-<td><v,w>表示从顶点v到顶点w的弧</td>
-<td>(v,w)表示v和w之间的边</td>
-</tr>
-<tr>
-<td><v,w>≠<w,v></td>
-<td>(v,w) = (w,v)</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p><strong>注</strong>：在<v,w>中v称为弧尾，w称为弧头<br><img src="https://i.loli.net/2020/10/24/nQNvM3b6roagp5L.png" alt="无向图"><br><img src="https://i.loli.net/2020/10/24/cWLG1vV8hs2qBau.png" alt="有向图"></p>
-<blockquote>
-<p>完全图：图中任意的两个顶点之间都存在边。假如图的顶点数目是n,那么无向完全图边的数目就是n(n-1)/2,有向完全图边的数目是n(n-1)。</p>
-</blockquote>
-<h5 id="3-边的权-weight-和网-network"><a href="#3-边的权-weight-和网-network" class="headerlink" title="3.边的权(weight)和网(network)"></a>3.边的权(weight)和网(network)</h5><p>在一个图中，每条边上可以标上具有某种意义的数值，该数值就称为该边的权值。这种边上带权值的图(带权图，weighted graph)也叫做网。</p>
-<h5 id="4-路径-path-、路径长度和回路"><a href="#4-路径-path-、路径长度和回路" class="headerlink" title="4.路径(path)、路径长度和回路"></a>4.路径(path)、路径长度和回路</h5><p>顶点v<sub>p</sub>和顶点v<sub>q</sub>之间的一条路径是指顶点序列v<sub>p</sub>,v<sub>1</sub>,v<sub>2</sub>,···,v<sub>i</sub>,v<sub>q</sub>.<br>路径上边的数目称为路径长度；<br>第一个顶点和最后一个顶点相同的路径称为环。<br><strong>注</strong>：如果一个图有n个顶点，而且边的数目大于等于n个，那么这个图一定有环。</p>
-<h5 id="5-距离"><a href="#5-距离" class="headerlink" title="5.距离"></a>5.距离</h5><p>从顶点u出发到顶点v的最短路径；<br>若从u到v不存在任何路径，则可以将距离记为∞。</p>
-<h5 id="6-顶点的度-degree"><a href="#6-顶点的度-degree" class="headerlink" title="6. 顶点的度(degree)"></a>6. 顶点的度(degree)</h5><p>定义：以一个顶点出发，所有和该顶点产生关联的边的数目。<br>假定图的顶点数v,边的数目是e。</p>
-<ul>
-<li>无向图：所有顶点的度的和是边的两倍也就是2e。(一条边有两个顶点，边会被计算两次)</li>
-<li>有向图：有向图的边存在方向，所以分为入度和出度。入度就是以这个顶点为终点的边的数目，出度就是以这个顶点为起点的边的数目。所以，有向图中顶点的度=入度+出度。同时所有顶点的入度之和等于所有顶点的出度之和都等于边的数目。</li>
-</ul>
-<h5 id="7-子图-subgraph"><a href="#7-子图-subgraph" class="headerlink" title="7.子图(subgraph)"></a>7.子图(subgraph)</h5><p>设有两个图，G=(V,E),G<sub>1</sub>=(V<sub>1</sub>,E<sub>1</sub>),其中V<sub>1</sub>是V的子集，E<sub>1</sub>是E的子集，则称G<sub>1</sub>是G的子图。<br><strong>注</strong>：不是任意选择V的子集再加上E的子集就可以构成G的子图，需要考虑到如果E的子集中所有边关联的顶点都必须在V的子集中，否则就无法构成图。</p>
-<p>如果满足V(G<sub>1</sub>) = V(G)的子图，那么称其为G的<u>生成子图</u></p>
-<h5 id="8-连通分量"><a href="#8-连通分量" class="headerlink" title="8.连通分量"></a>8.连通分量</h5><h6 id="8-1连通图-connected-graph-、连通分量-connected-component"><a href="#8-1连通图-connected-graph-、连通分量-connected-component" class="headerlink" title="8.1连通图(connected graph)、连通分量(connected component)"></a>8.1连通图(connected graph)、连通分量(connected component)</h6><ul>
-<li>连通：在无向图中，若从顶点v到顶点w有路径存在，则称v和w是连通的。</li>
-<li><p>连通图：如果图G中任意两个顶点都是连通的，那么图G称为连通图，否则被称为非连通图。<br><strong>注</strong>：如果一个连通图顶点数为N，那么边最少为N-1条(可以考虑极端情况，比如由N个顶点组成的一条“线段”)。换言之，如果边数少于N-1条，那么这个图一定为非连通图。</p>
-</li>
-<li><p>连通分量：无向图中的极大连通子图称为连通分量。<br><strong>注1</strong>：极大连通子图中的顶点是原图G的子集，在此情况下，边和原图中有关联的边相同。如果在此基础上再添加一个顶点，就会变为不连通的。<br>极小连通子图就是说在保证子图连通的情况下，尽可能删除多余的边，直到如果再删除一条边图就会变为非连通<br><strong>注2</strong>：连通图的连通分量仅有它自身一个，而非连通图有多个连通分量</p>
-<h6 id="8-2强连通图"><a href="#8-2强连通图" class="headerlink" title="8.2强连通图"></a>8.2强连通图</h6></li>
-<li>强连通(strongly connected)：在有向图中，若从顶点v到顶点w和从顶点w到顶点v之间都有路径，则称这两个顶点是强连通的；</li>
-<li>强连通图：若图中任何一对顶点都是强连通的，称此图为强连通图；</li>
-<li>强连通分量(strongly connected component)：有向图中的极大强连通子图称为有向图的强连通分量。</li>
-</ul>
-<h5 id="9-生成树、生成森林"><a href="#9-生成树、生成森林" class="headerlink" title="9.生成树、生成森林"></a>9.生成树、生成森林</h5><ul>
-<li>生成树(spanning tree)：连通图的生成树是包含途中全部顶点的一个极小连通子图。(顶点数如果是n,那么边为n-1条)</li>
-<li>生成森林：非连通图中，连通分量的生成树构成了非连通图的生成森林。<br><img src="https://i.loli.net/2020/10/24/QmM8CX1T6Sh5cHd.png" alt="生成树"></li>
-</ul>
-<blockquote>
-<p>关于连通图的若干问题：</p>
-<ol>
-<li>如果一个无向连通图的顶点数为n,那么的边至少为n-1；而一个有向连通图的边至少为n</li>
-<li>如果一个无向图(n)在<u>任何情况下</u>都是连通的，那么边至少为顶点数n-1的完全图边数再加1</li>
-</ol>
-</blockquote>
-<h3 id="二、图的存储-如何在计算机中表示一个图"><a href="#二、图的存储-如何在计算机中表示一个图" class="headerlink" title="二、图的存储(如何在计算机中表示一个图)"></a>二、图的存储(如何在计算机中表示一个图)</h3><h5 id="1-邻接矩阵-adjacency-matrix-法"><a href="#1-邻接矩阵-adjacency-matrix-法" class="headerlink" title="1. 邻接矩阵(adjacency matrix)法"></a>1. 邻接矩阵(adjacency matrix)法</h5><ul>
-<li>无权图：<br>已知G = (V,E),V={V<sub>1</sub>,V<sub>2</sub>,···,V<sub>n</sub>}，那么它的邻接矩阵可以表示为：<br><img src="https://i.loli.net/2020/10/24/L7ubMEC9PeR83Gl.png" alt="邻接矩阵"><br><img src="https://i.loli.net/2020/10/24/kz5VmJKfuiPdBbC.png" alt="无向图邻接矩阵"><blockquote>
-<p>无向图的邻接矩阵是一个对称矩阵，如果要求第i个顶点的度，那么只需要将第i行或者第i列所有元素相加即可。</p>
-</blockquote>
-</li>
-</ul>
-<p><img src="https://i.loli.net/2020/10/24/g85LmRWHUETy4Qt.png" alt="有向图邻接矩阵"></p>
-<blockquote>
-<p>有向图的邻接矩阵不一定为对称矩阵(多数情况下不是),如果要求第i个顶点的出度，则将第i行所有元素相加即可；如果要求第i个顶点的入度，则将第i列所有元素相加。</p>
-<ul>
-<li>带权图：<br>带权图的邻接矩阵表示实际上与无权图邻接矩阵类似，只要把1换成权值，0换成无穷即可。<br><img src="https://i.loli.net/2020/10/24/JxLKZ6folvpF5Pr.png" alt="Snipaste_2020-10-24_19-32-11.png"><br><img src="https://i.loli.net/2020/10/24/3lQSzvY7ZReUcrX.png" alt="带权图邻接矩阵"></li>
-</ul>
-</blockquote>
-<h5 id="2-邻接表-linked-adjacency-list-法"><a href="#2-邻接表-linked-adjacency-list-法" class="headerlink" title="2. 邻接表(linked-adjacency list)法"></a>2. 邻接表(linked-adjacency list)法</h5><p><img src="https://i.loli.net/2020/10/24/8hpOau574g2B6Hb.png" alt="邻接表"></p>
-<h5 id="3-邻接多重表-无向图"><a href="#3-邻接多重表-无向图" class="headerlink" title="3. 邻接多重表(无向图)"></a>3. 邻接多重表(无向图)</h5><p>在无向图中如果边数是e，则在邻接表表示中需要2e个单位来存储，相对来说是比较浪费存储空间的，所以采用邻接多重表，每条边用一个结点来表示。</p>
-<h5 id="4-十字链表-有向图"><a href="#4-十字链表-有向图" class="headerlink" title="4. 十字链表(有向图)"></a>4. 十字链表(有向图)</h5>]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-      <tags>
-        <tag>图</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>递归</title>
-    <url>/2020/05/21/%E9%80%92%E5%BD%92/</url>
-    <content><![CDATA[<h4 id="1-分治"><a href="#1-分治" class="headerlink" title="1. 分治"></a>1. 分治</h4><blockquote>
-<p>divide and conquer: 将原问题划分为若干个较小规模而结构与原问题相同或者相似的子问题，然后分别解决这些子问题，最后合并子问题的解，即可得到原问题的解。</p>
-</blockquote>
-<p>很多时候需要通过递归的手段实现，当然有时候也可以用非递归的方式，这里不再细讲。</p>
-<a id="more"></a>
-<h4 id="2-递归"><a href="#2-递归" class="headerlink" title="2. 递归"></a>2. 递归</h4><ul>
-<li><p>典型实例：求$n!$<br>n! = n（n-1)(n-2)(n-3)…1<br>n! = n*(n-1)!</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//求n的阶乘的函数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">F</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> n*F（n<span class="number">-1</span>）；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>实例2：斐波那契数列<br>f(n) = f(n-1) + f(n-2);</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">F</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>（n == <span class="number">0</span> || n == <span class="number">1</span> ）<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span>  F(n<span class="number">-1</span>) + F(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>1-n全排列问题：求1~n这n个整数能形成的所有排列，并且按<strong>字典顺序</strong>输出（假设n最大可以取到10）。<br>先解决第一个数字是1的排列，再解决第一个数字是2的排列，以此类推；<br>为了解决这个问题，需要构建一个大小为n的数组，存放排列；<br>借助hashTable判断将要读取的数字是否已经在数组中，在的话将其标记为true (hashTable初始化为false)<br>比如现在在一个排列中已经处理好前k-1个位置(1&lt;k&lt;n),此时需要处理第k个位置，首先判断将要填入的数字x的状态即hashTable（x）是否为false，如果为false将x填入,false改为true再去处理第k+1个位置；然后将hashTable(x)重新转成false</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> P[maxn];</span><br><span class="line"><span class="keyword">bool</span> hashTable[maxn] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createP</span><span class="params">(<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(k == n)&#123;<span class="comment">//k=n时，说明将要填的数组已经到达边界，递归结束，输出数组内的值</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n;i++)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d"</span>,P[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> x = <span class="number">1</span>; x &lt;= n; x++)&#123;<span class="comment">//遍历将要填的数字</span></span><br><span class="line">		<span class="keyword">if</span>(hashTable[x] == <span class="literal">false</span>)<span class="comment">//如果该数字在数组中没有出现过，填入k号位置，再去处理k+1号位置</span></span><br><span class="line">			&#123;</span><br><span class="line">				P[k] = x;</span><br><span class="line">				hashTable[x] = <span class="literal">true</span>;</span><br><span class="line">				createP(k+<span class="number">1</span>);</span><br><span class="line">		        hashTable[x] = <span class="literal">false</span>; </span><br><span class="line">			&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">	createP(<span class="number">0</span>);	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="\images\2020-5-21_1.png" alt="image"></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>程序设计基础</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-        <tag>斐波那契数列</tag>
-        <tag>全排列</tag>
       </tags>
   </entry>
   <entry>
@@ -331,6 +292,129 @@
       <tags>
         <tag>C/C++</tag>
         <tag>线性表</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>递归</title>
+    <url>/2020/05/21/%E9%80%92%E5%BD%92/</url>
+    <content><![CDATA[<h4 id="1-分治"><a href="#1-分治" class="headerlink" title="1. 分治"></a>1. 分治</h4><blockquote>
+<p>divide and conquer: 将原问题划分为若干个较小规模而结构与原问题相同或者相似的子问题，然后分别解决这些子问题，最后合并子问题的解，即可得到原问题的解。</p>
+</blockquote>
+<p>很多时候需要通过递归的手段实现，当然有时候也可以用非递归的方式，这里不再细讲。</p>
+<a id="more"></a>
+<h4 id="2-递归"><a href="#2-递归" class="headerlink" title="2. 递归"></a>2. 递归</h4><ul>
+<li><p>典型实例：求$n!$<br>n! = n（n-1)(n-2)(n-3)…1<br>n! = n*(n-1)!</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">//求n的阶乘的函数</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">F</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(n == <span class="number">1</span>) <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span> n*F（n<span class="number">-1</span>）；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实例2：斐波那契数列<br>f(n) = f(n-1) + f(n-2);</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">F</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>（n == <span class="number">0</span> || n == <span class="number">1</span> ）<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">return</span>  F(n<span class="number">-1</span>) + F(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>1-n全排列问题：求1~n这n个整数能形成的所有排列，并且按<strong>字典顺序</strong>输出（假设n最大可以取到10）。<br>先解决第一个数字是1的排列，再解决第一个数字是2的排列，以此类推；<br>为了解决这个问题，需要构建一个大小为n的数组，存放排列；<br>借助hashTable判断将要读取的数字是否已经在数组中，在的话将其标记为true (hashTable初始化为false)<br>比如现在在一个排列中已经处理好前k-1个位置(1&lt;k&lt;n),此时需要处理第k个位置，首先判断将要填入的数字x的状态即hashTable（x）是否为false，如果为false将x填入,false改为true再去处理第k+1个位置；然后将hashTable(x)重新转成false</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">int</span> P[maxn];</span><br><span class="line"><span class="keyword">bool</span> hashTable[maxn] = &#123;<span class="literal">false</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createP</span><span class="params">(<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(k == n)&#123;<span class="comment">//k=n时，说明将要填的数组已经到达边界，递归结束，输出数组内的值</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n;i++)&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"%d"</span>,P[i]);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> x = <span class="number">1</span>; x &lt;= n; x++)&#123;<span class="comment">//遍历将要填的数字</span></span><br><span class="line">		<span class="keyword">if</span>(hashTable[x] == <span class="literal">false</span>)<span class="comment">//如果该数字在数组中没有出现过，填入k号位置，再去处理k+1号位置</span></span><br><span class="line">			&#123;</span><br><span class="line">				P[k] = x;</span><br><span class="line">				hashTable[x] = <span class="literal">true</span>;</span><br><span class="line">				createP(k+<span class="number">1</span>);</span><br><span class="line">		        hashTable[x] = <span class="literal">false</span>; </span><br><span class="line">			&#125;		</span><br><span class="line">	&#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">	createP(<span class="number">0</span>);	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="\images\2020-5-21_1.png" alt="image"></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>程序设计基础</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+        <tag>斐波那契数列</tag>
+        <tag>全排列</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>图的相关概念及存储</title>
+    <url>/2020/10/24/%E5%9B%BE%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%AD%98%E5%82%A8/</url>
+    <content><![CDATA[<h3 id="一、-图-graph-的基本概念-总结"><a href="#一、-图-graph-的基本概念-总结" class="headerlink" title="一、 图(graph)的基本概念(总结)"></a>一、 图(graph)的基本概念(总结)</h3><h5 id="1-基本定义"><a href="#1-基本定义" class="headerlink" title="1. 基本定义"></a>1. 基本定义</h5><p>图G由顶点集V(vertex)和边集E(edge)组成，记为G = (V,E),其中V(G)表示图G中顶点的<u>有限非空集</u>；E(G)表示图G中顶点之间的关系(边)的集合。<br><a id="more"></a><br><strong>注</strong>：从定义上就可以看出顶点的集合不可能是空集，而边的集合可以是空集。(其实也很好理解，如果一个图一个顶点都没有，那这个图也就不存在了)<br>若V={v1,v2,···,vn},用|V|表示图G中顶点的个数，也称为图G的阶，E={(u,v)|u属于V，v属于V}，用|E|表示图G中边的条数。</p>
+<blockquote>
+<ul>
+<li>在学习中，后面的涉及到的图的存储以及图的遍历等算法，往往都是将图分为有向图和无向图，所以以这两类为主要分类，像简单图，完全图之类的概念作为补充。</li>
+<li>这里补充一个概念，简单图：1. 不存在重复边(两个顶点之间如果有边，只会有一条边)；2. 不存在顶点到自身的边</li>
+<li>我们所讨论的都是简单图</li>
+</ul>
+</blockquote>
+<h5 id="2-有向图-directed-graph-与无向图-undirected-graph"><a href="#2-有向图-directed-graph-与无向图-undirected-graph" class="headerlink" title="2.有向图(directed graph)与无向图(undirected graph)"></a>2.有向图(directed graph)与无向图(undirected graph)</h5><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>有向图</th>
+<th>无向图</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E为有向边(弧)的集合</td>
+<td>E为无向边的集合</td>
+</tr>
+<tr>
+<td><v,w>表示从顶点v到顶点w的弧</td>
+<td>(v,w)表示v和w之间的边</td>
+</tr>
+<tr>
+<td><v,w>≠<w,v></td>
+<td>(v,w) = (w,v)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>注</strong>：在<v,w>中v称为弧尾，w称为弧头<br><img src="https://i.loli.net/2020/10/24/nQNvM3b6roagp5L.png" alt="无向图"><br><img src="https://i.loli.net/2020/10/24/cWLG1vV8hs2qBau.png" alt="有向图"></p>
+<blockquote>
+<p>完全图：图中任意的两个顶点之间都存在边。假如图的顶点数目是n,那么无向完全图边的数目就是n(n-1)/2,有向完全图边的数目是n(n-1)。</p>
+</blockquote>
+<h5 id="3-边的权-weight-和网-network"><a href="#3-边的权-weight-和网-network" class="headerlink" title="3.边的权(weight)和网(network)"></a>3.边的权(weight)和网(network)</h5><p>在一个图中，每条边上可以标上具有某种意义的数值，该数值就称为该边的权值。这种边上带权值的图(带权图，weighted graph)也叫做网。</p>
+<h5 id="4-路径-path-、路径长度和回路"><a href="#4-路径-path-、路径长度和回路" class="headerlink" title="4.路径(path)、路径长度和回路"></a>4.路径(path)、路径长度和回路</h5><p>顶点v<sub>p</sub>和顶点v<sub>q</sub>之间的一条路径是指顶点序列v<sub>p</sub>,v<sub>1</sub>,v<sub>2</sub>,···,v<sub>i</sub>,v<sub>q</sub>.<br>路径上边的数目称为路径长度；<br>第一个顶点和最后一个顶点相同的路径称为环。<br><strong>注</strong>：如果一个图有n个顶点，而且边的数目大于等于n个，那么这个图一定有环。</p>
+<h5 id="5-距离"><a href="#5-距离" class="headerlink" title="5.距离"></a>5.距离</h5><p>从顶点u出发到顶点v的最短路径；<br>若从u到v不存在任何路径，则可以将距离记为∞。</p>
+<h5 id="6-顶点的度-degree"><a href="#6-顶点的度-degree" class="headerlink" title="6. 顶点的度(degree)"></a>6. 顶点的度(degree)</h5><p>定义：以一个顶点出发，所有和该顶点产生关联的边的数目。<br>假定图的顶点数v,边的数目是e。</p>
+<ul>
+<li>无向图：所有顶点的度的和是边的两倍也就是2e。(一条边有两个顶点，边会被计算两次)</li>
+<li>有向图：有向图的边存在方向，所以分为入度和出度。入度就是以这个顶点为终点的边的数目，出度就是以这个顶点为起点的边的数目。所以，有向图中顶点的度=入度+出度。同时所有顶点的入度之和等于所有顶点的出度之和都等于边的数目。</li>
+</ul>
+<h5 id="7-子图-subgraph"><a href="#7-子图-subgraph" class="headerlink" title="7.子图(subgraph)"></a>7.子图(subgraph)</h5><p>设有两个图，G=(V,E),G<sub>1</sub>=(V<sub>1</sub>,E<sub>1</sub>),其中V<sub>1</sub>是V的子集，E<sub>1</sub>是E的子集，则称G<sub>1</sub>是G的子图。<br><strong>注</strong>：不是任意选择V的子集再加上E的子集就可以构成G的子图，需要考虑到如果E的子集中所有边关联的顶点都必须在V的子集中，否则就无法构成图。</p>
+<p>如果满足V(G<sub>1</sub>) = V(G)的子图，那么称其为G的<u>生成子图</u></p>
+<h5 id="8-连通分量"><a href="#8-连通分量" class="headerlink" title="8.连通分量"></a>8.连通分量</h5><h6 id="8-1连通图-connected-graph-、连通分量-connected-component"><a href="#8-1连通图-connected-graph-、连通分量-connected-component" class="headerlink" title="8.1连通图(connected graph)、连通分量(connected component)"></a>8.1连通图(connected graph)、连通分量(connected component)</h6><ul>
+<li>连通：在无向图中，若从顶点v到顶点w有路径存在，则称v和w是连通的。</li>
+<li><p>连通图：如果图G中任意两个顶点都是连通的，那么图G称为连通图，否则被称为非连通图。<br><strong>注</strong>：如果一个连通图顶点数为N，那么边最少为N-1条(可以考虑极端情况，比如由N个顶点组成的一条“线段”)。换言之，如果边数少于N-1条，那么这个图一定为非连通图。</p>
+</li>
+<li><p>连通分量：无向图中的极大连通子图称为连通分量。<br><strong>注1</strong>：极大连通子图中的顶点是原图G的子集，在此情况下，边和原图中有关联的边相同。如果在此基础上再添加一个顶点，就会变为不连通的。<br>极小连通子图就是说在保证子图连通的情况下，尽可能删除多余的边，直到如果再删除一条边图就会变为非连通<br><strong>注2</strong>：连通图的连通分量仅有它自身一个，而非连通图有多个连通分量</p>
+<h6 id="8-2强连通图"><a href="#8-2强连通图" class="headerlink" title="8.2强连通图"></a>8.2强连通图</h6></li>
+<li>强连通(strongly connected)：在有向图中，若从顶点v到顶点w和从顶点w到顶点v之间都有路径，则称这两个顶点是强连通的；</li>
+<li>强连通图：若图中任何一对顶点都是强连通的，称此图为强连通图；</li>
+<li>强连通分量(strongly connected component)：有向图中的极大强连通子图称为有向图的强连通分量。</li>
+</ul>
+<h5 id="9-生成树、生成森林"><a href="#9-生成树、生成森林" class="headerlink" title="9.生成树、生成森林"></a>9.生成树、生成森林</h5><ul>
+<li>生成树(spanning tree)：连通图的生成树是包含途中全部顶点的一个极小连通子图。(顶点数如果是n,那么边为n-1条)</li>
+<li>生成森林：非连通图中，连通分量的生成树构成了非连通图的生成森林。<br><img src="https://i.loli.net/2020/10/24/QmM8CX1T6Sh5cHd.png" alt="生成树"></li>
+</ul>
+<blockquote>
+<p>关于连通图的若干问题：</p>
+<ol>
+<li>如果一个无向连通图的顶点数为n,那么的边至少为n-1；而一个有向连通图的边至少为n</li>
+<li>如果一个无向图(n)在<u>任何情况下</u>都是连通的，那么边至少为顶点数n-1的完全图边数再加1</li>
+</ol>
+</blockquote>
+<h3 id="二、图的存储-如何在计算机中表示一个图"><a href="#二、图的存储-如何在计算机中表示一个图" class="headerlink" title="二、图的存储(如何在计算机中表示一个图)"></a>二、图的存储(如何在计算机中表示一个图)</h3><h5 id="1-邻接矩阵-adjacency-matrix-法"><a href="#1-邻接矩阵-adjacency-matrix-法" class="headerlink" title="1. 邻接矩阵(adjacency matrix)法"></a>1. 邻接矩阵(adjacency matrix)法</h5><ul>
+<li>无权图：<br>已知G = (V,E),V={V<sub>1</sub>,V<sub>2</sub>,···,V<sub>n</sub>}，那么它的邻接矩阵可以表示为：<br><img src="https://i.loli.net/2020/10/24/L7ubMEC9PeR83Gl.png" alt="邻接矩阵"><br><img src="https://i.loli.net/2020/10/24/kz5VmJKfuiPdBbC.png" alt="无向图邻接矩阵"><blockquote>
+<p>无向图的邻接矩阵是一个对称矩阵，如果要求第i个顶点的度，那么只需要将第i行或者第i列所有元素相加即可。</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/10/24/g85LmRWHUETy4Qt.png" alt="有向图邻接矩阵"></p>
+<blockquote>
+<p>有向图的邻接矩阵不一定为对称矩阵(多数情况下不是),如果要求第i个顶点的出度，则将第i行所有元素相加即可；如果要求第i个顶点的入度，则将第i列所有元素相加。</p>
+<ul>
+<li>带权图：<br>带权图的邻接矩阵表示实际上与无权图邻接矩阵类似，只要把1换成权值，0换成无穷即可。<br><img src="https://i.loli.net/2020/10/24/JxLKZ6folvpF5Pr.png" alt="Snipaste_2020-10-24_19-32-11.png"><br><img src="https://i.loli.net/2020/10/24/3lQSzvY7ZReUcrX.png" alt="带权图邻接矩阵"></li>
+</ul>
+</blockquote>
+<h5 id="2-邻接表-linked-adjacency-list-法"><a href="#2-邻接表-linked-adjacency-list-法" class="headerlink" title="2. 邻接表(linked-adjacency list)法"></a>2. 邻接表(linked-adjacency list)法</h5><p><img src="https://i.loli.net/2020/10/24/8hpOau574g2B6Hb.png" alt="邻接表"></p>
+<h5 id="3-邻接多重表-无向图"><a href="#3-邻接多重表-无向图" class="headerlink" title="3. 邻接多重表(无向图)"></a>3. 邻接多重表(无向图)</h5><p>在无向图中如果边数是e，则在邻接表表示中需要2e个单位来存储，相对来说是比较浪费存储空间的，所以采用邻接多重表，每条边用一个结点来表示。</p>
+<h5 id="4-十字链表-有向图"><a href="#4-十字链表-有向图" class="headerlink" title="4. 十字链表(有向图)"></a>4. 十字链表(有向图)</h5>]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>图</tag>
       </tags>
   </entry>
 </search>

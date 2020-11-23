@@ -1,42 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Pat甲级考试题录：A1001-A1002</title>
-    <url>/2020/05/18/Pat%E7%94%B2%E7%BA%A7%E8%80%83%E8%AF%95%E9%A2%98%E5%BD%95%EF%BC%9AA1001-A1002/</url>
-    <content><![CDATA[<h4 id="1001-A-B-Format-20分"><a href="#1001-A-B-Format-20分" class="headerlink" title="1001. A+B Format(20分)"></a>1001. A+B Format(20分)</h4><p>Calculate a+b and output the sum in standard format — that is, the digits must be separated into groups of three by commas (unless there are less than four digits).<br><a id="more"></a><br><strong>Input Specification:</strong><br>Each input file contains one test case. Each case contains a pair of integers a and b where $-10^6≤a,b≤10^6$. The numbers are separated by a space.<br><strong>Output Specification:</strong><br>For each test case, you should output the sum of a and b in one line. The sum must be written in the standard format.<br><strong>Sample Input:</strong><br>-1000000 9<br><strong>Sample Output:</strong><br>-999,991</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a,b;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"请输入两个整数："</span>;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;a&gt;&gt;b;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">string</span> s = to_string(a+b);<span class="comment">//将a+b的结果转换成字符串，并自动生成数组</span></span><br><span class="line">    <span class="keyword">int</span> len = s.length();<span class="comment">//得到字符串数组的大小</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; len; i++)&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;s[i];<span class="comment">//将计算结果以字符的形式输出</span></span><br><span class="line">        <span class="keyword">if</span>(s[i]==<span class="string">'-'</span>) <span class="keyword">continue</span>;<span class="comment">//如果数字中存在负号，跳过此次循环，避免出现输出“-，999,999”的情况</span></span><br><span class="line">        <span class="keyword">if</span>((i + <span class="number">1</span>) %<span class="number">3</span> ==len %<span class="number">3</span> &amp;&amp; i != len<span class="number">-1</span>) <span class="built_in">cout</span>&lt;&lt;<span class="string">","</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="1002-1002-A-B-for-Polynomials-25分"><a href="#1002-1002-A-B-for-Polynomials-25分" class="headerlink" title="1002. 1002 A+B for Polynomials (25分)"></a>1002. 1002 A+B for Polynomials (25分)</h4><p>This time, you are supposed to find A+B where A and B are two polynomials.<br><strong>Input Specification:</strong><br>Each input file contains one test case. Each case occupies 2 lines, and each line contains the information of a polynomial:<br>K $N<em>1$ $a</em>{N<em>1}$ $N_2$ $a</em>{N<em>2}$ …. $N_k$ $a</em>{N<em>k}$<br>where K is the number of nonzero terms in the polynomial, $N_i$ and $a</em>{N_k}$ (i=1,2,⋯,K) are the exponents and coefficients, respectively. It is given that 1≤K≤10，0≤$N_k$&lt;⋯&lt;$N_2$&lt;$N_1$≤1000.<br><strong>Output Specification:</strong><br>For each test case you should output the sum of A and B in one line, with the same format as the input. Notice that there must be NO extra space at the end of each line. Please be accurate to 1 decimal place.<br><strong>Sample Input:</strong><br>2 1 2.4 0 3.2<br>2 2 1.5 1 0.5<br><strong>Sample Output:</strong><br>3 2 1.5 1 2.9 0 3.2</p>
-<p> 核心思路就是利用数组中的下标表示成多项式中的指数，将数组元素设计成各项系数。首先根据K的值确定循环条件，得到一个初始多项式，在此基础之上对于不同的项赋值新的数值，加和，得到加和之后的多项式。<br> 只要数组元素不等于0就意味着该项存在，可据此输出多项式的指数和系数，并且统计多项式的项数</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt; </span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> K,N;</span><br><span class="line">	<span class="keyword">float</span> a;	</span><br><span class="line">	<span class="keyword">float</span> p[<span class="number">1001</span>] = &#123;<span class="number">0</span>&#125;;	</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;K;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; K; i++)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;N&gt;&gt;a;</span><br><span class="line">		p[N] = a;</span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;K;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; K;i++)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;N&gt;&gt;a;</span><br><span class="line">		p[N] = p[N] + a;</span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="keyword">int</span> cont = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1000</span>; i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">		<span class="keyword">if</span>(p[i] != <span class="number">0</span>) 	cont++;		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; cont;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1000</span>; i&gt;=<span class="number">0</span>; i--)&#123;</span><br><span class="line">		<span class="keyword">if</span>(p[i] != <span class="number">0</span>) </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">" %d %.1f"</span>, i ,p[i]);<span class="comment">//涉及到输出格式还是老老实实用printf()吧，，，</span></span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意：C++中数组名不要和其他变量名重复<br>setprecision()函数可以控制输出数字的精度，不过需要引用#include<iomanip></p>
+    <title>JCF框架（一）数组和List类</title>
+    <url>/2020/11/23/JCF%E6%A1%86%E6%9E%B6%EF%BC%88%E4%B8%80%EF%BC%89%E6%95%B0%E7%BB%84%E5%92%8CList%E7%B1%BB/</url>
+    <content><![CDATA[<h3 id="一、数组"><a href="#一、数组" class="headerlink" title="一、数组"></a>一、数组</h3><ul>
+<li>数组是一种<strong>确定大小</strong>的存储<strong>同种数据</strong>的容器；</li>
+<li>需要牢牢掌握初始化和遍历方法，特别是两种遍历方式</li>
+</ul>
+<h4 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h4><ul>
+<li>数组是一个存放<strong>多个数据</strong>的容器；<ul>
+<li>数据是<strong>同一种类型</strong>；</li>
+<li>所有的数据是线性规则排列；</li>
+<li>可通过位置索引来快速定位访问数据；</li>
+<li>需要明确容器的长度。<a id="more"></a>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>广义上说，以前定义的变量也可以理解为一种容器，就比如<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">5</span>;</span><br></pre></td></tr></table></figure><br>a实际上就是一种容器，里面放着数字5。</p>
+</blockquote>
+<h4 id="2-定义与初始化"><a href="#2-定义与初始化" class="headerlink" title="2. 定义与初始化"></a>2. 定义与初始化</h4><ul>
+<li>定义：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> a[];<span class="comment">//可以用C的方式来定义一个数组；</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span>[] a;<span class="comment">//Java中更推荐用这种方式来定义；</span></span><br><span class="line"><span class="comment">//此时还没有new操作，a实际上是null(相当于空指针)，不知道内存位置</span></span><br></pre></td></tr></table></figure></li>
+<li>初始化：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span>[] a = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];<span class="comment">//表明开辟了一个大小为5个int字节的数组，</span></span><br><span class="line"><span class="comment">//数组内元素默认为0；</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span>[] b = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line"><span class="keyword">int</span>[] b = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;<span class="comment">//这两种初始化方式等价，都是用穷举的方式；</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意在声明一个数组时，并没有分配内存，此时不要指定大小，下面是错误示例；</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];<span class="comment">//error</span></span><br><span class="line"><span class="keyword">int</span>[<span class="number">5</span>] b;<span class="comment">//error</span></span><br><span class="line"><span class="keyword">int</span>[<span class="number">5</span>] c = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];<span class="comment">//error</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<h4 id="3-数组索引"><a href="#3-数组索引" class="headerlink" title="3. 数组索引"></a>3. 数组索引</h4><ul>
+<li>数组的length属性标识数组的长度<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LengthTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span>[] a = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br><span class="line">  System.out.println(<span class="string">"数组长度："</span> + a.length);</span><br><span class="line">     &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">/** 输出的结果是“数组长度：5” */</span></span><br></pre></td></tr></table></figure></li>
+<li>数组访问时不能越界，否则会报ArrayIndexOutOfBoundsException异常</li>
+</ul>
+<h4 id="4-数组遍历"><a href="#4-数组遍历" class="headerlink" title="4. 数组遍历"></a>4. 数组遍历</h4><ul>
+<li>for循环：这个都会，通常需要注意索引位置</li>
+<li>for-each语句：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LengthTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">	<span class="keyword">int</span>[] a = &#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i++) &#123;</span><br><span class="line">		System.out.println(a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	System.out.println(<span class="string">"================="</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> e: a) &#123;</span><br><span class="line">		System.out.println(e);</span><br><span class="line">	    &#125;</span><br><span class="line">	<span class="comment">/** 两者结果完全相同，for-each语句相比上面的语句</span></span><br><span class="line"><span class="comment">       不存在也不会出现越界访问，而且更简洁*/</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="5-多维数组-仅介绍二维"><a href="#5-多维数组-仅介绍二维" class="headerlink" title="5. 多维数组(仅介绍二维)"></a>5. 多维数组(仅介绍二维)</h4></li>
+<li>定义：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="number">1</span>. <span class="keyword">int</span> a[][] = <span class="keyword">new</span> <span class="keyword">int</span> a[<span class="number">2</span>][<span class="number">3</span>];</span><br><span class="line"><span class="comment">/** 上面表示的是一种 两行三列 的数组*/</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>计算机实际存储时，是按照行一个一个存储的，也就是说二维数组在内存中实际上<br>是线性的结构；比如上面的a[2][3],会先存储a[0][3]，再接在后面存储a[1][3]。</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>实际在遍历二维数组中也更推荐按行逐个遍历，如果按列进行遍历实际上性能会差很多。<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="number">2</span>. <span class="comment">/** 对于不规则的二维数组，可以按照下面的方式定义 */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> b[][];</span><br><span class="line">b = <span class="keyword">new</span> <span class="keyword">int</span> b[<span class="number">3</span>][];</span><br><span class="line">b[<span class="number">0</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</span><br><span class="line">b[<span class="number">1</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">4</span>];</span><br><span class="line">b[<span class="number">2</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>遍历：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">   <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> a[][];</span><br><span class="line">	<span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">	a = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>][];</span><br><span class="line">	a[<span class="number">0</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</span><br><span class="line">	a[<span class="number">1</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">4</span>];</span><br><span class="line">	a[<span class="number">2</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i++) &#123;<span class="comment">//二维数组中a.length表示的是整个数组的行数</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; a[i].length ;j++) &#123;<span class="comment">//每一行的长度a[i].length</span></span><br><span class="line">			a[i][j] = k++;</span><br><span class="line">			    &#125;</span><br><span class="line">	    &#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span>[] items: a) &#123;<span class="comment">//可以把二维数组理解成复合的数组，相当于items[]数组的每一个元素都是一个item[]数组</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> item: items) &#123;</span><br><span class="line">			System.out.println(item);</span><br><span class="line">		    &#125;</span><br><span class="line">	    &#125;</span><br><span class="line">	</span><br><span class="line">    &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+for-each循环的逻辑：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">for</span>(数据类型 变量名 ：数组名) &#123;<span class="comment">//变量名可以自定义</span></span><br><span class="line">      含有变量名的语句；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<h3 id="二、-JCF（Java-Collection-Frame-java容器框架）"><a href="#二、-JCF（Java-Collection-Frame-java容器框架）" class="headerlink" title="二、 JCF（Java Collection Frame,java容器框架）"></a>二、 JCF（Java Collection Frame,java容器框架）</h3><blockquote>
+<p>类似于C++中的STL，Standard Template Library,标准模板库</p>
+</blockquote>
+<h4 id="1-简介-1"><a href="#1-简介-1" class="headerlink" title="1. 简介"></a>1. 简介</h4><ul>
+<li><p>容器：能够存放数据的空间结构；</p>
+<ul>
+<li>数组/多维数组：只能线性存放数据；</li>
+<li>列表/散列集/树/···</li>
+</ul>
+</li>
+<li><p>容器框架：为表示和操作容器而规定的一种标准体系结构；</p>
+</li>
+</ul>
+<p>在数据结构课程中我们会学习对应的数据组织方式，以及如何存储、操作这些数据；<br>实际应用中Java将这些逻辑结构以及对应的代码封装起来，提供接口供人使用，这样<br>使用者就不必十分清楚数据结构的具体实现过程，只要知道如何使用就可以。</p>
+<ul>
+<li>优点：提高了数据存储效率，避免程序员重复劳动。</li>
+</ul>
+<p><img src="https://i.loli.net/2020/11/22/BJMt9PDHlspLbSh.png" alt="jcf图.png"></p>
+<h3 id="三、-列表List"><a href="#三、-列表List" class="headerlink" title="三、 列表List"></a>三、 列表List</h3><ul>
+<li>ArrayList/LinkedList/Vector</li>
+<li>同步采用Vector</li>
+<li>非同步情况下，根据数据操作特点选取ArrayList/LinkedList<h4 id="1-ArrayList用法"><a href="#1-ArrayList用法" class="headerlink" title="1. ArrayList用法"></a>1. ArrayList用法</h4></li>
+<li><p>简介：</p>
+<ul>
+<li>基于数组实现，不支持同步；</li>
+<li>可以按照索引访问，方便查询，不方便移动；</li>
+<li>可以实现动态扩容，增大容量的50%;</li>
+</ul>
+</li>
+<li><p>常见用法：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayListTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		ArrayList&lt;Integer&gt; a = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">		<span class="comment">//ArryList&lt;Integer&gt; a是泛型表示，意思是a这个数据结构里只能容纳Integer</span></span><br><span class="line">		<span class="comment">//的对象，其他的对象无法放入</span></span><br><span class="line">		a.add(<span class="number">3</span>);</span><br><span class="line">		a.add(<span class="number">2</span>);</span><br><span class="line">		a.add(<span class="number">1</span>);</span><br><span class="line">		a.add(<span class="number">4</span>);</span><br><span class="line">		a.add(<span class="number">5</span>);</span><br><span class="line">		a.add(<span class="number">6</span>);</span><br><span class="line">		a.add(<span class="keyword">new</span> Integer(<span class="number">6</span>));</span><br><span class="line">		<span class="comment">/** </span></span><br><span class="line"><span class="comment">		 * ArrayList只能装对象，当add(3)时，会自动将普通int变量3</span></span><br><span class="line"><span class="comment">		 * 自动装箱为Integer(3)的对象，然后放入ArrayList容器中。</span></span><br><span class="line"><span class="comment">		 * */</span></span><br><span class="line">		</span><br><span class="line">		System.out.print(<span class="string">"The third element is"</span>);</span><br><span class="line">		System.out.println(a.get(<span class="number">3</span>));<span class="comment">//按索引访问，3表示第四个元素</span></span><br><span class="line">		a.remove(<span class="number">3</span>);<span class="comment">//删除第四个元素，后面元素往前挪动</span></span><br><span class="line">		a.add(<span class="number">3</span>,<span class="number">9</span>);<span class="comment">//将9插入到第3个元素，后面元素往后挪动</span></span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"========遍历方法======"</span>);</span><br><span class="line">		</span><br><span class="line">		ArrayList&lt;Integer&gt; test = <span class="keyword">new</span> ArrayList&lt;Integer&gt;(<span class="number">100000</span>);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100000</span>; i++) &#123;</span><br><span class="line">			test.add(i);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		traverseByIterator(test);</span><br><span class="line">		traverseByIndex(test);</span><br><span class="line">		traverseByFor(test);</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">traverseByIterator</span><span class="params">(ArrayList&lt;Integer&gt; a)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> startTime = System.nanoTime();</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"========迭代器遍历========"</span>);</span><br><span class="line">		</span><br><span class="line">		Iterator&lt;Integer&gt; iter1 = a.iterator();</span><br><span class="line">		<span class="keyword">while</span>(iter1.hasNext()) &#123;</span><br><span class="line">			iter1.next();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">long</span> endTime = System.nanoTime();</span><br><span class="line">		<span class="keyword">long</span> duration = endTime - startTime;</span><br><span class="line">		System.out.println(duration + <span class="string">"纳秒"</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">traverseByIndex</span><span class="params">(ArrayList&lt;Integer&gt; a)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> startTime = System.nanoTime();</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"========索引遍历========"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.size(); i++) &#123;<span class="comment">//size()方法可以得出数据结构的大小；</span></span><br><span class="line">			a.get(i);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">long</span> endTime = System.nanoTime();</span><br><span class="line">		<span class="keyword">long</span> duration = endTime - startTime;</span><br><span class="line">		System.out.println(duration + <span class="string">"纳秒"</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">traverseByFor</span><span class="params">(ArrayList&lt;Integer&gt; a)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> startTime = System.nanoTime();</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"========for-each遍历========"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>(Integer item : a) &#123;<span class="comment">//数据结构a中的元素是Integer类型的变量；</span></span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">long</span> endTime = System.nanoTime();</span><br><span class="line">		<span class="keyword">long</span> duration = endTime - startTime;</span><br><span class="line">		System.out.println(duration + <span class="string">"纳秒"</span>);	</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：<br><img src="https://i.loli.net/2020/11/23/E4LeYSGB2qDT79A.png" alt="arraylist.png"></p>
+<blockquote>
+<p>看得出来迭代器方法和随机索引速度差不多，for-each方法速度最快。</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="2-LinkedList用法"><a href="#2-LinkedList用法" class="headerlink" title="2. LinkedList用法"></a>2. LinkedList用法</h4><ul>
+<li>简介：<ul>
+<li>以<strong>双向链表</strong>实现的列表，不支持同步；</li>
+<li>可被当做堆栈、队列和双端队列进行操作；</li>
+<li>顺序访问搞笑，随机访问较差，中间插入和删除高效；</li>
+<li>适用于经常变化的数据；</li>
+</ul>
+</li>
+<li>常见用法：<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedListTest</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		LinkedList&lt;Integer&gt; link = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">		link.add(<span class="number">3</span>);</span><br><span class="line">		link.add(<span class="number">2</span>);</span><br><span class="line">		link.add(<span class="number">5</span>);</span><br><span class="line">		link.add(<span class="number">6</span>);</span><br><span class="line">		link.add(<span class="number">6</span>);</span><br><span class="line">		System.out.println(<span class="string">"link's size is: "</span>+ link.size());</span><br><span class="line">		link.addFirst(<span class="number">9</span>);<span class="comment">//在头部增加9</span></span><br><span class="line">		link.add(<span class="number">3</span>, <span class="number">10</span>);<span class="comment">//将10插入到第四个元素，之前第四个及以后元素往后挪动</span></span><br><span class="line">		link.remove(<span class="number">3</span>);<span class="comment">//将第四个元素删除</span></span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>(Integer item: link) &#123;</span><br><span class="line">			System.out.println(item.toString());</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"=========遍历测试========"</span>);</span><br><span class="line">		</span><br><span class="line">		LinkedList&lt;Integer&gt; link2 = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100000</span>; i++) &#123;</span><br><span class="line">			link2.add(i);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		traverseByIterator(link2);</span><br><span class="line">		traverseByIndex(link2);</span><br><span class="line">		traverseByFor(link2);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">traverseByIterator</span><span class="params">(LinkedList&lt;Integer&gt; a)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> startTime = System.nanoTime();</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"========迭代器遍历========"</span>);</span><br><span class="line">		</span><br><span class="line">		Iterator&lt;Integer&gt; iter1 = a.iterator();</span><br><span class="line">		<span class="keyword">while</span>(iter1.hasNext()) &#123;</span><br><span class="line">			iter1.next();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">long</span> endTime = System.nanoTime();</span><br><span class="line">		<span class="keyword">long</span> duration = endTime - startTime;</span><br><span class="line">		System.out.println(duration + <span class="string">" 纳秒"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">traverseByIndex</span><span class="params">(LinkedList&lt;Integer&gt; a)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> startTime = System.nanoTime();</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"=========随机索引遍历============"</span>);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.size(); i++) &#123;</span><br><span class="line">			a.get(i);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">long</span> endTime = System.nanoTime();</span><br><span class="line">		<span class="keyword">long</span> duration = endTime - startTime;</span><br><span class="line">		System.out.println(duration + <span class="string">" 纳秒"</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">traverseByFor</span><span class="params">(LinkedList&lt;Integer&gt; a)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> startTime = System.nanoTime();</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"=========for-each循环遍历============"</span>);</span><br><span class="line">		<span class="keyword">for</span>(Integer item: a) &#123;</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">long</span> endTime = System.nanoTime();</span><br><span class="line">		<span class="keyword">long</span> duration = endTime - startTime;</span><br><span class="line">		System.out.println(duration + <span class="string">" 纳秒"</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+运行结果如下：<br><img src="https://i.loli.net/2020/11/23/FGbwLAQ5vxHCUJX.png" alt="linkedlist.png"><br>上面的程序整体上和ArrayList的相同，可以看出LinkedList类的随机索引遍历速度最慢。<br>性能和另外两个相差3个数量级，for-each循环遍历速度最快。</li>
+</ul>
+<h4 id="3-vector"><a href="#3-vector" class="headerlink" title="3. vector"></a>3. vector</h4><ul>
+<li>简介：<ul>
+<li>和ArrayList类似，可变数组实现的列表</li>
+<li>vector同步，适合在多线程下使用；</li>
+<li>原先不属于JCF，属于Java最早的数据结构，性能较差；</li>
+<li>从jdk1.2开始，Vector被重写，并纳入到JCF；</li>
+<li>官方文档建议在非同步情况下，优先采用ArrayList;</li>
+</ul>
+</li>
+</ul>
 ]]></content>
       <categories>
-        <category>PAT甲级</category>
+        <category>Java核心技术</category>
       </categories>
       <tags>
-        <tag>PAT</tag>
-        <tag>C/C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Pat甲级考试题录：A1034(未完成)</title>
-    <url>/2020/05/21/Pat%E7%94%B2%E7%BA%A7%E8%80%83%E8%AF%95%E9%A2%98%E5%BD%95%EF%BC%9AA1034(%E6%9C%AA%E5%AE%8C%E6%88%90)/</url>
-    <content><![CDATA[<h3 id="1034-Head-of-a-Gang-30分"><a href="#1034-Head-of-a-Gang-30分" class="headerlink" title="1034 Head of a Gang (30分)"></a>1034 Head of a Gang (30分)</h3><p>One way that the police finds the head of a gang is to check people’s phone calls. If there is a phone call between <em>A</em> and <em>B</em>, we say that <em>A</em> and <em>B</em> is related. The weight of a relation is defined to be the total time length of all the phone calls made between the two persons. A “Gang” is a cluster of more than 2 persons who are related to each other with total relation weight being greater than a given threshold <em>K</em>. In each gang, the one with maximum total weight is the head. Now given a list of phone calls, you are supposed to find the gangs and the heads.<br><a id="more"></a></p>
-<h3 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a>Input Specification:</h3><p>Each input file contains one test case. For each case, the first line contains two positive numbers <em>N</em> and <em>K</em> (both less than or equal to 1000), the number of phone calls and the weight threthold, respectively. Then <em>N</em> lines follow, each in the following format:</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Name1 Name2 Time</span><br></pre></td></tr></table></figure>
-<p>where <code>Name1</code> and <code>Name2</code> are the names of people at the two ends of the call, and <code>Time</code> is the length of the call. A name is a string of three capital letters chosen from <code>A</code>-<code>Z</code>. A time length is a positive integer which is no more than 1000 minutes.</p>
-<h3 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a>Output Specification:</h3><p>For each test case, first print in a line the total number of gangs. Then for each gang, print in a line the name of the head and the total number of the members. It is guaranteed that the head is unique for each gang. The output must be sorted according to the alphabetical order of the names of the heads.</p>
-<h3 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1:"></a>Sample Input 1:</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">8 59</span><br><span class="line">AAA BBB 10</span><br><span class="line">BBB AAA 20</span><br><span class="line">AAA CCC 40</span><br><span class="line">DDD EEE 5</span><br><span class="line">EEE DDD 70</span><br><span class="line">FFF GGG 30</span><br><span class="line">GGG HHH 20</span><br><span class="line">HHH FFF 10</span><br></pre></td></tr></table></figure>
-<h3 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1:"></a>Sample Output 1:</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">AAA 3</span><br><span class="line">GGG 3</span><br></pre></td></tr></table></figure>
-<h3 id="Sample-Input-2"><a href="#Sample-Input-2" class="headerlink" title="Sample Input 2:"></a>Sample Input 2:</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">8 70</span><br><span class="line">AAA BBB 10</span><br><span class="line">BBB AAA 20</span><br><span class="line">AAA CCC 40</span><br><span class="line">DDD EEE 5</span><br><span class="line">EEE DDD 70</span><br><span class="line">FFF GGG 30</span><br><span class="line">GGG HHH 20</span><br><span class="line">HHH FFF 10</span><br></pre></td></tr></table></figure>
-<h3 id="Sample-Output-2"><a href="#Sample-Output-2" class="headerlink" title="Sample Output 2:"></a>Sample Output 2:</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>PAT甲级</category>
-      </categories>
-      <tags>
-        <tag>C/C++</tag>
-        <tag>Graph</tag>
+        <tag>JCF</tag>
+        <tag>数组</tag>
+        <tag>List类</tag>
       </tags>
   </entry>
   <entry>
@@ -137,139 +217,8 @@
         <category>程序设计基础</category>
       </categories>
       <tags>
-        <tag>C/C++</tag>
         <tag>散列</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>软件过程模型</title>
-    <url>/2020/10/22/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E6%A8%A1%E5%9E%8B/</url>
-    <content><![CDATA[<blockquote>
-<p>目前还没有参加过任何实际的软件开发工作，软件过程模型在面试中属于经常被考察的点，虽然占比不大，但还是相当重要的。所以提前将这部分知识整理一下，着重梳理每个模型的特点，与其他模型相比较有什么差异，有哪些优势或者不足，为以后做准备。再者以后实际工作中难免会遇到这些模型，到时候再回过头来看看这些肯定会有些不一样的感受。</p>
-</blockquote>
-<h3 id="一、构建修复-build-fix-模型"><a href="#一、构建修复-build-fix-模型" class="headerlink" title="一、构建修复(build-fix)模型"></a>一、构建修复(build-fix)模型</h3><p><img src="https://i.loli.net/2020/10/22/KSaFhAdzNPB65bx.png" alt="构建-修复模型.png"><br>是最早也是最自然产生的软件开发模型。<br>严格来说它并不能算是一个软件过程模型，因为它对软件开发活动没有任何的规划和组织，是一种完全依靠开发人员个人能力进行软件开发的方式。<br><a id="more"></a></p>
-<p><strong>缺点</strong>：</p>
-<ol>
-<li>没有对开发工作进行规范和组织，所以随着软件系统复杂度的提升，开发活动会超出个人直接控制能力，构建-修复模型就会导致开发活动无法有效进行而失败；</li>
-<li>没有分析需求的真实性，给软件开发带来很大的风险；</li>
-<li>没有考虑软件结构的质量，使得软件结构在不断的修改中变得质量越来越糟，直至无法修改；</li>
-<li>没有考虑测试和程序的可维护性，也没有任何文档，软件维护十分困难；</li>
-</ol>
-<p><strong>适用性</strong>：</p>
-<ol>
-<li>软件规模很小，只需要几百行程序，其开发复杂度个人能力能够胜任；</li>
-<li>软件对质量的要求不高，即使出错也无所谓；</li>
-<li>只关注开发活动，对后期维护的要求不高，甚至不需要进行维护</li>
-</ol>
-<h3 id="二、-生命周期模型-瀑布模型"><a href="#二、-生命周期模型-瀑布模型" class="headerlink" title="二、 生命周期模型(瀑布模型)"></a>二、 生命周期模型(瀑布模型)</h3><p><img src="https://i.loli.net/2020/10/22/Eo3AzmFT71hIgUt.png" alt="典型的生命周期.png"></p>
-<p>上面是经典的生命周期模型，可以看得出来将整个软件开发的过程是线性的，连续的。缺点也是同样明显，只有当进行完一个步骤之后，才能继续进行下一个步骤。<br>在此基础之上更为常见的瀑布模型如下：<br><img src="https://i.loli.net/2020/10/22/DTU1rRZvSLszNnu.png" alt="瀑布模型.png"><br><strong>区别</strong>：</p>
-<ol>
-<li>允许活动出现反复和迭代；</li>
-<li>重点在于要求每个活动的结果必须要进行验证；</li>
-<li>文档驱动</li>
-</ol>
-<p>就是说过在上面经典模型的基础之上，对于每个过程添加了一个验证的过程，如果检验之后发现不合格还可以返回上一级进行修改，所以文档就显得格外重要，这也是说它是文档驱动的原因<br><strong>缺点</strong>：</p>
-<ol>
-<li>对文档的过高期望具有局限性；</li>
-<li>对开发活动的线性假设具有局限性；</li>
-<li>客户、用户参与具有局限性；</li>
-<li>里程碑粒度具有局限性；</li>
-</ol>
-<p>仔细思考一下，瀑布模型的缺点正是来源于它的特点。<br>一个特点是线性，这就意味着以这个模型为基础的开发客户和用户只能参与一种的某个环节，而实际的开发过程中需要他们从始至终的参与；其次，如果前面的开发环节中出现了问题，那么后面的活动也无法展开，势必会影响开发效率。<br>第二个特点是文档驱动。所以说在文档方面需要投入大量的时间和精力，需要建立一个特别完备可靠的文档库，实际上在工作中是很难实现的。</p>
-<p><strong>适用性</strong>：</p>
-<ol>
-<li>需求十分成熟、稳定，没有不确定的内容，也不会发生变化；</li>
-<li>所需的技术成熟、可靠，没有不确定的技术难点，也没有开发人员不熟悉的技术问题；</li>
-<li>复杂度适中，不至于产生太大的文档负担和过粗的里程碑。</li>
-</ol>
-<h3 id="三、增量迭代模型"><a href="#三、增量迭代模型" class="headerlink" title="三、增量迭代模型"></a>三、增量迭代模型</h3><p><img src="https://i.loli.net/2020/10/22/SmgCw1JDKnjRz8r.png" alt="增量迭代模型.png"></p>
-<p>随着软件规模增大，开发周期越来越长，所以需要一种可以并行并发的开发模式以提高效率。<br>这种开发模式的逻辑是在项目开始时，通过系统需求开发和核心体系结构设计活动完成项目对前景和范围的界定，然后再讲后续开发活动组织为多个迭代、并行的瀑布式开发活动。</p>
-<p><strong>优点</strong>：</p>
-<ol>
-<li>迭代式开发更加符合软件开发的实际情况，具有更好的适用性；</li>
-<li>并行开发可以帮助缩短软件产品的开发时间；</li>
-<li>渐进交付可以加强用户反馈，降低开发风险。</li>
-</ol>
-<p><strong>缺点</strong>：</p>
-<ol>
-<li>由于各个构件是逐渐并入已有的软件体系结构中的，所以加入构件必须不被破坏已构造好的系统部分，这需要软件具备开放式的体系结构。</li>
-<li>增量迭代模型需要一个完备、清晰的项目前景和范围以进行并行开发规划，但是在一些不稳定的领域，不确定性太多或者需求变化非常频繁，很难在项目开始就确定前景和范围。</li>
-</ol>
-<p><strong>适用性</strong>：<br>适用于大规模软件系统的开发，在<u>比较成熟和稳定的领域</u>有着广泛的应用。</p>
-<h3 id="四、演化模型"><a href="#四、演化模型" class="headerlink" title="四、演化模型"></a>四、演化模型</h3><p><img src="https://i.loli.net/2020/10/22/t93sXALnYBxONb1.png" alt="演化模型.png"><br>与增量模型相比，相同点是它们都使用迭代式组织开发活动并且都适合大规模软件开发，不同点是增量迭代模型使用于比较成熟、稳定的领域，而演化模型主要用在需求变更比较频繁或不确定性较多的领域。</p>
-<p><strong>优点</strong>：</p>
-<ol>
-<li>使用了迭代式开发，具有更好的适用性，尤其是演化式迭代安排能够适用于那些需求变更比较频繁或不确定性较多的软件系统的开发；</li>
-<li>并行开发可以帮助缩短软件产品的开发时间；</li>
-<li>渐进交付可以加强用户反馈，降低开发风险。</li>
-</ol>
-<p><strong>缺点</strong>：</p>
-<ol>
-<li>无法在项目早期阶段确定项目范围，所以项目的整体计划、进度调度，尤其是商务协商事宜无法准确把握；</li>
-<li>后续迭代的开发活动是在前导迭代基础上进行修改和扩展的，这<strong>容易让后续迭代忽略分析与设计工作</strong>，蜕变为构建-修复方式。</li>
-</ol>
-<p>在实践中，<u>不稳定领域的大规模软件系统开发</u>适合使用演化模型进行组织。</p>
-<h3 id="五、原型模型"><a href="#五、原型模型" class="headerlink" title="五、原型模型"></a>五、原型模型</h3><p><img src="https://i.loli.net/2020/10/22/Q7lDiJ3ueCN8ZaO.png" alt="原型模型.png"></p>
-<ul>
-<li><p>抛弃式原型：<br>  通过模拟“未来”产品，将“未来”的知识置于“现在”进行推敲，解决不确定性。</p>
-</li>
-<li><p>演化式原型：<br>  在迭代中构建，是系统的核心，并不断扩充，最终成为真正的软件产品。</p>
-</li>
-</ul>
-<p><strong>优点</strong>：</p>
-<ol>
-<li>对原型方法的使用加强了与客户、用户的交流，可以让最终产品取得更好的满意度；</li>
-<li>适用于非常新颖的领域，这些领域因为新颖存在着大量的不确定性。</li>
-</ol>
-<p><strong>缺点</strong>：</p>
-<ol>
-<li>原型方法能够解决风险，但是自身也能带来新的风险，例如原因开发的成本较高，可能会耗尽项目的费用和时间；</li>
-<li>实践中，很多项目负责人不舍得抛弃“抛弃式原型”，使得质量较差的代码进入了最终产品，导致了最终产品的低质量。</li>
-</ol>
-<p>实践中，原型模型主要用于在<u>有着大量不确定性的新颖领域</u>进行开发活动组织。</p>
-<h3 id="六、螺旋模型"><a href="#六、螺旋模型" class="headerlink" title="六、螺旋模型"></a>六、螺旋模型</h3><p><img src="https://i.loli.net/2020/10/22/DdEcuGBw2Hn9UkR.png" alt="螺旋.png"><br>基本思想是尽早解决比较高的风险，如果有些问题实在无法解决，那么早发现比项目结束时再发现要好，至少损失要小得多</p>
-<p><strong>优点</strong>：</p>
-<ol>
-<li>可以降低风险，减少项目因风险造成的损失</li>
-</ol>
-<p><strong>缺点</strong>：</p>
-<ol>
-<li>风险解决需要使用原型手段，也就会存在原型自身带来的风险，这一点与原型模型相同；</li>
-<li>模型过于复杂，不利于管理者依据其组织软件开发活动。</li>
-</ol>
-<p>在实践中，螺旋模型在<u>高风险的大规模软件系统开发</u>中有着较多的应用。</p>
-<h3 id="七、Rational统一过程"><a href="#七、Rational统一过程" class="headerlink" title="七、Rational统一过程"></a>七、Rational统一过程</h3><p>英文：Rational Unified Process 缩写：RUP<br>一种迭代式软件开发流程，最早由Rational Software公司开发，因此冠上公司名称。后来，这家公司被IBM并购，成IBM公司下一个部门。RUP描述了如何有效利用商业的可靠的方法开发和部署软件，是一种重量级过程，因此特别适用于大型软件团队开发大型项目。<br><strong>RUP核心实践方法</strong>：</p>
-<ol>
-<li>迭代式开发；</li>
-<li>管理需求，重视需求工程中除了需求开发之外的需求管理活动；</li>
-<li>使用基于组件包的体系结构，他帮助建立一个可维护、易开发、易服用的软件体系结构；</li>
-<li>可视化建模（利用UML进行建模）；</li>
-<li>验证软件质量，尽早和持续地展开验证，以尽早发现缺陷，降低风险和成本；</li>
-<li>控制软件变更，适应1990s以后需求变更越来越重要的事实。</li>
-</ol>
-<p><strong>优点</strong>：</p>
-<ol>
-<li>吸收和借鉴了传统的最佳实践方法，尤其是核心的6个实践方法，能够保证软件开发过程的组织是基本有效和合理的；</li>
-<li>RUP依据其定制机制的不同，可以适用于小型项目，也可以适用于大型项目的开发，适用面广发；</li>
-<li>RUP有一套软件工程工具的支持，这可以帮助RUP有效地实施</li>
-</ol>
-<p><strong>缺点</strong>：</p>
-<ol>
-<li>没有考虑交付之后的软件维护问题；</li>
-<li>裁剪和配置工作不是一个简单的任务，无法保证每个项目都能定制一个有效的RUP过程。</li>
-</ol>
-<h3 id="八、敏捷过程"><a href="#八、敏捷过程" class="headerlink" title="八、敏捷过程"></a>八、敏捷过程</h3><p>敏捷开发是一种以人为核心、迭代、循序渐进的开发方法。在敏捷开发中，软件项目的构建被切分成多个子项目，各个子项目的成果都经过测试，具备集成和可运行的特征。换言之，就是把一个大项目分为多个相互联系，但也可独立运行的小项目，并且分别完成，在此过程中软件一直处于可使用的状态。<br><strong>特点</strong>：</p>
-<ol>
-<li>具有很强的适应性而非预设性；<br>实际的软件开发过程中存在很多的不确定因素，这也正是软件设计的难点所在。传统的控制项目模式都是试图对一个软件开发项目在很长的时间跨度内作出详细的计划，然后依计划进行开发。所以这类方法往往不欢迎变化，拒绝变化。<br>而敏捷过程与此相反。</li>
-<li>敏捷开发方法是“面向人”而非“面向过程”<br> 在传统的软件开发工作中，项目团队分配工作的中点是明确角色的定义，以个人的能力去适应角色，而角色的定义就是为了保证过程的事实，即个人以资源的方式被分配给角色，同时，资源是可以替代的，而角色不可替代。<br> 然而，传统软件开发的这些方法在敏捷开发方式中被完全颠覆。敏捷开发试图是软件开发工作能够利用人的特点，充分发挥人的创造能力。<br> 敏捷开发的目的是建立起一个项目团队全员参与到软件开发中，包括设定软件开发流程的管理人员，只有这样软件开发流程才有可接受性。同时敏捷开发要求研发人员自主在技术上进行决策。因为他们是最了解什么技术是需要和不需要的。再者，敏捷开发特别重视项目团队中的信息交流。</li>
-</ol>
-<p>敏捷过程包含的方法众多，各有特点，除了共同的思想和原则之外，很难准确描述它们的共同点，所以也无法确切界定它们的优缺点。从敏捷联盟声明的思想和原则来看，它们反映了20世纪90年代之后软件工程的发展趋势，所以得到了广泛的应用，尤其是能够适应于快速变化或者时间压力较大的项目。</p>
-]]></content>
-      <categories>
-        <category>软件工程</category>
-      </categories>
-      <tags>
-        <tag>设计模式</tag>
+        <tag>C/C++</tag>
       </tags>
   </entry>
   <entry>
@@ -415,6 +364,176 @@
       </categories>
       <tags>
         <tag>图</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pat甲级考试题录：A1001-A1002</title>
+    <url>/2020/05/18/Pat%E7%94%B2%E7%BA%A7%E8%80%83%E8%AF%95%E9%A2%98%E5%BD%95%EF%BC%9AA1001-A1002/</url>
+    <content><![CDATA[<h4 id="1001-A-B-Format-20分"><a href="#1001-A-B-Format-20分" class="headerlink" title="1001. A+B Format(20分)"></a>1001. A+B Format(20分)</h4><p>Calculate a+b and output the sum in standard format — that is, the digits must be separated into groups of three by commas (unless there are less than four digits).<br><a id="more"></a><br><strong>Input Specification:</strong><br>Each input file contains one test case. Each case contains a pair of integers a and b where $-10^6≤a,b≤10^6$. The numbers are separated by a space.<br><strong>Output Specification:</strong><br>For each test case, you should output the sum of a and b in one line. The sum must be written in the standard format.<br><strong>Sample Input:</strong><br>-1000000 9<br><strong>Sample Output:</strong><br>-999,991</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a,b;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"请输入两个整数："</span>;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;a&gt;&gt;b;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">string</span> s = to_string(a+b);<span class="comment">//将a+b的结果转换成字符串，并自动生成数组</span></span><br><span class="line">    <span class="keyword">int</span> len = s.length();<span class="comment">//得到字符串数组的大小</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; len; i++)&#123;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;s[i];<span class="comment">//将计算结果以字符的形式输出</span></span><br><span class="line">        <span class="keyword">if</span>(s[i]==<span class="string">'-'</span>) <span class="keyword">continue</span>;<span class="comment">//如果数字中存在负号，跳过此次循环，避免出现输出“-，999,999”的情况</span></span><br><span class="line">        <span class="keyword">if</span>((i + <span class="number">1</span>) %<span class="number">3</span> ==len %<span class="number">3</span> &amp;&amp; i != len<span class="number">-1</span>) <span class="built_in">cout</span>&lt;&lt;<span class="string">","</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="1002-1002-A-B-for-Polynomials-25分"><a href="#1002-1002-A-B-for-Polynomials-25分" class="headerlink" title="1002. 1002 A+B for Polynomials (25分)"></a>1002. 1002 A+B for Polynomials (25分)</h4><p>This time, you are supposed to find A+B where A and B are two polynomials.<br><strong>Input Specification:</strong><br>Each input file contains one test case. Each case occupies 2 lines, and each line contains the information of a polynomial:<br>K $N<em>1$ $a</em>{N<em>1}$ $N_2$ $a</em>{N<em>2}$ …. $N_k$ $a</em>{N<em>k}$<br>where K is the number of nonzero terms in the polynomial, $N_i$ and $a</em>{N_k}$ (i=1,2,⋯,K) are the exponents and coefficients, respectively. It is given that 1≤K≤10，0≤$N_k$&lt;⋯&lt;$N_2$&lt;$N_1$≤1000.<br><strong>Output Specification:</strong><br>For each test case you should output the sum of A and B in one line, with the same format as the input. Notice that there must be NO extra space at the end of each line. Please be accurate to 1 decimal place.<br><strong>Sample Input:</strong><br>2 1 2.4 0 3.2<br>2 2 1.5 1 0.5<br><strong>Sample Output:</strong><br>3 2 1.5 1 2.9 0 3.2</p>
+<p> 核心思路就是利用数组中的下标表示成多项式中的指数，将数组元素设计成各项系数。首先根据K的值确定循环条件，得到一个初始多项式，在此基础之上对于不同的项赋值新的数值，加和，得到加和之后的多项式。<br> 只要数组元素不等于0就意味着该项存在，可据此输出多项式的指数和系数，并且统计多项式的项数</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt; </span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> K,N;</span><br><span class="line">	<span class="keyword">float</span> a;	</span><br><span class="line">	<span class="keyword">float</span> p[<span class="number">1001</span>] = &#123;<span class="number">0</span>&#125;;	</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;K;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; K; i++)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;N&gt;&gt;a;</span><br><span class="line">		p[N] = a;</span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="built_in">cin</span>&gt;&gt;K;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; K;i++)&#123;</span><br><span class="line">		<span class="built_in">cin</span>&gt;&gt;N&gt;&gt;a;</span><br><span class="line">		p[N] = p[N] + a;</span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="keyword">int</span> cont = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1000</span>; i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">		<span class="keyword">if</span>(p[i] != <span class="number">0</span>) 	cont++;		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; cont;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1000</span>; i&gt;=<span class="number">0</span>; i--)&#123;</span><br><span class="line">		<span class="keyword">if</span>(p[i] != <span class="number">0</span>) </span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">" %d %.1f"</span>, i ,p[i]);<span class="comment">//涉及到输出格式还是老老实实用printf()吧，，，</span></span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：C++中数组名不要和其他变量名重复<br>setprecision()函数可以控制输出数字的精度，不过需要引用#include<iomanip></p>
+]]></content>
+      <categories>
+        <category>PAT甲级</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+        <tag>PAT</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软件过程模型</title>
+    <url>/2020/10/22/%E8%BD%AF%E4%BB%B6%E8%BF%87%E7%A8%8B%E6%A8%A1%E5%9E%8B/</url>
+    <content><![CDATA[<blockquote>
+<p>目前还没有参加过任何实际的软件开发工作，软件过程模型在面试中属于经常被考察的点，虽然占比不大，但还是相当重要的。所以提前将这部分知识整理一下，着重梳理每个模型的特点，与其他模型相比较有什么差异，有哪些优势或者不足，为以后做准备。再者以后实际工作中难免会遇到这些模型，到时候再回过头来看看这些肯定会有些不一样的感受。</p>
+</blockquote>
+<h3 id="一、构建修复-build-fix-模型"><a href="#一、构建修复-build-fix-模型" class="headerlink" title="一、构建修复(build-fix)模型"></a>一、构建修复(build-fix)模型</h3><p><img src="https://i.loli.net/2020/10/22/KSaFhAdzNPB65bx.png" alt="构建-修复模型.png"><br>是最早也是最自然产生的软件开发模型。<br>严格来说它并不能算是一个软件过程模型，因为它对软件开发活动没有任何的规划和组织，是一种完全依靠开发人员个人能力进行软件开发的方式。<br><a id="more"></a></p>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>没有对开发工作进行规范和组织，所以随着软件系统复杂度的提升，开发活动会超出个人直接控制能力，构建-修复模型就会导致开发活动无法有效进行而失败；</li>
+<li>没有分析需求的真实性，给软件开发带来很大的风险；</li>
+<li>没有考虑软件结构的质量，使得软件结构在不断的修改中变得质量越来越糟，直至无法修改；</li>
+<li>没有考虑测试和程序的可维护性，也没有任何文档，软件维护十分困难；</li>
+</ol>
+<p><strong>适用性</strong>：</p>
+<ol>
+<li>软件规模很小，只需要几百行程序，其开发复杂度个人能力能够胜任；</li>
+<li>软件对质量的要求不高，即使出错也无所谓；</li>
+<li>只关注开发活动，对后期维护的要求不高，甚至不需要进行维护</li>
+</ol>
+<h3 id="二、-生命周期模型-瀑布模型"><a href="#二、-生命周期模型-瀑布模型" class="headerlink" title="二、 生命周期模型(瀑布模型)"></a>二、 生命周期模型(瀑布模型)</h3><p><img src="https://i.loli.net/2020/10/22/Eo3AzmFT71hIgUt.png" alt="典型的生命周期.png"></p>
+<p>上面是经典的生命周期模型，可以看得出来将整个软件开发的过程是线性的，连续的。缺点也是同样明显，只有当进行完一个步骤之后，才能继续进行下一个步骤。<br>在此基础之上更为常见的瀑布模型如下：<br><img src="https://i.loli.net/2020/10/22/DTU1rRZvSLszNnu.png" alt="瀑布模型.png"><br><strong>区别</strong>：</p>
+<ol>
+<li>允许活动出现反复和迭代；</li>
+<li>重点在于要求每个活动的结果必须要进行验证；</li>
+<li>文档驱动</li>
+</ol>
+<p>就是说过在上面经典模型的基础之上，对于每个过程添加了一个验证的过程，如果检验之后发现不合格还可以返回上一级进行修改，所以文档就显得格外重要，这也是说它是文档驱动的原因<br><strong>缺点</strong>：</p>
+<ol>
+<li>对文档的过高期望具有局限性；</li>
+<li>对开发活动的线性假设具有局限性；</li>
+<li>客户、用户参与具有局限性；</li>
+<li>里程碑粒度具有局限性；</li>
+</ol>
+<p>仔细思考一下，瀑布模型的缺点正是来源于它的特点。<br>一个特点是线性，这就意味着以这个模型为基础的开发客户和用户只能参与一种的某个环节，而实际的开发过程中需要他们从始至终的参与；其次，如果前面的开发环节中出现了问题，那么后面的活动也无法展开，势必会影响开发效率。<br>第二个特点是文档驱动。所以说在文档方面需要投入大量的时间和精力，需要建立一个特别完备可靠的文档库，实际上在工作中是很难实现的。</p>
+<p><strong>适用性</strong>：</p>
+<ol>
+<li>需求十分成熟、稳定，没有不确定的内容，也不会发生变化；</li>
+<li>所需的技术成熟、可靠，没有不确定的技术难点，也没有开发人员不熟悉的技术问题；</li>
+<li>复杂度适中，不至于产生太大的文档负担和过粗的里程碑。</li>
+</ol>
+<h3 id="三、增量迭代模型"><a href="#三、增量迭代模型" class="headerlink" title="三、增量迭代模型"></a>三、增量迭代模型</h3><p><img src="https://i.loli.net/2020/10/22/SmgCw1JDKnjRz8r.png" alt="增量迭代模型.png"></p>
+<p>随着软件规模增大，开发周期越来越长，所以需要一种可以并行并发的开发模式以提高效率。<br>这种开发模式的逻辑是在项目开始时，通过系统需求开发和核心体系结构设计活动完成项目对前景和范围的界定，然后再讲后续开发活动组织为多个迭代、并行的瀑布式开发活动。</p>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>迭代式开发更加符合软件开发的实际情况，具有更好的适用性；</li>
+<li>并行开发可以帮助缩短软件产品的开发时间；</li>
+<li>渐进交付可以加强用户反馈，降低开发风险。</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>由于各个构件是逐渐并入已有的软件体系结构中的，所以加入构件必须不被破坏已构造好的系统部分，这需要软件具备开放式的体系结构。</li>
+<li>增量迭代模型需要一个完备、清晰的项目前景和范围以进行并行开发规划，但是在一些不稳定的领域，不确定性太多或者需求变化非常频繁，很难在项目开始就确定前景和范围。</li>
+</ol>
+<p><strong>适用性</strong>：<br>适用于大规模软件系统的开发，在<u>比较成熟和稳定的领域</u>有着广泛的应用。</p>
+<h3 id="四、演化模型"><a href="#四、演化模型" class="headerlink" title="四、演化模型"></a>四、演化模型</h3><p><img src="https://i.loli.net/2020/10/22/t93sXALnYBxONb1.png" alt="演化模型.png"><br>与增量模型相比，相同点是它们都使用迭代式组织开发活动并且都适合大规模软件开发，不同点是增量迭代模型使用于比较成熟、稳定的领域，而演化模型主要用在需求变更比较频繁或不确定性较多的领域。</p>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>使用了迭代式开发，具有更好的适用性，尤其是演化式迭代安排能够适用于那些需求变更比较频繁或不确定性较多的软件系统的开发；</li>
+<li>并行开发可以帮助缩短软件产品的开发时间；</li>
+<li>渐进交付可以加强用户反馈，降低开发风险。</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>无法在项目早期阶段确定项目范围，所以项目的整体计划、进度调度，尤其是商务协商事宜无法准确把握；</li>
+<li>后续迭代的开发活动是在前导迭代基础上进行修改和扩展的，这<strong>容易让后续迭代忽略分析与设计工作</strong>，蜕变为构建-修复方式。</li>
+</ol>
+<p>在实践中，<u>不稳定领域的大规模软件系统开发</u>适合使用演化模型进行组织。</p>
+<h3 id="五、原型模型"><a href="#五、原型模型" class="headerlink" title="五、原型模型"></a>五、原型模型</h3><p><img src="https://i.loli.net/2020/10/22/Q7lDiJ3ueCN8ZaO.png" alt="原型模型.png"></p>
+<ul>
+<li><p>抛弃式原型：<br>  通过模拟“未来”产品，将“未来”的知识置于“现在”进行推敲，解决不确定性。</p>
+</li>
+<li><p>演化式原型：<br>  在迭代中构建，是系统的核心，并不断扩充，最终成为真正的软件产品。</p>
+</li>
+</ul>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>对原型方法的使用加强了与客户、用户的交流，可以让最终产品取得更好的满意度；</li>
+<li>适用于非常新颖的领域，这些领域因为新颖存在着大量的不确定性。</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>原型方法能够解决风险，但是自身也能带来新的风险，例如原因开发的成本较高，可能会耗尽项目的费用和时间；</li>
+<li>实践中，很多项目负责人不舍得抛弃“抛弃式原型”，使得质量较差的代码进入了最终产品，导致了最终产品的低质量。</li>
+</ol>
+<p>实践中，原型模型主要用于在<u>有着大量不确定性的新颖领域</u>进行开发活动组织。</p>
+<h3 id="六、螺旋模型"><a href="#六、螺旋模型" class="headerlink" title="六、螺旋模型"></a>六、螺旋模型</h3><p><img src="https://i.loli.net/2020/10/22/DdEcuGBw2Hn9UkR.png" alt="螺旋.png"><br>基本思想是尽早解决比较高的风险，如果有些问题实在无法解决，那么早发现比项目结束时再发现要好，至少损失要小得多</p>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>可以降低风险，减少项目因风险造成的损失</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>风险解决需要使用原型手段，也就会存在原型自身带来的风险，这一点与原型模型相同；</li>
+<li>模型过于复杂，不利于管理者依据其组织软件开发活动。</li>
+</ol>
+<p>在实践中，螺旋模型在<u>高风险的大规模软件系统开发</u>中有着较多的应用。</p>
+<h3 id="七、Rational统一过程"><a href="#七、Rational统一过程" class="headerlink" title="七、Rational统一过程"></a>七、Rational统一过程</h3><p>英文：Rational Unified Process 缩写：RUP<br>一种迭代式软件开发流程，最早由Rational Software公司开发，因此冠上公司名称。后来，这家公司被IBM并购，成IBM公司下一个部门。RUP描述了如何有效利用商业的可靠的方法开发和部署软件，是一种重量级过程，因此特别适用于大型软件团队开发大型项目。<br><strong>RUP核心实践方法</strong>：</p>
+<ol>
+<li>迭代式开发；</li>
+<li>管理需求，重视需求工程中除了需求开发之外的需求管理活动；</li>
+<li>使用基于组件包的体系结构，他帮助建立一个可维护、易开发、易服用的软件体系结构；</li>
+<li>可视化建模（利用UML进行建模）；</li>
+<li>验证软件质量，尽早和持续地展开验证，以尽早发现缺陷，降低风险和成本；</li>
+<li>控制软件变更，适应1990s以后需求变更越来越重要的事实。</li>
+</ol>
+<p><strong>优点</strong>：</p>
+<ol>
+<li>吸收和借鉴了传统的最佳实践方法，尤其是核心的6个实践方法，能够保证软件开发过程的组织是基本有效和合理的；</li>
+<li>RUP依据其定制机制的不同，可以适用于小型项目，也可以适用于大型项目的开发，适用面广发；</li>
+<li>RUP有一套软件工程工具的支持，这可以帮助RUP有效地实施</li>
+</ol>
+<p><strong>缺点</strong>：</p>
+<ol>
+<li>没有考虑交付之后的软件维护问题；</li>
+<li>裁剪和配置工作不是一个简单的任务，无法保证每个项目都能定制一个有效的RUP过程。</li>
+</ol>
+<h3 id="八、敏捷过程"><a href="#八、敏捷过程" class="headerlink" title="八、敏捷过程"></a>八、敏捷过程</h3><p>敏捷开发是一种以人为核心、迭代、循序渐进的开发方法。在敏捷开发中，软件项目的构建被切分成多个子项目，各个子项目的成果都经过测试，具备集成和可运行的特征。换言之，就是把一个大项目分为多个相互联系，但也可独立运行的小项目，并且分别完成，在此过程中软件一直处于可使用的状态。<br><strong>特点</strong>：</p>
+<ol>
+<li>具有很强的适应性而非预设性；<br>实际的软件开发过程中存在很多的不确定因素，这也正是软件设计的难点所在。传统的控制项目模式都是试图对一个软件开发项目在很长的时间跨度内作出详细的计划，然后依计划进行开发。所以这类方法往往不欢迎变化，拒绝变化。<br>而敏捷过程与此相反。</li>
+<li>敏捷开发方法是“面向人”而非“面向过程”<br> 在传统的软件开发工作中，项目团队分配工作的中点是明确角色的定义，以个人的能力去适应角色，而角色的定义就是为了保证过程的事实，即个人以资源的方式被分配给角色，同时，资源是可以替代的，而角色不可替代。<br> 然而，传统软件开发的这些方法在敏捷开发方式中被完全颠覆。敏捷开发试图是软件开发工作能够利用人的特点，充分发挥人的创造能力。<br> 敏捷开发的目的是建立起一个项目团队全员参与到软件开发中，包括设定软件开发流程的管理人员，只有这样软件开发流程才有可接受性。同时敏捷开发要求研发人员自主在技术上进行决策。因为他们是最了解什么技术是需要和不需要的。再者，敏捷开发特别重视项目团队中的信息交流。</li>
+</ol>
+<p>敏捷过程包含的方法众多，各有特点，除了共同的思想和原则之外，很难准确描述它们的共同点，所以也无法确切界定它们的优缺点。从敏捷联盟声明的思想和原则来看，它们反映了20世纪90年代之后软件工程的发展趋势，所以得到了广泛的应用，尤其是能够适应于快速变化或者时间压力较大的项目。</p>
+]]></content>
+      <categories>
+        <category>软件工程</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Pat甲级考试题录：A1034(未完成)</title>
+    <url>/2020/05/21/Pat%E7%94%B2%E7%BA%A7%E8%80%83%E8%AF%95%E9%A2%98%E5%BD%95%EF%BC%9AA1034(%E6%9C%AA%E5%AE%8C%E6%88%90)/</url>
+    <content><![CDATA[<h3 id="1034-Head-of-a-Gang-30分"><a href="#1034-Head-of-a-Gang-30分" class="headerlink" title="1034 Head of a Gang (30分)"></a>1034 Head of a Gang (30分)</h3><p>One way that the police finds the head of a gang is to check people’s phone calls. If there is a phone call between <em>A</em> and <em>B</em>, we say that <em>A</em> and <em>B</em> is related. The weight of a relation is defined to be the total time length of all the phone calls made between the two persons. A “Gang” is a cluster of more than 2 persons who are related to each other with total relation weight being greater than a given threshold <em>K</em>. In each gang, the one with maximum total weight is the head. Now given a list of phone calls, you are supposed to find the gangs and the heads.<br><a id="more"></a></p>
+<h3 id="Input-Specification"><a href="#Input-Specification" class="headerlink" title="Input Specification:"></a>Input Specification:</h3><p>Each input file contains one test case. For each case, the first line contains two positive numbers <em>N</em> and <em>K</em> (both less than or equal to 1000), the number of phone calls and the weight threthold, respectively. Then <em>N</em> lines follow, each in the following format:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Name1 Name2 Time</span><br></pre></td></tr></table></figure>
+<p>where <code>Name1</code> and <code>Name2</code> are the names of people at the two ends of the call, and <code>Time</code> is the length of the call. A name is a string of three capital letters chosen from <code>A</code>-<code>Z</code>. A time length is a positive integer which is no more than 1000 minutes.</p>
+<h3 id="Output-Specification"><a href="#Output-Specification" class="headerlink" title="Output Specification:"></a>Output Specification:</h3><p>For each test case, first print in a line the total number of gangs. Then for each gang, print in a line the name of the head and the total number of the members. It is guaranteed that the head is unique for each gang. The output must be sorted according to the alphabetical order of the names of the heads.</p>
+<h3 id="Sample-Input-1"><a href="#Sample-Input-1" class="headerlink" title="Sample Input 1:"></a>Sample Input 1:</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">8 59</span><br><span class="line">AAA BBB 10</span><br><span class="line">BBB AAA 20</span><br><span class="line">AAA CCC 40</span><br><span class="line">DDD EEE 5</span><br><span class="line">EEE DDD 70</span><br><span class="line">FFF GGG 30</span><br><span class="line">GGG HHH 20</span><br><span class="line">HHH FFF 10</span><br></pre></td></tr></table></figure>
+<h3 id="Sample-Output-1"><a href="#Sample-Output-1" class="headerlink" title="Sample Output 1:"></a>Sample Output 1:</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">2</span><br><span class="line">AAA 3</span><br><span class="line">GGG 3</span><br></pre></td></tr></table></figure>
+<h3 id="Sample-Input-2"><a href="#Sample-Input-2" class="headerlink" title="Sample Input 2:"></a>Sample Input 2:</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">8 70</span><br><span class="line">AAA BBB 10</span><br><span class="line">BBB AAA 20</span><br><span class="line">AAA CCC 40</span><br><span class="line">DDD EEE 5</span><br><span class="line">EEE DDD 70</span><br><span class="line">FFF GGG 30</span><br><span class="line">GGG HHH 20</span><br><span class="line">HHH FFF 10</span><br></pre></td></tr></table></figure>
+<h3 id="Sample-Output-2"><a href="#Sample-Output-2" class="headerlink" title="Sample Output 2:"></a>Sample Output 2:</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>PAT甲级</category>
+      </categories>
+      <tags>
+        <tag>C/C++</tag>
+        <tag>Graph</tag>
       </tags>
   </entry>
 </search>

@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"halfmoonex.cn","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":true},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="一、数组 数组是一种确定大小的存储同种数据的容器； 需要牢牢掌握初始化和遍历方法，特别是两种遍历方式  1. 简介 数组是一个存放多个数据的容器； 数据是同一种类型； 所有的数据是线性规则排列； 可通过位置索引来快速定位访问数据； 需要明确容器的长度。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JCF框架（一）数组和List类">
+<meta property="og:url" content="http://halfmoonex.cn/2020/11/23/JCF%E6%A1%86%E6%9E%B6%EF%BC%88%E4%B8%80%EF%BC%89%E6%95%B0%E7%BB%84%E5%92%8CList%E7%B1%BB/index.html">
+<meta property="og:site_name" content="半月的博客">
+<meta property="og:description" content="一、数组 数组是一种确定大小的存储同种数据的容器； 需要牢牢掌握初始化和遍历方法，特别是两种遍历方式  1. 简介 数组是一个存放多个数据的容器； 数据是同一种类型； 所有的数据是线性规则排列； 可通过位置索引来快速定位访问数据； 需要明确容器的长度。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2020/11/22/BJMt9PDHlspLbSh.png">
+<meta property="og:image" content="https://i.loli.net/2020/11/23/E4LeYSGB2qDT79A.png">
+<meta property="og:image" content="https://i.loli.net/2020/11/23/FGbwLAQ5vxHCUJX.png">
+<meta property="article:published_time" content="2020-11-23T08:20:44.908Z">
+<meta property="article:modified_time" content="2020-11-23T08:45:06.539Z">
+<meta property="article:author" content="halfmoon">
+<meta property="article:tag" content="JCF">
+<meta property="article:tag" content="数组">
+<meta property="article:tag" content="List类">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2020/11/22/BJMt9PDHlspLbSh.png">
+
+<link rel="canonical" href="http://halfmoonex.cn/2020/11/23/JCF%E6%A1%86%E6%9E%B6%EF%BC%88%E4%B8%80%EF%BC%89%E6%95%B0%E7%BB%84%E5%92%8CList%E7%B1%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>JCF框架（一）数组和List类 | 半月的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">半月的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">自学技术的小宅</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">15</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">9</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://halfmoonex.cn/2020/11/23/JCF%E6%A1%86%E6%9E%B6%EF%BC%88%E4%B8%80%EF%BC%89%E6%95%B0%E7%BB%84%E5%92%8CList%E7%B1%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="halfmoon">
+      <meta itemprop="description" content="路还很长，要慢慢走">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="半月的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          JCF框架（一）数组和List类
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-11-23 16:20:44 / 修改时间：16:45:06" itemprop="dateCreated datePublished" datetime="2020-11-23T16:20:44+08:00">2020-11-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index"><span itemprop="name">Java核心技术</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h3 id="一、数组"><a href="#一、数组" class="headerlink" title="一、数组"></a>一、数组</h3><ul>
+<li>数组是一种<strong>确定大小</strong>的存储<strong>同种数据</strong>的容器；</li>
+<li>需要牢牢掌握初始化和遍历方法，特别是两种遍历方式</li>
+</ul>
+<h4 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h4><ul>
+<li>数组是一个存放<strong>多个数据</strong>的容器；<ul>
+<li>数据是<strong>同一种类型</strong>；</li>
+<li>所有的数据是线性规则排列；</li>
+<li>可通过位置索引来快速定位访问数据；</li>
+<li>需要明确容器的长度。<a id="more"></a>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>广义上说，以前定义的变量也可以理解为一种容器，就比如<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">5</span>;</span><br></pre></td></tr></table></figure><br>a实际上就是一种容器，里面放着数字5。</p>
+</blockquote>
+<h4 id="2-定义与初始化"><a href="#2-定义与初始化" class="headerlink" title="2. 定义与初始化"></a>2. 定义与初始化</h4><ul>
+<li>定义：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[];<span class="comment">//可以用C的方式来定义一个数组；</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span>[] a;<span class="comment">//Java中更推荐用这种方式来定义；</span></span><br><span class="line"><span class="comment">//此时还没有new操作，a实际上是null(相当于空指针)，不知道内存位置</span></span><br></pre></td></tr></table></figure></li>
+<li>初始化：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] a = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];<span class="comment">//表明开辟了一个大小为5个int字节的数组，</span></span><br><span class="line"><span class="comment">//数组内元素默认为0；</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span>[] b = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;</span><br><span class="line"><span class="keyword">int</span>[] b = &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;;<span class="comment">//这两种初始化方式等价，都是用穷举的方式；</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意在声明一个数组时，并没有分配内存，此时不要指定大小，下面是错误示例；</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">5</span>];<span class="comment">//error</span></span><br><span class="line"><span class="keyword">int</span>[<span class="number">5</span>] b;<span class="comment">//error</span></span><br><span class="line"><span class="keyword">int</span>[<span class="number">5</span>] c = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];<span class="comment">//error</span></span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<h4 id="3-数组索引"><a href="#3-数组索引" class="headerlink" title="3. 数组索引"></a>3. 数组索引</h4><ul>
+<li>数组的length属性标识数组的长度<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LengthTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span>[] a = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br><span class="line">  System.out.println(<span class="string">"数组长度："</span> + a.length);</span><br><span class="line">     &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">/** 输出的结果是“数组长度：5” */</span></span><br></pre></td></tr></table></figure></li>
+<li>数组访问时不能越界，否则会报ArrayIndexOutOfBoundsException异常</li>
+</ul>
+<h4 id="4-数组遍历"><a href="#4-数组遍历" class="headerlink" title="4. 数组遍历"></a>4. 数组遍历</h4><ul>
+<li>for循环：这个都会，通常需要注意索引位置</li>
+<li>for-each语句：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LengthTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">	<span class="keyword">int</span>[] a = &#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i++) &#123;</span><br><span class="line">		System.out.println(a[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	System.out.println(<span class="string">"================="</span>);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> e: a) &#123;</span><br><span class="line">		System.out.println(e);</span><br><span class="line">	    &#125;</span><br><span class="line">	<span class="comment">/** 两者结果完全相同，for-each语句相比上面的语句</span></span><br><span class="line"><span class="comment">       不存在也不会出现越界访问，而且更简洁*/</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="5-多维数组-仅介绍二维"><a href="#5-多维数组-仅介绍二维" class="headerlink" title="5. 多维数组(仅介绍二维)"></a>5. 多维数组(仅介绍二维)</h4></li>
+<li>定义：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>. <span class="keyword">int</span> a[][] = <span class="keyword">new</span> <span class="keyword">int</span> a[<span class="number">2</span>][<span class="number">3</span>];</span><br><span class="line"><span class="comment">/** 上面表示的是一种 两行三列 的数组*/</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>计算机实际存储时，是按照行一个一个存储的，也就是说二维数组在内存中实际上<br>是线性的结构；比如上面的a[2][3],会先存储a[0][3]，再接在后面存储a[1][3]。</p>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>实际在遍历二维数组中也更推荐按行逐个遍历，如果按列进行遍历实际上性能会差很多。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span>. <span class="comment">/** 对于不规则的二维数组，可以按照下面的方式定义 */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> b[][];</span><br><span class="line">b = <span class="keyword">new</span> <span class="keyword">int</span> b[<span class="number">3</span>][];</span><br><span class="line">b[<span class="number">0</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</span><br><span class="line">b[<span class="number">1</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">4</span>];</span><br><span class="line">b[<span class="number">2</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>遍历：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> a[][];</span><br><span class="line">	<span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">	a = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>][];</span><br><span class="line">	a[<span class="number">0</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</span><br><span class="line">	a[<span class="number">1</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">4</span>];</span><br><span class="line">	a[<span class="number">2</span>] = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.length; i++) &#123;<span class="comment">//二维数组中a.length表示的是整个数组的行数</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; a[i].length ;j++) &#123;<span class="comment">//每一行的长度a[i].length</span></span><br><span class="line">			a[i][j] = k++;</span><br><span class="line">			    &#125;</span><br><span class="line">	    &#125;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span>[] items: a) &#123;<span class="comment">//可以把二维数组理解成复合的数组，相当于items[]数组的每一个元素都是一个item[]数组</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> item: items) &#123;</span><br><span class="line">			System.out.println(item);</span><br><span class="line">		    &#125;</span><br><span class="line">	    &#125;</span><br><span class="line">	</span><br><span class="line">    &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+for-each循环的逻辑：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">for</span>(数据类型 变量名 ：数组名) &#123;<span class="comment">//变量名可以自定义</span></span><br><span class="line">      含有变量名的语句；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</blockquote>
+<h3 id="二、-JCF（Java-Collection-Frame-java容器框架）"><a href="#二、-JCF（Java-Collection-Frame-java容器框架）" class="headerlink" title="二、 JCF（Java Collection Frame,java容器框架）"></a>二、 JCF（Java Collection Frame,java容器框架）</h3><blockquote>
+<p>类似于C++中的STL，Standard Template Library,标准模板库</p>
+</blockquote>
+<h4 id="1-简介-1"><a href="#1-简介-1" class="headerlink" title="1. 简介"></a>1. 简介</h4><ul>
+<li><p>容器：能够存放数据的空间结构；</p>
+<ul>
+<li>数组/多维数组：只能线性存放数据；</li>
+<li>列表/散列集/树/···</li>
+</ul>
+</li>
+<li><p>容器框架：为表示和操作容器而规定的一种标准体系结构；</p>
+</li>
+</ul>
+<p>在数据结构课程中我们会学习对应的数据组织方式，以及如何存储、操作这些数据；<br>实际应用中Java将这些逻辑结构以及对应的代码封装起来，提供接口供人使用，这样<br>使用者就不必十分清楚数据结构的具体实现过程，只要知道如何使用就可以。</p>
+<ul>
+<li>优点：提高了数据存储效率，避免程序员重复劳动。</li>
+</ul>
+<p><img src="https://i.loli.net/2020/11/22/BJMt9PDHlspLbSh.png" alt="jcf图.png"></p>
+<h3 id="三、-列表List"><a href="#三、-列表List" class="headerlink" title="三、 列表List"></a>三、 列表List</h3><ul>
+<li>ArrayList/LinkedList/Vector</li>
+<li>同步采用Vector</li>
+<li>非同步情况下，根据数据操作特点选取ArrayList/LinkedList<h4 id="1-ArrayList用法"><a href="#1-ArrayList用法" class="headerlink" title="1. ArrayList用法"></a>1. ArrayList用法</h4></li>
+<li><p>简介：</p>
+<ul>
+<li>基于数组实现，不支持同步；</li>
+<li>可以按照索引访问，方便查询，不方便移动；</li>
+<li>可以实现动态扩容，增大容量的50%;</li>
+</ul>
+</li>
+<li><p>常见用法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayListTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		ArrayList&lt;Integer&gt; a = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">		<span class="comment">//ArryList&lt;Integer&gt; a是泛型表示，意思是a这个数据结构里只能容纳Integer</span></span><br><span class="line">		<span class="comment">//的对象，其他的对象无法放入</span></span><br><span class="line">		a.add(<span class="number">3</span>);</span><br><span class="line">		a.add(<span class="number">2</span>);</span><br><span class="line">		a.add(<span class="number">1</span>);</span><br><span class="line">		a.add(<span class="number">4</span>);</span><br><span class="line">		a.add(<span class="number">5</span>);</span><br><span class="line">		a.add(<span class="number">6</span>);</span><br><span class="line">		a.add(<span class="keyword">new</span> Integer(<span class="number">6</span>));</span><br><span class="line">		<span class="comment">/** </span></span><br><span class="line"><span class="comment">		 * ArrayList只能装对象，当add(3)时，会自动将普通int变量3</span></span><br><span class="line"><span class="comment">		 * 自动装箱为Integer(3)的对象，然后放入ArrayList容器中。</span></span><br><span class="line"><span class="comment">		 * */</span></span><br><span class="line">		</span><br><span class="line">		System.out.print(<span class="string">"The third element is"</span>);</span><br><span class="line">		System.out.println(a.get(<span class="number">3</span>));<span class="comment">//按索引访问，3表示第四个元素</span></span><br><span class="line">		a.remove(<span class="number">3</span>);<span class="comment">//删除第四个元素，后面元素往前挪动</span></span><br><span class="line">		a.add(<span class="number">3</span>,<span class="number">9</span>);<span class="comment">//将9插入到第3个元素，后面元素往后挪动</span></span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"========遍历方法======"</span>);</span><br><span class="line">		</span><br><span class="line">		ArrayList&lt;Integer&gt; test = <span class="keyword">new</span> ArrayList&lt;Integer&gt;(<span class="number">100000</span>);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100000</span>; i++) &#123;</span><br><span class="line">			test.add(i);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		traverseByIterator(test);</span><br><span class="line">		traverseByIndex(test);</span><br><span class="line">		traverseByFor(test);</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">traverseByIterator</span><span class="params">(ArrayList&lt;Integer&gt; a)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> startTime = System.nanoTime();</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"========迭代器遍历========"</span>);</span><br><span class="line">		</span><br><span class="line">		Iterator&lt;Integer&gt; iter1 = a.iterator();</span><br><span class="line">		<span class="keyword">while</span>(iter1.hasNext()) &#123;</span><br><span class="line">			iter1.next();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">long</span> endTime = System.nanoTime();</span><br><span class="line">		<span class="keyword">long</span> duration = endTime - startTime;</span><br><span class="line">		System.out.println(duration + <span class="string">"纳秒"</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">traverseByIndex</span><span class="params">(ArrayList&lt;Integer&gt; a)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> startTime = System.nanoTime();</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"========索引遍历========"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.size(); i++) &#123;<span class="comment">//size()方法可以得出数据结构的大小；</span></span><br><span class="line">			a.get(i);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">long</span> endTime = System.nanoTime();</span><br><span class="line">		<span class="keyword">long</span> duration = endTime - startTime;</span><br><span class="line">		System.out.println(duration + <span class="string">"纳秒"</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">traverseByFor</span><span class="params">(ArrayList&lt;Integer&gt; a)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> startTime = System.nanoTime();</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"========for-each遍历========"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>(Integer item : a) &#123;<span class="comment">//数据结构a中的元素是Integer类型的变量；</span></span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">long</span> endTime = System.nanoTime();</span><br><span class="line">		<span class="keyword">long</span> duration = endTime - startTime;</span><br><span class="line">		System.out.println(duration + <span class="string">"纳秒"</span>);	</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：<br><img src="https://i.loli.net/2020/11/23/E4LeYSGB2qDT79A.png" alt="arraylist.png"></p>
+<blockquote>
+<p>看得出来迭代器方法和随机索引速度差不多，for-each方法速度最快。</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="2-LinkedList用法"><a href="#2-LinkedList用法" class="headerlink" title="2. LinkedList用法"></a>2. LinkedList用法</h4><ul>
+<li>简介：<ul>
+<li>以<strong>双向链表</strong>实现的列表，不支持同步；</li>
+<li>可被当做堆栈、队列和双端队列进行操作；</li>
+<li>顺序访问搞笑，随机访问较差，中间插入和删除高效；</li>
+<li>适用于经常变化的数据；</li>
+</ul>
+</li>
+<li>常见用法：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedListTest</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		LinkedList&lt;Integer&gt; link = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">		link.add(<span class="number">3</span>);</span><br><span class="line">		link.add(<span class="number">2</span>);</span><br><span class="line">		link.add(<span class="number">5</span>);</span><br><span class="line">		link.add(<span class="number">6</span>);</span><br><span class="line">		link.add(<span class="number">6</span>);</span><br><span class="line">		System.out.println(<span class="string">"link's size is: "</span>+ link.size());</span><br><span class="line">		link.addFirst(<span class="number">9</span>);<span class="comment">//在头部增加9</span></span><br><span class="line">		link.add(<span class="number">3</span>, <span class="number">10</span>);<span class="comment">//将10插入到第四个元素，之前第四个及以后元素往后挪动</span></span><br><span class="line">		link.remove(<span class="number">3</span>);<span class="comment">//将第四个元素删除</span></span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span>(Integer item: link) &#123;</span><br><span class="line">			System.out.println(item.toString());</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"=========遍历测试========"</span>);</span><br><span class="line">		</span><br><span class="line">		LinkedList&lt;Integer&gt; link2 = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100000</span>; i++) &#123;</span><br><span class="line">			link2.add(i);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		traverseByIterator(link2);</span><br><span class="line">		traverseByIndex(link2);</span><br><span class="line">		traverseByFor(link2);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">traverseByIterator</span><span class="params">(LinkedList&lt;Integer&gt; a)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> startTime = System.nanoTime();</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"========迭代器遍历========"</span>);</span><br><span class="line">		</span><br><span class="line">		Iterator&lt;Integer&gt; iter1 = a.iterator();</span><br><span class="line">		<span class="keyword">while</span>(iter1.hasNext()) &#123;</span><br><span class="line">			iter1.next();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">long</span> endTime = System.nanoTime();</span><br><span class="line">		<span class="keyword">long</span> duration = endTime - startTime;</span><br><span class="line">		System.out.println(duration + <span class="string">" 纳秒"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">traverseByIndex</span><span class="params">(LinkedList&lt;Integer&gt; a)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> startTime = System.nanoTime();</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"=========随机索引遍历============"</span>);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; a.size(); i++) &#123;</span><br><span class="line">			a.get(i);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">long</span> endTime = System.nanoTime();</span><br><span class="line">		<span class="keyword">long</span> duration = endTime - startTime;</span><br><span class="line">		System.out.println(duration + <span class="string">" 纳秒"</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">traverseByFor</span><span class="params">(LinkedList&lt;Integer&gt; a)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">long</span> startTime = System.nanoTime();</span><br><span class="line">		</span><br><span class="line">		System.out.println(<span class="string">"=========for-each循环遍历============"</span>);</span><br><span class="line">		<span class="keyword">for</span>(Integer item: a) &#123;</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">long</span> endTime = System.nanoTime();</span><br><span class="line">		<span class="keyword">long</span> duration = endTime - startTime;</span><br><span class="line">		System.out.println(duration + <span class="string">" 纳秒"</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+运行结果如下：<br><img src="https://i.loli.net/2020/11/23/FGbwLAQ5vxHCUJX.png" alt="linkedlist.png"><br>上面的程序整体上和ArrayList的相同，可以看出LinkedList类的随机索引遍历速度最慢。<br>性能和另外两个相差3个数量级，for-each循环遍历速度最快。</li>
+</ul>
+<h4 id="3-vector"><a href="#3-vector" class="headerlink" title="3. vector"></a>3. vector</h4><ul>
+<li>简介：<ul>
+<li>和ArrayList类似，可变数组实现的列表</li>
+<li>vector同步，适合在多线程下使用；</li>
+<li>原先不属于JCF，属于Java最早的数据结构，性能较差；</li>
+<li>从jdk1.2开始，Vector被重写，并纳入到JCF；</li>
+<li>官方文档建议在非同步情况下，优先采用ArrayList;</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+	
+	<div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+    </div>
+	
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>halfmoon
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://halfmoonex.cn/2020/11/23/JCF%E6%A1%86%E6%9E%B6%EF%BC%88%E4%B8%80%EF%BC%89%E6%95%B0%E7%BB%84%E5%92%8CList%E7%B1%BB/" title="JCF框架（一）数组和List类">http://halfmoonex.cn/2020/11/23/JCF框架（一）数组和List类/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/JCF/" rel="tag"><i class="fa fa-tag"></i> JCF</a>
+              <a href="/tags/%E6%95%B0%E7%BB%84/" rel="tag"><i class="fa fa-tag"></i> 数组</a>
+              <a href="/tags/List%E7%B1%BB/" rel="tag"><i class="fa fa-tag"></i> List类</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/31/%E5%AF%B9%E8%B1%A1%E4%B8%8E%E7%B1%BB/" rel="prev" title="对象与类">
+      <i class="fa fa-chevron-left"></i> 对象与类
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="gitalk-container"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、数组"><span class="nav-number">1.</span> <span class="nav-text">一、数组</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-简介"><span class="nav-number">1.1.</span> <span class="nav-text">1. 简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-定义与初始化"><span class="nav-number">1.2.</span> <span class="nav-text">2. 定义与初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-数组索引"><span class="nav-number">1.3.</span> <span class="nav-text">3. 数组索引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-数组遍历"><span class="nav-number">1.4.</span> <span class="nav-text">4. 数组遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-多维数组-仅介绍二维"><span class="nav-number">1.5.</span> <span class="nav-text">5. 多维数组(仅介绍二维)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、-JCF（Java-Collection-Frame-java容器框架）"><span class="nav-number">2.</span> <span class="nav-text">二、 JCF（Java Collection Frame,java容器框架）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-简介-1"><span class="nav-number">2.1.</span> <span class="nav-text">1. 简介</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、-列表List"><span class="nav-number">3.</span> <span class="nav-text">三、 列表List</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-ArrayList用法"><span class="nav-number">3.1.</span> <span class="nav-text">1. ArrayList用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-LinkedList用法"><span class="nav-number">3.2.</span> <span class="nav-text">2. LinkedList用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-vector"><span class="nav-number">3.3.</span> <span class="nav-text">3. vector</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="halfmoon"
+      src="/images/avatar.gif">
+  <p class="site-author-name" itemprop="name">halfmoon</p>
+  <div class="site-description" itemprop="description">路还很长，要慢慢走</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/NjuWsj" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;NjuWsj" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/2616289505/profile?rightmod=1&wvr=6&mod=personinfo&is_all=1" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;2616289505&#x2F;profile?rightmod&#x3D;1&amp;wvr&#x3D;6&amp;mod&#x3D;personinfo&amp;is_all&#x3D;1" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+      </div>
+	  
+	  
+      <div class="links-of-blogroll motion-element links-of-blogroll-block">
+      <div class="links-of-blogroll-title">
+        <!-- modify icon to fire by szw -->
+        <i class="fa fa-history fa-" aria-hidden="true"></i>
+        近期文章
+      </div>
+      <ul class="links-of-blogroll-list">
+        
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+          <li>
+            <a href="/" title="" target="_blank"></a>
+          </li>
+        
+      </ul>
+    </div>
+
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fas fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jamie</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">23k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">21 分钟</span>
+</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'dea6b8f99a140aedca8f',
+      clientSecret: 'a67b0dc00e81473283893d0fae14ed0d8bcaa39f',
+      repo        : 'Comments',
+      owner       : 'NjuWsj',
+      admin       : ['NjuWsj'],
+      id          : '337617627129f1ffbcbe29c9253cd13b',
+        language: 'zh-CN',
+      distractionFreeMode: false
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
+
+ 
+ <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+ 
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
+</html>
